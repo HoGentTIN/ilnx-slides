@@ -31,6 +31,76 @@
 
 ## I/O redirection
 
+## Streams
+
+- *stdin*, standard input
+    - vgl. Java `System.in`
+- *stdout*, standard output
+    - vgl. `System.out`
+- *stderr*, standard error
+    - vgl. `System.err`
+
+## Syntax
+
+| Syntax        | Betekenis                                          |
+| :---          | :---                                               |
+| `cmd > file`  | schrijf uitvoer van `cmd` weg naar `file`          |
+| `cmd >> file` | voeg toe aan einde van `file`                      |
+| `cmd 2> file` | schrijf foutboodschappen van `cmd` weg naar `file` |
+| `cmd < file`  | gebruik inhoud van `file` als invoer voor `cmd`    |
+| `cmd1 | cmd2` | gebruik uitvoer van `cmd1` als invoer voor `cmd2`  |
+
+## Combineren
+
+```bash
+# stdout en stderr apart wegschrijven
+find / -type d > directories.txt 2> errors.txt
+
+# stdout en stderr samen wegschrijven
+find / -type d > all.txt 2>&1
+
+# stdin/stdout en stderr omleiden
+sort < unsorted.txt > sorted.txt 2> errors.txt
+```
+
+## Foutboodschappen afdrukken
+
+(Equivalent van `System.err.println()`)
+
+```bash
+echo "Error: ${dir} is not a directory" >&2
+```
+
+## Here documents
+
+Als je meer dan één lijn wil afdrukken:
+
+
+```bash
+cat << _EOF_
+Usage: ${0} [OPT]... [ARG]..
+
+OPTIONS:
+  -h, --help  Print this help message
+
+_EOF_
+```
+
+*Let op:* geen whitespace toegelaten voor de eindemarkering
+
+## Here documents
+
+Dit kan bv. ook:
+
+```bash
+mysql -uroot -p"${db_password}" mysql << _EOF_
+DROP DATABASE IF EXISTS drupal;
+CREATE DATABASE drupal;
+GRANT ALL PRIVILEGES ON drupal TO ${drupal_usr}@localhost
+  IDENTIFIED BY ${drupal_password};
+_EOF_
+```
+
 # Les 5. Filters
 
 # Hoofdstuk 4. Een webserver installeren
@@ -48,7 +118,6 @@
 - Gebruikers: `useradd`, `usermod`, `userdel`
 - Groepen: `groupadd`, `groupmod`, `groupdel`
 - Info opvragen: `who`, `groups`, `id`
-
 
 ## Configuratiebestanden
 
@@ -87,7 +156,7 @@
 - = toegangsrechten voor bestanden en directories
     - Bestanden zijn eigendom van een gebruiker en groep
     - cfr. `ls -l` voor een overzicht
-    
+
 ## Permissies
 
 Instelbaar op niveau van:
@@ -117,7 +186,7 @@ chmod u+r FILE
       o=x
       a
 ```
-    
+
 Voorbeelden:
 
 - `chmod g+rw bestand`
@@ -152,34 +221,64 @@ Voorbeelden:
 
 ## Permissies van nieuwe bestanden: `umask`
 
-- `umask` bepaalt standaard-permissies van bestand/directory bij aanmaken
+- `umask` bepaalt permissies van bestand/directory bij aanmaken
 - huidige waarde opvragen: `umask` zonder opties
 - opgegeven in octale notatie
     - enkel 0, 2 en 7 zijn zinvol
 - welke permissies *afnemen*
     - bestand krijgt nooit execute-permissie
 
----
+## Voorbeeld `umask`
+
+`umask 0002`, wat worden de permissies?
 
 ```
   file      directory
-  
+
   0 6 6 6     0 7 7 7      basis
 - 0 0 0 2   - 0 0 0 2      umask
 ---------   ---------
   0 6 6 4     0 7 7 5      permissies
 ```
 
-## Speciale permissies
+## Speciale permissies: *SUID*
 
-- `u+s`: set user ID (*setUID*)
-    - op bestanden met execute-permissies
-    - tijdens uitvoeren krijgt de gebruiker de rechten van de eigenaar van het bestand
-- `g+s`: set group ID (*setGID*)
-    - tijdens uitvoeren krijgt de gebruiker de rechten van de groep van het bestand
-- `+t`: restricted deletion, of *sticky bit*
-    - toegepast op directories
-    - een bestand mag in zo'n directory enkel door de eigenaar verwijderd worden
+- set user ID (*SUID*)
+- op bestanden met execute-permissies
+- tijdens uitvoeren krijgt de gebruiker de rechten van de eigenaar van het bestand
+- symbolisch: `u+s`
+- octaal: 4
+
+```bash
+$ ls -l /bin/passwd
+-rwsr-xr-x. 1 root root 28k 2017-02-11 12:02 /bin/passwd
+```
+
+## Speciale permissies: *SGID*
+
+- set group ID (*SGID*)
+- op bestanden met execute-permissies
+- tijdens uitvoeren krijgt de gebruiker de rechten van de groep van het bestand
+- symbolisch: `g+s`
+- octaal: 2
+
+```bash
+$ ls -l /usr/bin/write 
+-rwxr-sr-x. 1 root tty 20k 2017-09-22 10:55 /usr/bin/write
+```
+
+## Speciale permissies: restricted deletion
+
+- restricted deletion, of *sticky bit*
+- toegepast op directories
+- een bestand mag in zo'n directory enkel door de eigenaar verwijderd worden
+- symbolisch: `+t`
+- octaal: 1
+
+```bash
+ls -ld /tmp
+drwxrwxrwt. 16 root root 360 2017-12-04 13:05 /tmp/
+```
 
 ## Eigenaar/groep veranderen:
 
@@ -190,7 +289,6 @@ chown user file
 chown user:group file
 chgrp group file
 ```
-
 
 # Hoofdstuk 6. scripts
 
@@ -239,7 +337,7 @@ touch "${bestand}"             # Juist
 
 Enkel binnen zelfde "shell", niet binnen "subshells"
 
-- Een script of functie oproepen creëert een subshell
+- Een script oproepen creëert een subshell
 - Maak "globale", of *omgevingsvariabele* met `export`:
 
 ```bash
@@ -274,6 +372,16 @@ Het commando `shift` schuift positionele parameters op:
 - `${2}` wordt `${1}`
 - `${3}` wordt `${2}`
 - enz.
+
+## Positionele parameters instellen
+
+```bash
+set par1 par2 par3
+echo "${1}"  #  => par1
+echo "${2}"  #  => par2
+echo "${3}"  #  => par3
+echo "${4}"  #  =>       (lege string)
+```
 
 ## Exit-status
 
@@ -322,3 +430,71 @@ fi
 ```
 
 # Les 11. Logische structuren, functies
+
+## Tekst afdrukken
+
+Wat is het verschil?
+
+```bash
+var="world"
+
+echo "Hello ${var}"
+echo 'Hello ${var}'
+```
+---
+
+```bash
+var="world"
+
+echo "Hello ${var}"    # Binnen " wordt substitutie toegepast
+echo 'Hello ${var}'    # Binnen ' NIET!
+```
+
+## Command substitution
+
+```bash
+datum=$(date)
+
+echo "${datum}"
+```
+
+## Gebruik `printf`
+
+`printf` is beter dan `echo`
+
+```bash
+var="world"
+
+printf "Hello %s\n" "${var}"
+```
+
+- Het gedrag is beter gedefinieerd over verschillende UNIX-varianten.
+- Vgl. `printf()` method in Java!
+
+## Itereren over positionele parameters (`while`)
+
+```bash
+while [ "$#" -gt 0 ]; do
+  printf "Arg: %s\n" "${1}"
+  # ...
+  shift
+done
+```
+
+## Itereren over positionele parameters (`for`)
+
+```bash
+for arg in "${@}"; do
+  printf "Arg: %s\n" "${arg}"
+  # ...
+done
+```
+
+## Itereren over bestanden
+
+```bash
+for file in *.jpg; do
+  printf "Processing %s\n" "${file}"
+  # ...
+done
+```

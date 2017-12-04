@@ -109,6 +109,88 @@ code > span.in { color: #008000; } /* Information */
 </table>
 </section><section id="io-redirection" class="slide level2">
 <h2>I/O redirection</h2>
+</section><section id="streams" class="slide level2">
+<h2>Streams</h2>
+<ul>
+<li><em>stdin</em>, standard input
+<ul>
+<li>vgl. Java <code>System.in</code></li>
+</ul></li>
+<li><em>stdout</em>, standard output
+<ul>
+<li>vgl. <code>System.out</code></li>
+</ul></li>
+<li><em>stderr</em>, standard error
+<ul>
+<li>vgl. <code>System.err</code></li>
+</ul></li>
+</ul>
+</section><section id="syntax" class="slide level2">
+<h2>Syntax</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Syntax</th>
+<th style="text-align: left;">Betekenis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>cmd &gt; file</code></td>
+<td style="text-align: left;">schrijf uitvoer van <code>cmd</code> weg naar <code>file</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cmd &gt;&gt; file</code></td>
+<td style="text-align: left;">voeg toe aan einde van <code>file</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cmd 2&gt; file</code></td>
+<td style="text-align: left;">schrijf foutboodschappen van <code>cmd</code> weg naar <code>file</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cmd &lt; file</code></td>
+<td style="text-align: left;">gebruik inhoud van <code>file</code> als invoer voor <code>cmd</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cmd1 | cmd2</code></td>
+<td style="text-align: left;">gebruik uitvoer van <code>cmd1</code> als invoer voor <code>cmd2</code></td>
+</tr>
+</tbody>
+</table>
+</section><section id="combineren" class="slide level2">
+<h2>Combineren</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># stdout en stderr apart wegschrijven</span>
+<span class="fu">find</span> / -type d <span class="op">&gt;</span> directories.txt <span class="op">2&gt;</span> errors.txt
+
+<span class="co"># stdout en stderr samen wegschrijven</span>
+<span class="fu">find</span> / -type d <span class="op">&gt;</span> all.txt <span class="op">2&gt;&amp;1</span>
+
+<span class="co"># stdin/stdout en stderr omleiden</span>
+<span class="fu">sort</span> <span class="op">&lt;</span> unsorted.txt <span class="op">&gt;</span> sorted.txt <span class="op">2&gt;</span> errors.txt</code></pre></div>
+</section><section id="foutboodschappen-afdrukken" class="slide level2">
+<h2>Foutboodschappen afdrukken</h2>
+<p>(Equivalent van <code>System.err.println()</code>)</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="bu">echo</span> <span class="st">&quot;Error: </span><span class="va">${dir}</span><span class="st"> is not a directory&quot;</span> <span class="op">&gt;&amp;2</span></code></pre></div>
+</section><section id="here-documents" class="slide level2">
+<h2>Here documents</h2>
+<p>Als je meer dan één lijn wil afdrukken:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">cat</span> &lt;&lt; _EOF_
+Usage: <span class="va">${0}</span> [OPT]... [ARG]..
+
+OPTIONS:
+  -h, --help  Print this help message
+
+_EOF_</code></pre></div>
+<p><em>Let op:</em> geen whitespace toegelaten voor de eindemarkering</p>
+</section><section id="here-documents-1" class="slide level2">
+<h2>Here documents</h2>
+<p>Dit kan bv. ook:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">mysql</span> -uroot -p<span class="st">&quot;</span><span class="va">${db_password}</span><span class="st">&quot;</span> mysql &lt;&lt; _EOF_
+DROP DATABASE IF EXISTS drupa<span class="op">l</span>;
+CREATE DATABASE drupa<span class="op">l</span>;
+GRANT ALL PRIVILEGES ON drupa<span class="op">l</span> <span class="ex">TO</span> <span class="va">${drupal_usr}</span>@localhost
+  IDENTIFIED BY <span class="va">${drupal_password}</span>;
+_E<span class="op">O</span><span class="ex">F_</span></code></pre></div>
 </section></section>
 <section><section id="les-5.-filters" class="titleslide slide level1"><h1>Les 5. Filters</h1></section></section>
 <section><section id="hoofdstuk-4.-een-webserver-installeren" class="titleslide slide level1"><h1>Hoofdstuk 4. Een webserver installeren</h1></section></section>
@@ -214,7 +296,7 @@ r w x  r - x  - - -
 </section><section id="permissies-van-nieuwe-bestanden-umask" class="slide level2">
 <h2>Permissies van nieuwe bestanden: <code>umask</code></h2>
 <ul>
-<li><code>umask</code> bepaalt standaard-permissies van bestand/directory bij aanmaken</li>
+<li><code>umask</code> bepaalt permissies van bestand/directory bij aanmaken</li>
 <li>huidige waarde opvragen: <code>umask</code> zonder opties</li>
 <li>opgegeven in octale notatie
 <ul>
@@ -225,32 +307,48 @@ r w x  r - x  - - -
 <li>bestand krijgt nooit execute-permissie</li>
 </ul></li>
 </ul>
-</section><section class="slide level2">
-
+</section><section id="voorbeeld-umask" class="slide level2">
+<h2>Voorbeeld <code>umask</code></h2>
+<p><code>umask 0002</code>, wat worden de permissies?</p>
 <pre><code>  file      directory
-  
+
   0 6 6 6     0 7 7 7      basis
 - 0 0 0 2   - 0 0 0 2      umask
 ---------   ---------
   0 6 6 4     0 7 7 5      permissies</code></pre>
-</section><section id="speciale-permissies" class="slide level2">
-<h2>Speciale permissies</h2>
+</section><section id="speciale-permissies-suid" class="slide level2">
+<h2>Speciale permissies: <em>SUID</em></h2>
 <ul>
-<li><code>u+s</code>: set user ID (<em>setUID</em>)
-<ul>
+<li>set user ID (<em>SUID</em>)</li>
 <li>op bestanden met execute-permissies</li>
 <li>tijdens uitvoeren krijgt de gebruiker de rechten van de eigenaar van het bestand</li>
-</ul></li>
-<li><code>g+s</code>: set group ID (<em>setGID</em>)
+<li>symbolisch: <code>u+s</code></li>
+<li>octaal: 4</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="fu">ls</span> -l /bin/passwd
+<span class="ex">-rwsr-xr-x.</span> 1 root root 28k 2017-02-11 12:02 /bin/passwd</code></pre></div>
+</section><section id="speciale-permissies-sgid" class="slide level2">
+<h2>Speciale permissies: <em>SGID</em></h2>
 <ul>
+<li>set group ID (<em>SGID</em>)</li>
+<li>op bestanden met execute-permissies</li>
 <li>tijdens uitvoeren krijgt de gebruiker de rechten van de groep van het bestand</li>
-</ul></li>
-<li><code>+t</code>: restricted deletion, of <em>sticky bit</em>
+<li>symbolisch: <code>g+s</code></li>
+<li>octaal: 2</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="fu">ls</span> -l /usr/bin/write 
+<span class="ex">-rwxr-sr-x.</span> 1 root tty 20k 2017-09-22 10:55 /usr/bin/write</code></pre></div>
+</section><section id="speciale-permissies-restricted-deletion" class="slide level2">
+<h2>Speciale permissies: restricted deletion</h2>
 <ul>
+<li>restricted deletion, of <em>sticky bit</em></li>
 <li>toegepast op directories</li>
 <li>een bestand mag in zo'n directory enkel door de eigenaar verwijderd worden</li>
-</ul></li>
+<li>symbolisch: <code>+t</code></li>
+<li>octaal: 1</li>
 </ul>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">ls</span> -ld /tmp
+<span class="ex">drwxrwxrwt.</span> 16 root root 360 2017-12-04 13:05 /tmp/</code></pre></div>
 </section><section id="eigenaargroep-veranderen" class="slide level2">
 <h2>Eigenaar/groep veranderen:</h2>
 <p>Merk op: root-rechten nodig</p>
@@ -294,7 +392,7 @@ chgrp group file</code></pre>
 <h2>Scope</h2>
 <p>Enkel binnen zelfde &quot;shell&quot;, niet binnen &quot;subshells&quot;</p>
 <ul>
-<li>Een script of functie oproepen creëert een subshell</li>
+<li>Een script oproepen creëert een subshell</li>
 <li>Maak &quot;globale&quot;, of <em>omgevingsvariabele</em> met <code>export</code>:</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="bu">export</span> <span class="va">VARIABLE1=</span>value
@@ -348,6 +446,13 @@ chgrp group file</code></pre>
 <li><code>${3}</code> wordt <code>${2}</code></li>
 <li>enz.</li>
 </ul>
+</section><section id="positionele-parameters-instellen" class="slide level2">
+<h2>Positionele parameters instellen</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">set</span> <span class="ex">par1</span> par2 par3
+<span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span>  <span class="co">#  =&gt; par1</span>
+<span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${2}</span><span class="st">&quot;</span>  <span class="co">#  =&gt; par2</span>
+<span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${3}</span><span class="st">&quot;</span>  <span class="co">#  =&gt; par3</span>
+<span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${4}</span><span class="st">&quot;</span>  <span class="co">#  =&gt;       (lege string)</span></code></pre></div>
 </section><section id="exit-status" class="slide level2">
 <h2>Exit-status</h2>
 <ul>
@@ -398,7 +503,54 @@ chgrp group file</code></pre>
   <span class="bu">echo</span> <span class="st">&quot;Expected at least one argument&quot;</span>
 <span class="kw">fi</span></code></pre></div>
 </section></section>
-<section><section id="les-11.-logische-structuren-functies" class="titleslide slide level1"><h1>Les 11. Logische structuren, functies</h1></section></section>
+<section><section id="les-11.-logische-structuren-functies" class="titleslide slide level1"><h1>Les 11. Logische structuren, functies</h1></section><section id="tekst-afdrukken" class="slide level2">
+<h2>Tekst afdrukken</h2>
+<p>Wat is het verschil?</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="va">var=</span><span class="st">&quot;world&quot;</span>
+
+<span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span>
+<span class="bu">echo</span> <span class="st">&#39;Hello ${var}&#39;</span></code></pre></div>
+</section><section class="slide level2">
+
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="va">var=</span><span class="st">&quot;world&quot;</span>
+
+<span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span>    <span class="co"># Binnen &quot; wordt substitutie toegepast</span>
+<span class="bu">echo</span> <span class="st">&#39;Hello ${var}&#39;</span>    <span class="co"># Binnen &#39; NIET!</span></code></pre></div>
+</section><section id="command-substitution" class="slide level2">
+<h2>Command substitution</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="va">datum=$(</span><span class="fu">date</span><span class="va">)</span>
+
+<span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${datum}</span><span class="st">&quot;</span></code></pre></div>
+</section><section id="gebruik-printf" class="slide level2">
+<h2>Gebruik <code>printf</code></h2>
+<p><code>printf</code> is beter dan <code>echo</code></p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="va">var=</span><span class="st">&quot;world&quot;</span>
+
+<span class="bu">printf</span> <span class="st">&quot;Hello %s\n&quot;</span> <span class="st">&quot;</span><span class="va">${var}</span><span class="st">&quot;</span></code></pre></div>
+<ul>
+<li>Het gedrag is beter gedefinieerd over verschillende UNIX-varianten.</li>
+<li>Vgl. <code>printf()</code> method in Java!</li>
+</ul>
+</section><section id="itereren-over-positionele-parameters-while" class="slide level2">
+<h2>Itereren over positionele parameters (<code>while</code>)</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">while</span><span class="bu"> [</span> <span class="st">&quot;</span><span class="va">$#</span><span class="st">&quot;</span> <span class="ot">-gt</span> 0<span class="bu"> ]</span>; <span class="kw">do</span>
+  <span class="bu">printf</span> <span class="st">&quot;Arg: %s\n&quot;</span> <span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span>
+  <span class="co"># ...</span>
+  <span class="bu">shift</span>
+<span class="kw">done</span></code></pre></div>
+</section><section id="itereren-over-positionele-parameters-for" class="slide level2">
+<h2>Itereren over positionele parameters (<code>for</code>)</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> <span class="ex">arg</span> in <span class="st">&quot;</span><span class="va">${@}</span><span class="st">&quot;</span><span class="kw">;</span> <span class="kw">do</span>
+  <span class="bu">printf</span> <span class="st">&quot;Arg: %s\n&quot;</span> <span class="st">&quot;</span><span class="va">${arg}</span><span class="st">&quot;</span>
+  <span class="co"># ...</span>
+<span class="kw">done</span></code></pre></div>
+</section><section id="itereren-over-bestanden" class="slide level2">
+<h2>Itereren over bestanden</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> <span class="fu">file</span> in *.jpg<span class="kw">;</span> <span class="kw">do</span>
+  <span class="bu">printf</span> <span class="st">&quot;Processing %s\n&quot;</span> <span class="st">&quot;</span><span class="va">${file}</span><span class="st">&quot;</span>
+  <span class="co"># ...</span>
+<span class="kw">done</span></code></pre></div>
+</section></section>
     </div>
   </div>
 
