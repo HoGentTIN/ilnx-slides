@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="HoGent Bedrijf en Organisatie">
+  <title>Besturingssystemen: Linux</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="reveal.js/css/reveal.css">
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #0000ff; } /* Keyword */
+code > span.ch { color: #008080; } /* Char */
+code > span.st { color: #008080; } /* String */
+code > span.co { color: #008000; } /* Comment */
+code > span.ot { color: #ff4000; } /* Other */
+code > span.al { color: #ff0000; } /* Alert */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #008000; font-weight: bold; } /* Warning */
+code > span.cn { } /* Constant */
+code > span.sc { color: #008080; } /* SpecialChar */
+code > span.vs { color: #008080; } /* VerbatimString */
+code > span.ss { color: #008080; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { } /* Variable */
+code > span.cf { color: #0000ff; } /* ControlFlow */
+code > span.op { } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #ff4000; } /* Preprocessor */
+code > span.do { color: #008000; } /* Documentation */
+code > span.an { color: #008000; } /* Annotation */
+code > span.cv { color: #008000; } /* CommentVar */
+code > span.at { } /* Attribute */
+code > span.in { color: #008000; } /* Information */
+  </style>
+  <link rel="stylesheet" href="reveal.js/css/theme/hogent.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'reveal.js/css/print/pdf.css' : 'reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+  <h1 class="title">Besturingssystemen: Linux</h1>
+  <p class="author">HoGent Bedrijf en Organisatie</p>
+  <p class="date">2017-2018</p>
+</section>
+
+<section><section id="hoofdstuk-1.-linux-installeren" class="titleslide slide level1"><h1>Hoofdstuk 1. Linux installeren</h1></section></section>
+<section><section id="les-1.-linux-installeren" class="titleslide slide level1"><h1>Les 1. Linux installeren</h1></section></section>
+<section><section id="hoofdstuk-2.-linux-leren-kennen" class="titleslide slide level1"><h1>Hoofdstuk 2. Linux leren kennen</h1></section></section>
+<section><section id="les-2.-werking-van-de-command-line" class="titleslide slide level1"><h1>Les 2. Werking van de command line</h1></section></section>
+<section><section id="les-3.-bestanden-en-directories" class="titleslide slide level1"><h1>Les 3. Bestanden en directories</h1></section></section>
+<section><section id="hoofdstuk-3.-werken-met-tekst" class="titleslide slide level1"><h1>Hoofdstuk 3. Werken met tekst</h1></section></section>
+<section><section id="les-4.-de-vim-editor-io-redirection" class="titleslide slide level1"><h1>Les 4. De Vim-editor, I/O Redirection</h1></section><section id="vim-survival-guide" class="slide level2">
+<h2>Vim survival guide</h2>
+<ul>
+<li>Bij opstarten van Vim kom je terecht in <em>normal mode</em>.</li>
+<li>Als je tekst wil invoeren moet je naar <em>insert mode</em>.</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Taak</th>
+<th style="text-align: left;">Commando</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Normal mode -&gt; insert mode</td>
+<td style="text-align: left;"><code>i</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Insert mode -&gt; normal mode</td>
+<td style="text-align: left;"><code>&lt;Esc&gt;</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Opslaan</td>
+<td style="text-align: left;"><code>:w</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Opslaan en afsluiten</td>
+<td style="text-align: left;"><code>:wq</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Afsluiten zonder opslaan</td>
+<td style="text-align: left;"><code>:q!</code></td>
+</tr>
+</tbody>
+</table>
+</section><section id="io-redirection" class="slide level2">
+<h2>I/O redirection</h2>
+</section></section>
+<section><section id="les-5.-filters" class="titleslide slide level1"><h1>Les 5. Filters</h1></section></section>
+<section><section id="hoofdstuk-4.-een-webserver-installeren" class="titleslide slide level1"><h1>Hoofdstuk 4. Een webserver installeren</h1></section></section>
+<section><section id="les-6.-een-webserver-installeren" class="titleslide slide level1"><h1>Les 6. Een webserver installeren</h1></section></section>
+<section><section id="les-7.-netwerkinstellingen-controleren" class="titleslide slide level1"><h1>Les 7. Netwerkinstellingen controleren</h1></section></section>
+<section><section id="hoofdstuk-5.-gebruikers-groepen-en-permissies" class="titleslide slide level1"><h1>Hoofdstuk 5. Gebruikers, groepen en permissies</h1></section></section>
+<section><section id="les-8.-gebruikers-en-groepen" class="titleslide slide level1"><h1>Les 8. Gebruikers en groepen</h1></section><section id="commandos" class="slide level2">
+<h2>Commando's</h2>
+<ul>
+<li>Gebruikers: <code>useradd</code>, <code>usermod</code>, <code>userdel</code></li>
+<li>Groepen: <code>groupadd</code>, <code>groupmod</code>, <code>groupdel</code></li>
+<li>Info opvragen: <code>who</code>, <code>groups</code>, <code>id</code></li>
+</ul>
+</section><section id="configuratiebestanden" class="slide level2">
+<h2>Configuratiebestanden</h2>
+<ul>
+<li>Gebruikers: <code>/etc/passwd</code>, <code>/etc/shadow</code></li>
+<li>Groepen: <code>/etc/group</code>, (<code>/etc/gshadow</code>, van weinig belang)</li>
+</ul>
+</section><section id="primaire-vs-aanvullende-groepen" class="slide level2">
+<h2>Primaire vs aanvullende groepen</h2>
+<ul>
+<li>Primaire groep: 4e veld van <code>/etc/passwd</code> (group ID)</li>
+<li>Aanvullende groepen: in <code>/etc/group</code>. Gebruiker staat niet vermeld in de primaire groep!</li>
+</ul>
+</section><section class="slide level2">
+
+<ul>
+<li><p><em>primaire</em> groep aanpassen</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="ex">usermod</span> -g groep gebruiker</code></pre></div></li>
+<li><p>gebruiker toevoegen aan opgegeven groepen <em>en verwijderen uit alle andere groepen</em></p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="ex">usermod</span> -G groep1,groep2 gebruiker </code></pre></div></li>
+<li><p>gebruiker toevoegen aan opgegeven groep, blijft lid van andere groepen</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="ex">usermod</span> -aG groep gebruiker</code></pre></div></li>
+</ul>
+</section></section>
+<section><section id="les-9.-bestandspermissies" class="titleslide slide level1"><h1>Les 9. Bestandspermissies</h1></section><section id="permissies" class="slide level2">
+<h2>Permissies</h2>
+<ul>
+<li>= toegangsrechten voor bestanden en directories
+<ul>
+<li>Bestanden zijn eigendom van een gebruiker en groep</li>
+<li>cfr. <code>ls -l</code> voor een overzicht</li>
+</ul></li>
+</ul>
+</section><section id="permissies-1" class="slide level2">
+<h2>Permissies</h2>
+<p>Instelbaar op niveau van:</p>
+<ul>
+<li><code>u</code>: gebruiker, user</li>
+<li><code>g</code>: groep, group</li>
+<li><code>o</code>: andere gebruikers, others</li>
+<li><code>a</code>: iedereen, all</li>
+</ul>
+</section><section id="soorten-permissies" class="slide level2">
+<h2>Soorten permissies</h2>
+<ul>
+<li><code>r</code>: lezen, read</li>
+<li><code>w</code>: schrijven, write</li>
+<li><code>x</code>: execute
+<ul>
+<li>uitvoeren als commando (file)</li>
+<li>toegang met <code>cd</code> (directory)</li>
+</ul></li>
+</ul>
+</section><section id="instellen-met-symbolische-notatie" class="slide level2">
+<h2>Instellen met symbolische notatie</h2>
+<p>permissies instellen met <code>chmod</code>, symbolische notatie</p>
+<pre><code>chmod MODUS FILE
+chmod u+r FILE
+      g-w
+      o=x
+      a</code></pre>
+<p>Voorbeelden:</p>
+<ul>
+<li><code>chmod g+rw bestand</code></li>
+<li><code>chmod +x bestand</code></li>
+<li><code>chmod u+rw,g+r,o-rw bestand</code></li>
+<li><code>chmod a=r bestand</code></li>
+</ul>
+</section><section id="instellen-met-octale-notatie" class="slide level2">
+<h2>Instellen met octale notatie</h2>
+<pre><code>  u      g      o
+r w x  r - x  - - -
+1 1 1  1 0 1  0 0 0
+4+2+1  4+0+1  0+0+0
+  7      5      0</code></pre>
+<p>Voorbeelden:</p>
+<ul>
+<li><code>chmod 755 script</code></li>
+<li><code>chmod 600 file</code></li>
+<li><code>chmod 644 file</code></li>
+<li><code>chmod 775 dir</code></li>
+</ul>
+</section><section id="merk-op" class="slide level2">
+<h2>Merk op</h2>
+<ul>
+<li>sommige permissie-combinaties komen nooit voor in de praktijk, bv. 1, 2, 3</li>
+<li>directories: altijd lezen (r) en execute (x) <em>samen</em> toekennen of afnemen</li>
+<li>gebruiker heeft altijd meer rechten dan groep/others</li>
+<li><code>root</code> negeert bestandspermissies (mag alles), vb. <code>/etc/shadow</code></li>
+</ul>
+</section><section id="permissies-van-nieuwe-bestanden-umask" class="slide level2">
+<h2>Permissies van nieuwe bestanden: <code>umask</code></h2>
+<ul>
+<li><code>umask</code> bepaalt standaard-permissies van bestand/directory bij aanmaken</li>
+<li>huidige waarde opvragen: <code>umask</code> zonder opties</li>
+<li>opgegeven in octale notatie
+<ul>
+<li>enkel 0, 2 en 7 zijn zinvol</li>
+</ul></li>
+<li>welke permissies <em>afnemen</em>
+<ul>
+<li>bestand krijgt nooit execute-permissie</li>
+</ul></li>
+</ul>
+</section><section class="slide level2">
+
+<pre><code>  file      directory
+  
+  0 6 6 6     0 7 7 7      basis
+- 0 0 0 2   - 0 0 0 2      umask
+---------   ---------
+  0 6 6 4     0 7 7 5      permissies</code></pre>
+</section><section id="speciale-permissies" class="slide level2">
+<h2>Speciale permissies</h2>
+<ul>
+<li><code>u+s</code>: set user ID (<em>setUID</em>)
+<ul>
+<li>op bestanden met execute-permissies</li>
+<li>tijdens uitvoeren krijgt de gebruiker de rechten van de eigenaar van het bestand</li>
+</ul></li>
+<li><code>g+s</code>: set group ID (<em>setGID</em>)
+<ul>
+<li>tijdens uitvoeren krijgt de gebruiker de rechten van de groep van het bestand</li>
+</ul></li>
+<li><code>+t</code>: restricted deletion, of <em>sticky bit</em>
+<ul>
+<li>toegepast op directories</li>
+<li>een bestand mag in zo'n directory enkel door de eigenaar verwijderd worden</li>
+</ul></li>
+</ul>
+</section><section id="eigenaargroep-veranderen" class="slide level2">
+<h2>Eigenaar/groep veranderen:</h2>
+<p>Merk op: root-rechten nodig</p>
+<pre><code>chown user file
+chown user:group file
+chgrp group file</code></pre>
+</section></section>
+<section><section id="hoofdstuk-6.-scripts" class="titleslide slide level1"><h1>Hoofdstuk 6. scripts</h1></section></section>
+<section><section id="les-10.-variabelen-positionele-parameters-logische-operatoren" class="titleslide slide level1"><h1>Les 10. Variabelen, positionele parameters, logische operatoren</h1></section><section id="variabelen" class="slide level2">
+<h2>Variabelen</h2>
+<p>Bash-variabelen zijn (vrijwel altijd) strings.</p>
+<p>Declaratie:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="va">variabele=</span>waarde</code></pre></div>
+<p>Waarde v/e variabele opvragen:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="va">${variable}</span></code></pre></div>
+<p>Gebruik in strings (met dubbele aanhalingstekens):</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${USER}</span><span class="st">&quot;</span></code></pre></div>
+</section><section id="variabelen-1" class="slide level2">
+<h2>Variabelen</h2>
+<ul>
+<li>Gebruik zoveel mogelijk de notatie <code>${var}</code>
+<ul>
+<li><em>accolades</em></li>
+</ul></li>
+<li>Gebruik dubbele aanhalingstekens: <code>&quot;${var}&quot;</code>
+<ul>
+<li>vermijd <em>splitsen</em> van woorden</li>
+</ul></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="va">bestand=</span><span class="st">&quot;Mijn bestand.txt&quot;</span>
+<span class="fu">touch</span> <span class="va">${bestand}</span>               <span class="co"># Fout</span>
+<span class="fu">touch</span> <span class="st">&quot;</span><span class="va">${bestand}</span><span class="st">&quot;</span>             <span class="co"># Juist</span></code></pre></div>
+<ul>
+<li>Onbestaande variabele wordt beschouwd als <em>lege string</em>.
+<ul>
+<li>Oorzaak van veel fouten in shell-scripts!</li>
+<li><code>set -o nounset</code> ⇒ script afgebroken</li>
+</ul></li>
+</ul>
+</section><section id="scope" class="slide level2">
+<h2>Scope</h2>
+<p>Enkel binnen zelfde &quot;shell&quot;, niet binnen &quot;subshells&quot;</p>
+<ul>
+<li>Een script of functie oproepen creëert een subshell</li>
+<li>Maak &quot;globale&quot;, of <em>omgevingsvariabele</em> met <code>export</code>:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="bu">export</span> <span class="va">VARIABLE1=</span>value
+
+<span class="va">VARIABLE2=</span>value
+<span class="bu">export</span> <span class="va">VARIABLE2</span></code></pre></div>
+<p>Conventie naamgeving:</p>
+<ul>
+<li>Lokale variabelen: kleine letters, bv: <code>foo_bar</code></li>
+<li>Omgevingsvariabelen: hoofdletters, bv. <code>FOO_BAR</code></li>
+</ul>
+</section><section id="positionele-parameters" class="slide level2">
+<h2>Positionele parameters</h2>
+<p>Bij uitvoeren van script zijn opties en argumenten beschikbaar via variabelen, <em>positionele parameters</em></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variabele</th>
+<th style="text-align: left;">Betekenis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>${0}</code></td>
+<td style="text-align: left;">Naam script</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>${1}</code>, <code>${2}</code>, ...</td>
+<td style="text-align: left;">Eerste, tweede, ... argument</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>${10}</code></td>
+<td style="text-align: left;">Tiende argument (accolades verplicht!)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>${*}</code></td>
+<td style="text-align: left;">Alle argumenten: <code>${1} ${2} ${3}...</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>${@}</code></td>
+<td style="text-align: left;">Alle argumenten: <code>&quot;${1}&quot; &quot;${2}&quot; &quot;${3}&quot;...</code></td>
+</tr>
+</tbody>
+</table>
+</section><section id="positionele-parameters-1" class="slide level2">
+<h2>Positionele parameters</h2>
+<p>Het commando <code>shift</code> schuift positionele parameters op:</p>
+<ul>
+<li><code>${1}</code> verdwijnt</li>
+<li><code>${2}</code> wordt <code>${1}</code></li>
+<li><code>${3}</code> wordt <code>${2}</code></li>
+<li>enz.</li>
+</ul>
+</section><section id="exit-status" class="slide level2">
+<h2>Exit-status</h2>
+<ul>
+<li>Elk commando heeft een <em>exit-status</em>, numerieke waarde
+<ul>
+<li>Opvragen met <code>echo &quot;$?&quot;</code></li>
+<li>0 =&gt; commando geslaagd, logische <em>true</em></li>
+<li>1-255 =&gt; commando gefaald, logische <em>false</em></li>
+</ul></li>
+<li>Logische operatoren in Bash zijn gebaseerd op exit-status</li>
+<li>Booleaanse variabelen <em>bestaan niet</em></li>
+</ul>
+</section><section id="logische-operatoren" class="slide level2">
+<h2>Logische operatoren</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">if</span> <span class="ex">COMMANDO</span><span class="kw">;</span> <span class="kw">then</span>
+  <span class="co"># A</span>
+<span class="kw">else</span>
+  <span class="co"># B</span>
+<span class="kw">fi</span></code></pre></div>
+<ul>
+<li><code>A</code>-blok wordt uitgevoerd als exit-status van <code>COMMANDO</code> 0 is (geslaagd, TRUE)</li>
+<li><code>B</code>-blok wordt uitgevoerd als exit-status van <code>COMMANDO</code> verschillend is van 0 (gefaald, FALSE)</li>
+</ul>
+</section><section id="het-commando-test" class="slide level2">
+<h2>Het commando <code>test</code></h2>
+<ul>
+<li>Evalueren van logische expressies</li>
+<li>Geeft geschikte exit-status
+<ul>
+<li>0 = TRUE</li>
+<li>1 = FALSE</li>
+</ul></li>
+<li>Alias voor <code>test</code> is <code>[</code>
+<ul>
+<li><code>[</code> is een <em>commando</em>, geen &quot;haakje&quot; in de traditionele betekenis</li>
+<li>spaties vóór en na!</li>
+</ul></li>
+</ul>
+</section><section class="slide level2">
+
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># Fout:</span>
+<span class="ex">if</span>[<span class="va">$#</span>-eq 0]<span class="kw">;</span> <span class="kw">then</span>
+  <span class="bu">echo</span> <span class="st">&quot;Expected at least one argument&quot;</span>
+<span class="kw">fi</span>
+
+<span class="co"># Juist:</span>
+<span class="kw">if</span><span class="bu"> [</span> <span class="st">&quot;</span><span class="va">${#}</span><span class="st">&quot;</span> <span class="ot">-eq</span> <span class="st">&quot;0&quot;</span><span class="bu"> ]</span>; <span class="kw">then</span>
+  <span class="bu">echo</span> <span class="st">&quot;Expected at least one argument&quot;</span>
+<span class="kw">fi</span></code></pre></div>
+</section></section>
+<section><section id="les-11.-logische-structuren-functies" class="titleslide slide level1"><h1>Les 11. Logische structuren, functies</h1></section></section>
+    </div>
+  </div>
+
+  <script src="reveal.js/lib/js/head.min.js"></script>
+  <script src="reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+              { src: 'reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>
