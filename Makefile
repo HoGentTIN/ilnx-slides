@@ -1,6 +1,6 @@
 ## Presentation makefile
 
-OUTPUT := gh-pages
+OUTPUT := docs
 
 # Directory for reveal.js
 REVEAL_JS_DIR := $(OUTPUT)/reveal.js
@@ -30,21 +30,15 @@ $(OUTPUT)/index.html: besturingssystemen-linux.md $(REVEAL_JS_DIR) $(STYLE_FILE)
 $(STYLE_FILE): $(STYLE).css
 	cp $(STYLE).css $(STYLE_FILE)
 
+#$(OUTPUT)/img/*: img/*
+#	cp -r img/* $(OUTPUT)/img
+
 ## Download and install reveal.js locally
 $(REVEAL_JS_DIR):
 	wget $(REVEAL_JS_URL)
 	tar xzf $(REVEAL_JS_TAR)
 	rm $(REVEAL_JS_TAR)
 	mv -T reveal.js* $(REVEAL_JS_DIR)
-
-## Cleanup
-clean:
-	rm -f $(OUTPUT)/*.html
-	rm -f $(OUTPUT)/*.pdf
-
-## Thorough cleanup (also removes reveal.js)
-mrproper: clean
-	rm -rf $(REVEAL_JS_DIR)
 
 all: $(STYLE_FILE) $(OUTPUT)/index.html
 
@@ -56,3 +50,13 @@ handouts.pdf: basic-commands-el7.md.md
 		-f markdown  $< \
 		--latex-engine=lualatex \
 		-o $@
+
+## Cleanup
+clean:
+	rm -f $(OUTPUT)/*.html
+	rm -f $(OUTPUT)/*.pdf
+
+## Thorough cleanup (also removes reveal.js)
+mrproper: clean
+	rm -rf $(REVEAL_JS_DIR)
+
