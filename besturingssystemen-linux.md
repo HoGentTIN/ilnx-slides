@@ -10,7 +10,114 @@
 
 # Les 2. Werking van de command line
 
+## Hulp zoeken
+
+```bash
+# Hulp over het commando 'passwd'
+man passwd
+
+# Hulp over het configuratiebestand /etc/passwd
+man 5 passwd
+
+# Zoek in alle man-pages naar de string 'passwd'
+man -k passwd
+apropos passwd
+```
+
+## Hulp zoeken
+
+- Binnen man-page:
+    - `q` - man-page verlaten
+    - `/` - zoeken binnen de pagina
+    - `n` - ga naar volgende zoekresultaat
+    - `N` - ga naar vorige zoekresultaat
+- Secties, vb:
+    - 1 - cmmando's
+    - 5 - configuratiebestanden
+    - 8 - systeembeheercommando's
+    - Notatie: vb. `passwd(1)`, `passwd(5)`
+
+## Structuur van een commandoregel
+
+```bash
+$ COMMANDO [OPTIES]... [ARGUMENTEN]...
+```
+
+- "Onderdelen" gescheiden door *spaties*
+- *Opties* veranderen het gedrag van een commando
+- *Argumenten* zijn de entiteiten waarop het commando uitgevoerd wordt
+
+## Commando
+
+Het eerste "woord" van een opdrachtregel
+
+- Alias of functie, gedefinieerd door gebruiker
+- Ingebouwd in Bash
+    - Zie `man builtins`
+- Uitvoerbaar bestand in één van de directories in `${PATH}`
+- Absoluut pad naar uitvoerbaar bestand
+
+**Let op!** Bash zoekt nooit in de huidige directory!
+
+## Opties
+
+Wijzigen het gedrag van het commando
+
+- Korte notatie: `-a -b -c`
+    - Korter schrijven als `-abc`
+- Lange notatie: `--foo --bar`
+
+**Let op!** Niet alle commando's volgen de conventie! (bv `find`)
+
+## Substitutie/expansie
+
+Vóór uitvoeren van een commando vervangt Bash bepaalde uitdrukkingen:
+
+- *Brace expansion*, vb. `{1..10}`, `project/{bin,lib,out}`
+- *Tilde expansion*: `~` wordt vervangen door home-directory, vb. `/home/student/`
+- *Parameter expansion*: variabelennamen worden vervangen door waarde, vb. `${USER}` -> `student`
+
+## Substitutie/expansie
+
+- *Command substitution*: `$(commando)` wordt vervangen door uitvoer van `commando`
+- *Filename expansion* of "globbing": wildcards in bestandsnamen, vb. `*`, `?`, `[abc]`, enz.
+- ...
+
+## Resultaat expansie
+
+- `set -x` toont resultaat van expansie ("debug mode")
+- `set +x` zet optie terug uit
+
+Voorbeeld:
+
+```bash
+set -x; ls -ld ${HOME}/D[eo]*; set +x
+set -x; mkdir -p a/{b,c,d}/{e,f}; set +x
+```
+
 # Les 3. Bestanden en directories
+
+## Werken met directories
+
+| Commando | Taak                          |
+| :---     | :---                          |
+| `pwd`    | Toon huidige directory        |
+| `ls`     | Toon inhoud huidige directory |
+| `cd`     | Ga naar een andere directory  |
+| `mkdir`  | Maak een subdirectory aan     |
+| `rmdir`  | Verwijder een lege directory  |
+
+## Werken met bestanden
+
+| Commando | Taak                                            |
+| :---     | :---                                            |
+| `cat`    | Toon inhoud van een bestand                     |
+| `less`   | Toon inhoud, per pagina (navigeer met pijltjes) |
+| `touch`  | Maak leeg bestand aan                           |
+|          | (eigenlijk: pas datum laatste wijziging aan)    |
+| `cp`     | Kopieer bestanden                               |
+| `mv`     | Verplaats bestanden (of hernoemen!)             |
+| `rm`     | Verwijder bestanden of directories              |
 
 # Hoofdstuk 3. Werken met tekst
 
@@ -56,10 +163,13 @@
 # stdout en stderr apart wegschrijven
 find / -type d > directories.txt 2> errors.txt
 
+# stderr "negeren"
+find / -type d > directories.txt 2> /dev/null
+
 # stdout en stderr samen wegschrijven
 find / -type d > all.txt 2>&1
 
-# stdin/stdout en stderr omleiden
+# invoer én uitvoer omleiden
 sort < unsorted.txt > sorted.txt 2> errors.txt
 ```
 
@@ -103,11 +213,90 @@ _EOF_
 
 # Les 5. Filters
 
+## Filter
+
+- Filter = commando dat:
+    1. leest van `stdin` (of bestand),
+    2. tekst transformeert, en
+    3. wegschrijft naar `stdout`
+- Combineer filters via `|` (pipe) om complexe bewerkingen op tekst toe te passen
+    - De *UNIX-filosofie*
+
+## Filters
+
+| Commando | Doel                                                            |
+| :---     | :---                                                            |
+| `awk`    | Veelzijdige tool voor bewerken van tekst                        |
+| `cat`    | Druk inhoud bestand(en) af op stdout                            |
+| `cut`    | Selecteer "kolommen" uit tekstbestanden                         |
+| `fmt`    | Herformatteer tekst (bv. bepaald aantal kolommen)               |
+| `grep`   | Zoek ahv reguliere expressies naar tekstpatronen in bestanden   |
+| `head`   | Toon de eerste regels van een tekstbestand                      |
+| `join`   | Voeg twee tekstbestanden samen ahv een gemeenschappelijke kolom |
+| `nl`     | Voeg regelnummers toe aan een bestand                           |
+
+## Filters
+
+| Commando | Doel                                                     |
+| :---     | :---                                                     |
+| `paste`  | Voeg twee tekstbestanden regel per regel samen           |
+| `sed`    | Veelzijdige tool voor bewerken van tekst (Stream EDitor) |
+| `sort`   | Sorteer tekst                                            |
+| `tail`   | Toon de laatste regels van een tekstbestand              |
+| `tr`     | Zoek en vervang lettertekens in tekst                    |
+| `uniq`   | Verwijder dubbele rijen uit een gesorteerd tekstbestand  |
+| `wc`     | Tel karakters, woorden of lijnen in een tekstbestand     |
+
+## Sed: voorbeelden
+
+```bash
+# Zoeken en vervangen (1x per regel)
+sed 's/foo/bar/'
+
+# "Globaal", meerdere keren per regel
+sed 's/foo/bar/g'
+
+# Regels die beginnen met '#' verwijderen
+sed '/^#/d'
+
+# Lege regels verwijderen
+sed '/^$/d'
+```
+
+## Awk: voorbeelden
+
+Wat tussen accolades staat wordt uitgevoerd op elke regel
+
+```bash
+# Druk 3e kolom af (afgebakend door "whitespace")
+awk '{ print $4 }'
+
+# Enkel regels afdrukken die beginnen met #
+awk '/^#/ { print $0 }'
+
+# Druk kolom 2 en 4 af, gescheiden door ;
+awk '{ printf "%s;%s", $2, $4 }'
+```
+
 # Hoofdstuk 4. Een webserver installeren
 
 # Les 6. Een webserver installeren
 
 # Les 7. Netwerkinstellingen controleren
+
+## Netwerkinstellingen
+
+Om Internettoegang mogelijk te maken zijn er 3 instellingen nodig:
+
+1. IP-adres en subnetmasker
+2. Default gateway
+3. DNS-server
+
+## Netwerkinstellingen opvragen
+
+1. IP-adress/netmask: `ip address` (`ip a`)
+2. Default gateway: `ip route` (`ip r`)
+3. DNS-server: `cat /etc/resolv.conf`
 
 # Hoofdstuk 5. Gebruikers, groepen en permissies
 
@@ -356,13 +545,14 @@ Conventie naamgeving:
 
 Bij uitvoeren van script zijn opties en argumenten beschikbaar via variabelen, *positionele parameters*
 
-| Variabele           | Betekenis                                  |
-|:--------------------|:-------------------------------------------|
-| `${0}`              | Naam script                                |
-| `${1}`, `${2}`, ... | Eerste, tweede, ... argument               |
-| `${10}`             | Tiende argument (accolades verplicht!)     |
-| `${*}`              | Alle argumenten: `${1} ${2} ${3}...`       |
-| `${@}`              | Alle argumenten: `"${1}" "${2}" "${3}"...` |
+| Variabele             | Betekenis                                    |
+| :-------------------- | :------------------------------------------- |
+| `${0}`                | Naam script                                  |
+| `${1}`, `${2}`, ...   | Eerste, tweede, ... argument                 |
+| `${10}`               | Tiende argument (accolades verplicht!)       |
+| `${*}`                | Alle argumenten: `${1} ${2} ${3}...`         |
+| `${@}`                | Alle argumeniten: `"${1}" "${2}" "${3}"...`  |
+| `${#}`                | Aantal positionele parameters                |
 
 ## Positionele parameters
 
@@ -429,7 +619,7 @@ if [ "${#}" -eq "0" ]; then
 fi
 ```
 
-# Les 11. Logische structuren, functies
+# Les 11. Logische structuren
 
 ## Tekst afdrukken
 
@@ -471,6 +661,61 @@ printf "Hello %s\n" "${var}"
 - Het gedrag is beter gedefinieerd over verschillende UNIX-varianten.
 - Vgl. `printf()` method in Java!
 
+## If
+
+```bash
+if EXPR
+then
+  # ...
+elif EXPR
+  # ...
+else
+  # ...
+fi
+```
+
+## If
+
+```bash
+if [ "${#}" -gt '2' ]; then
+  printf "Too many arguments\n" >&2
+  exit 1
+fi
+```
+
+## While-lus
+
+```bash
+while EXPR; do
+  # ...
+done
+```
+
+## Until-lus
+
+```bash
+until EXPR; do
+  # ...
+done
+```
+
+## For-lus
+
+Itereren over een lijst
+
+```bash
+for ITEM in LIST; do
+  # ...
+done
+```
+
+```bash
+for file in *.md; do
+  printf "Processing file %s\n" "${file}"
+  # ...
+done
+```
+
 ## Itereren over positionele parameters (`while`)
 
 ```bash
@@ -490,11 +735,3 @@ for arg in "${@}"; do
 done
 ```
 
-## Itereren over bestanden
-
-```bash
-for file in *.jpg; do
-  printf "Processing %s\n" "${file}"
-  # ...
-done
-```

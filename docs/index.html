@@ -68,8 +68,165 @@ code > span.in { color: #008000; } /* Information */
 <section><section id="hoofdstuk-1.-linux-installeren" class="titleslide slide level1"><h1>Hoofdstuk 1. Linux installeren</h1></section></section>
 <section><section id="les-1.-linux-installeren" class="titleslide slide level1"><h1>Les 1. Linux installeren</h1></section></section>
 <section><section id="hoofdstuk-2.-linux-leren-kennen" class="titleslide slide level1"><h1>Hoofdstuk 2. Linux leren kennen</h1></section></section>
-<section><section id="les-2.-werking-van-de-command-line" class="titleslide slide level1"><h1>Les 2. Werking van de command line</h1></section></section>
-<section><section id="les-3.-bestanden-en-directories" class="titleslide slide level1"><h1>Les 3. Bestanden en directories</h1></section></section>
+<section><section id="les-2.-werking-van-de-command-line" class="titleslide slide level1"><h1>Les 2. Werking van de command line</h1></section><section id="hulp-zoeken" class="slide level2">
+<h2>Hulp zoeken</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># Hulp over het commando &#39;passwd&#39;</span>
+<span class="fu">man</span> passwd
+
+<span class="co"># Hulp over het configuratiebestand /etc/passwd</span>
+<span class="fu">man</span> 5 passwd
+
+<span class="co"># Zoek in alle man-pages naar de string &#39;passwd&#39;</span>
+<span class="fu">man</span> -k passwd
+<span class="fu">apropos</span> passwd</code></pre></div>
+</section><section id="hulp-zoeken-1" class="slide level2">
+<h2>Hulp zoeken</h2>
+<ul>
+<li>Binnen man-page:
+<ul>
+<li><code>q</code> - man-page verlaten</li>
+<li><code>/</code> - zoeken binnen de pagina</li>
+<li><code>n</code> - ga naar volgende zoekresultaat</li>
+<li><code>N</code> - ga naar vorige zoekresultaat</li>
+</ul></li>
+<li>Secties, vb:
+<ul>
+<li>1 - cmmando's</li>
+<li>5 - configuratiebestanden</li>
+<li>8 - systeembeheercommando's</li>
+<li>Notatie: vb. <code>passwd(1)</code>, <code>passwd(5)</code></li>
+</ul></li>
+</ul>
+</section><section id="structuur-van-een-commandoregel" class="slide level2">
+<h2>Structuur van een commandoregel</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="ex">COMMANDO</span> [OPTIES]... [ARGUMENTEN]...</code></pre></div>
+<ul>
+<li>&quot;Onderdelen&quot; gescheiden door <em>spaties</em></li>
+<li><em>Opties</em> veranderen het gedrag van een commando</li>
+<li><em>Argumenten</em> zijn de entiteiten waarop het commando uitgevoerd wordt</li>
+</ul>
+</section><section id="commando" class="slide level2">
+<h2>Commando</h2>
+<p>Het eerste &quot;woord&quot; van een opdrachtregel</p>
+<ul>
+<li>Alias of functie, gedefinieerd door gebruiker</li>
+<li>Ingebouwd in Bash
+<ul>
+<li>Zie <code>man builtins</code></li>
+</ul></li>
+<li>Uitvoerbaar bestand in één van de directories in <code>${PATH}</code></li>
+<li>Absoluut pad naar uitvoerbaar bestand</li>
+</ul>
+<p><strong>Let op!</strong> Bash zoekt nooit in de huidige directory!</p>
+</section><section id="opties" class="slide level2">
+<h2>Opties</h2>
+<p>Wijzigen het gedrag van het commando</p>
+<ul>
+<li>Korte notatie: <code>-a -b -c</code>
+<ul>
+<li>Korter schrijven als <code>-abc</code></li>
+</ul></li>
+<li>Lange notatie: <code>--foo --bar</code></li>
+</ul>
+<p><strong>Let op!</strong> Niet alle commando's volgen de conventie! (bv <code>find</code>)</p>
+</section><section id="substitutieexpansie" class="slide level2">
+<h2>Substitutie/expansie</h2>
+<p>Vóór uitvoeren van een commando vervangt Bash bepaalde uitdrukkingen:</p>
+<ul>
+<li><em>Brace expansion</em>, vb. <code>{1..10}</code>, <code>project/{bin,lib,out}</code></li>
+<li><em>Tilde expansion</em>: <code>~</code> wordt vervangen door home-directory, vb. <code>/home/student/</code></li>
+<li><em>Parameter expansion</em>: variabelennamen worden vervangen door waarde, vb. <code>${USER}</code> -&gt; <code>student</code></li>
+</ul>
+</section><section id="substitutieexpansie-1" class="slide level2">
+<h2>Substitutie/expansie</h2>
+<ul>
+<li><em>Command substitution</em>: <code>$(commando)</code> wordt vervangen door uitvoer van <code>commando</code></li>
+<li><em>Filename expansion</em> of &quot;globbing&quot;: wildcards in bestandsnamen, vb. <code>*</code>, <code>?</code>, <code>[abc]</code>, enz.</li>
+<li>...</li>
+</ul>
+</section><section id="resultaat-expansie" class="slide level2">
+<h2>Resultaat expansie</h2>
+<ul>
+<li><code>set -x</code> toont resultaat van expansie (&quot;debug mode&quot;)</li>
+<li><code>set +x</code> zet optie terug uit</li>
+</ul>
+<p>Voorbeeld:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">set</span> <span class="ex">-x</span><span class="kw">;</span> <span class="fu">ls</span> -ld <span class="va">${HOME}</span>/D[eo]*<span class="kw">;</span> <span class="kw">set</span> <span class="ex">+x</span>
+<span class="kw">set</span> <span class="ex">-x</span><span class="kw">;</span> <span class="fu">mkdir</span> -p a/<span class="dt">{b,c,d}/{e,f}</span><span class="kw">;</span> <span class="kw">set</span> <span class="ex">+x</span></code></pre></div>
+</section></section>
+<section><section id="les-3.-bestanden-en-directories" class="titleslide slide level1"><h1>Les 3. Bestanden en directories</h1></section><section id="werken-met-directories" class="slide level2">
+<h2>Werken met directories</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Commando</th>
+<th style="text-align: left;">Taak</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>pwd</code></td>
+<td style="text-align: left;">Toon huidige directory</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>ls</code></td>
+<td style="text-align: left;">Toon inhoud huidige directory</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cd</code></td>
+<td style="text-align: left;">Ga naar een andere directory</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>mkdir</code></td>
+<td style="text-align: left;">Maak een subdirectory aan</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>rmdir</code></td>
+<td style="text-align: left;">Verwijder een lege directory</td>
+</tr>
+</tbody>
+</table>
+</section><section id="werken-met-bestanden" class="slide level2">
+<h2>Werken met bestanden</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Commando</th>
+<th style="text-align: left;">Taak</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>cat</code></td>
+<td style="text-align: left;">Toon inhoud van een bestand</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>less</code></td>
+<td style="text-align: left;">Toon inhoud, per pagina (navigeer met pijltjes)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>touch</code></td>
+<td style="text-align: left;">Maak leeg bestand aan</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">(eigenlijk: pas datum laatste wijziging aan)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cp</code></td>
+<td style="text-align: left;">Kopieer bestanden</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>mv</code></td>
+<td style="text-align: left;">Verplaats bestanden (of hernoemen!)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>rm</code></td>
+<td style="text-align: left;">Verwijder bestanden of directories</td>
+</tr>
+</tbody>
+</table>
+</section></section>
 <section><section id="hoofdstuk-3.-werken-met-tekst" class="titleslide slide level1"><h1>Hoofdstuk 3. Werken met tekst</h1></section></section>
 <section><section id="les-4.-de-vim-editor-io-redirection" class="titleslide slide level1"><h1>Les 4. De Vim-editor, I/O Redirection</h1></section><section id="vim-survival-guide" class="slide level2">
 <h2>Vim survival guide</h2>
@@ -162,10 +319,13 @@ code > span.in { color: #008000; } /* Information */
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># stdout en stderr apart wegschrijven</span>
 <span class="fu">find</span> / -type d <span class="op">&gt;</span> directories.txt <span class="op">2&gt;</span> errors.txt
 
+<span class="co"># stderr &quot;negeren&quot;</span>
+<span class="fu">find</span> / -type d <span class="op">&gt;</span> directories.txt <span class="op">2&gt;</span> /dev/null
+
 <span class="co"># stdout en stderr samen wegschrijven</span>
 <span class="fu">find</span> / -type d <span class="op">&gt;</span> all.txt <span class="op">2&gt;&amp;1</span>
 
-<span class="co"># stdin/stdout en stderr omleiden</span>
+<span class="co"># invoer én uitvoer omleiden</span>
 <span class="fu">sort</span> <span class="op">&lt;</span> unsorted.txt <span class="op">&gt;</span> sorted.txt <span class="op">2&gt;</span> errors.txt</code></pre></div>
 </section><section id="foutboodschappen-afdrukken" class="slide level2">
 <h2>Foutboodschappen afdrukken</h2>
@@ -192,10 +352,147 @@ GRANT ALL PRIVILEGES ON drupa<span class="op">l</span> <span class="ex">TO</span
   IDENTIFIED BY <span class="va">${drupal_password}</span>;
 _E<span class="op">O</span><span class="ex">F_</span></code></pre></div>
 </section></section>
-<section><section id="les-5.-filters" class="titleslide slide level1"><h1>Les 5. Filters</h1></section></section>
+<section><section id="les-5.-filters" class="titleslide slide level1"><h1>Les 5. Filters</h1></section><section id="filter" class="slide level2">
+<h2>Filter</h2>
+<ul>
+<li>Filter = commando dat:
+<ol type="1">
+<li>leest van <code>stdin</code> (of bestand),</li>
+<li>tekst transformeert, en</li>
+<li>wegschrijft naar <code>stdout</code></li>
+</ol></li>
+<li>Combineer filters via <code>|</code> (pipe) om complexe bewerkingen op tekst toe te passen
+<ul>
+<li>De <em>UNIX-filosofie</em></li>
+</ul></li>
+</ul>
+</section><section id="filters" class="slide level2">
+<h2>Filters</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Commando</th>
+<th style="text-align: left;">Doel</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>awk</code></td>
+<td style="text-align: left;">Veelzijdige tool voor bewerken van tekst</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cat</code></td>
+<td style="text-align: left;">Druk inhoud bestand(en) af op stdout</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cut</code></td>
+<td style="text-align: left;">Selecteer &quot;kolommen&quot; uit tekstbestanden</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>fmt</code></td>
+<td style="text-align: left;">Herformatteer tekst (bv. bepaald aantal kolommen)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>grep</code></td>
+<td style="text-align: left;">Zoek ahv reguliere expressies naar tekstpatronen in bestanden</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>head</code></td>
+<td style="text-align: left;">Toon de eerste regels van een tekstbestand</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>join</code></td>
+<td style="text-align: left;">Voeg twee tekstbestanden samen ahv een gemeenschappelijke kolom</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>nl</code></td>
+<td style="text-align: left;">Voeg regelnummers toe aan een bestand</td>
+</tr>
+</tbody>
+</table>
+</section><section id="filters-1" class="slide level2">
+<h2>Filters</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Commando</th>
+<th style="text-align: left;">Doel</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>paste</code></td>
+<td style="text-align: left;">Voeg twee tekstbestanden regel per regel samen</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>sed</code></td>
+<td style="text-align: left;">Veelzijdige tool voor bewerken van tekst (Stream EDitor)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>sort</code></td>
+<td style="text-align: left;">Sorteer tekst</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>tail</code></td>
+<td style="text-align: left;">Toon de laatste regels van een tekstbestand</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>tr</code></td>
+<td style="text-align: left;">Zoek en vervang lettertekens in tekst</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>uniq</code></td>
+<td style="text-align: left;">Verwijder dubbele rijen uit een gesorteerd tekstbestand</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>wc</code></td>
+<td style="text-align: left;">Tel karakters, woorden of lijnen in een tekstbestand</td>
+</tr>
+</tbody>
+</table>
+</section><section id="sed-voorbeelden" class="slide level2">
+<h2>Sed: voorbeelden</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># Zoeken en vervangen (1x per regel)</span>
+<span class="fu">sed</span> <span class="st">&#39;s/foo/bar/&#39;</span>
+
+<span class="co"># &quot;Globaal&quot;, meerdere keren per regel</span>
+<span class="fu">sed</span> <span class="st">&#39;s/foo/bar/g&#39;</span>
+
+<span class="co"># Regels die beginnen met &#39;#&#39; verwijderen</span>
+<span class="fu">sed</span> <span class="st">&#39;/^#/d&#39;</span>
+
+<span class="co"># Lege regels verwijderen</span>
+<span class="fu">sed</span> <span class="st">&#39;/^$/d&#39;</span></code></pre></div>
+</section><section id="awk-voorbeelden" class="slide level2">
+<h2>Awk: voorbeelden</h2>
+<p>Wat tussen accolades staat wordt uitgevoerd op elke regel</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># Druk 3e kolom af (afgebakend door &quot;whitespace&quot;)</span>
+<span class="fu">awk</span> <span class="st">&#39;{ print $4 }&#39;</span>
+
+<span class="co"># Enkel regels afdrukken die beginnen met #</span>
+<span class="fu">awk</span> <span class="st">&#39;/^#/ { print $0 }&#39;</span>
+
+<span class="co"># Druk kolom 2 en 4 af, gescheiden door ;</span>
+<span class="fu">awk</span> <span class="st">&#39;{ printf &quot;%s;%s&quot;, $2, $4 }&#39;</span></code></pre></div>
+</section></section>
 <section><section id="hoofdstuk-4.-een-webserver-installeren" class="titleslide slide level1"><h1>Hoofdstuk 4. Een webserver installeren</h1></section></section>
 <section><section id="les-6.-een-webserver-installeren" class="titleslide slide level1"><h1>Les 6. Een webserver installeren</h1></section></section>
-<section><section id="les-7.-netwerkinstellingen-controleren" class="titleslide slide level1"><h1>Les 7. Netwerkinstellingen controleren</h1></section></section>
+<section><section id="les-7.-netwerkinstellingen-controleren" class="titleslide slide level1"><h1>Les 7. Netwerkinstellingen controleren</h1></section><section id="netwerkinstellingen" class="slide level2">
+<h2>Netwerkinstellingen</h2>
+<p>Om Internettoegang mogelijk te maken zijn er 3 instellingen nodig:</p>
+<ol type="1">
+<li>IP-adres en subnetmasker</li>
+<li>Default gateway</li>
+<li>DNS-server</li>
+</ol>
+</section><section id="netwerkinstellingen-opvragen" class="slide level2">
+<h2>Netwerkinstellingen opvragen</h2>
+<ol type="1">
+<li>IP-adress/netmask: <code>ip address</code> (<code>ip a</code>)</li>
+<li>Default gateway: <code>ip route</code> (<code>ip r</code>)</li>
+<li>DNS-server: <code>cat /etc/resolv.conf</code></li>
+</ol>
+</section></section>
 <section><section id="hoofdstuk-5.-gebruikers-groepen-en-permissies" class="titleslide slide level1"><h1>Hoofdstuk 5. Gebruikers, groepen en permissies</h1></section></section>
 <section><section id="les-8.-gebruikers-en-groepen" class="titleslide slide level1"><h1>Les 8. Gebruikers en groepen</h1></section><section id="commandos" class="slide level2">
 <h2>Commando's</h2>
@@ -433,7 +730,11 @@ chgrp group file</code></pre>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>${@}</code></td>
-<td style="text-align: left;">Alle argumenten: <code>&quot;${1}&quot; &quot;${2}&quot; &quot;${3}&quot;...</code></td>
+<td style="text-align: left;">Alle argumeniten: <code>&quot;${1}&quot; &quot;${2}&quot; &quot;${3}&quot;...</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>${#}</code></td>
+<td style="text-align: left;">Aantal positionele parameters</td>
 </tr>
 </tbody>
 </table>
@@ -503,7 +804,7 @@ chgrp group file</code></pre>
   <span class="bu">echo</span> <span class="st">&quot;Expected at least one argument&quot;</span>
 <span class="kw">fi</span></code></pre></div>
 </section></section>
-<section><section id="les-11.-logische-structuren-functies" class="titleslide slide level1"><h1>Les 11. Logische structuren, functies</h1></section><section id="tekst-afdrukken" class="slide level2">
+<section><section id="les-11.-logische-structuren" class="titleslide slide level1"><h1>Les 11. Logische structuren</h1></section><section id="tekst-afdrukken" class="slide level2">
 <h2>Tekst afdrukken</h2>
 <p>Wat is het verschil?</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="va">var=</span><span class="st">&quot;world&quot;</span>
@@ -531,6 +832,42 @@ chgrp group file</code></pre>
 <li>Het gedrag is beter gedefinieerd over verschillende UNIX-varianten.</li>
 <li>Vgl. <code>printf()</code> method in Java!</li>
 </ul>
+</section><section id="if" class="slide level2">
+<h2>If</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">if</span> <span class="ex">EXPR</span>
+<span class="kw">then</span>
+  <span class="co"># ...</span>
+<span class="kw">elif</span> <span class="ex">EXPR</span>
+  <span class="co"># ...</span>
+<span class="kw">else</span>
+  <span class="co"># ...</span>
+<span class="kw">fi</span></code></pre></div>
+</section><section id="if-1" class="slide level2">
+<h2>If</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">if</span><span class="bu"> [</span> <span class="st">&quot;</span><span class="va">${#}</span><span class="st">&quot;</span> <span class="ot">-gt</span> <span class="st">&#39;2&#39;</span><span class="bu"> ]</span>; <span class="kw">then</span>
+  <span class="bu">printf</span> <span class="st">&quot;Too many arguments\n&quot;</span> <span class="op">&gt;&amp;2</span>
+  <span class="bu">exit</span> 1
+<span class="kw">fi</span></code></pre></div>
+</section><section id="while-lus" class="slide level2">
+<h2>While-lus</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">while</span> <span class="ex">EXPR</span><span class="kw">;</span> <span class="kw">do</span>
+  <span class="co"># ...</span>
+<span class="kw">done</span></code></pre></div>
+</section><section id="until-lus" class="slide level2">
+<h2>Until-lus</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">until</span> <span class="ex">EXPR</span><span class="kw">;</span> <span class="kw">do</span>
+  <span class="co"># ...</span>
+<span class="kw">done</span></code></pre></div>
+</section><section id="for-lus" class="slide level2">
+<h2>For-lus</h2>
+<p>Itereren over een lijst</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> <span class="ex">ITEM</span> in LIST<span class="kw">;</span> <span class="kw">do</span>
+  <span class="co"># ...</span>
+<span class="kw">done</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> <span class="fu">file</span> in *.md<span class="kw">;</span> <span class="kw">do</span>
+  <span class="bu">printf</span> <span class="st">&quot;Processing file %s\n&quot;</span> <span class="st">&quot;</span><span class="va">${file}</span><span class="st">&quot;</span>
+  <span class="co"># ...</span>
+<span class="kw">done</span></code></pre></div>
 </section><section id="itereren-over-positionele-parameters-while" class="slide level2">
 <h2>Itereren over positionele parameters (<code>while</code>)</h2>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">while</span><span class="bu"> [</span> <span class="st">&quot;</span><span class="va">$#</span><span class="st">&quot;</span> <span class="ot">-gt</span> 0<span class="bu"> ]</span>; <span class="kw">do</span>
