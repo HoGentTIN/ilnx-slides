@@ -848,6 +848,38 @@ chgrp group file</code></pre>
   <span class="bu">printf</span> <span class="st">&quot;Too many arguments\n&quot;</span> <span class="op">&gt;&amp;2</span>
   <span class="bu">exit</span> 1
 <span class="kw">fi</span></code></pre></div>
+</section><section id="case" class="slide level2">
+<h2>Case</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">case</span> EXPR<span class="kw"> in</span>
+  CASE1<span class="kw">)</span>
+    <span class="co"># ...</span>
+    <span class="kw">;;</span>
+  CASE2<span class="kw">)</span>
+    <span class="co"># ...</span>
+    <span class="kw">;;</span>
+  *<span class="kw">)</span>
+    <span class="co"># ...</span>
+    <span class="kw">;;</span>
+<span class="kw">esac</span></code></pre></div>
+</section><section id="case-1" class="slide level2">
+<h2>Case</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="va">option=</span><span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span>
+
+<span class="kw">case</span> <span class="st">&quot;</span><span class="va">${option}</span><span class="st">&quot;</span><span class="kw"> in</span>
+  -h<span class="kw">|</span>--help<span class="kw">|</span>-?<span class="kw">)</span>
+    <span class="ex">usage</span>
+    <span class="bu">exit</span> 0
+    <span class="kw">;;</span>
+  -v<span class="kw">|</span>--verbose<span class="kw">)</span>
+    <span class="va">verbose=</span>y
+    <span class="bu">shift</span>
+    <span class="kw">;;</span>
+  *<span class="kw">)</span>
+    <span class="bu">printf</span> <span class="st">&quot;Unrecognized option: %s\n&quot;</span> <span class="st">&quot;</span><span class="va">${option}</span><span class="st">&quot;</span>
+    <span class="ex">usage</span>
+    <span class="bu">exit</span> 1
+    <span class="kw">;;</span>
+<span class="kw">esac</span></code></pre></div>
 </section><section id="while-lus" class="slide level2">
 <h2>While-lus</h2>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">while</span> <span class="ex">EXPR</span><span class="kw">;</span> <span class="kw">do</span>
@@ -879,12 +911,6 @@ chgrp group file</code></pre>
 <h2>Itereren over positionele parameters (<code>for</code>)</h2>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> <span class="ex">arg</span> in <span class="st">&quot;</span><span class="va">${@}</span><span class="st">&quot;</span><span class="kw">;</span> <span class="kw">do</span>
   <span class="bu">printf</span> <span class="st">&quot;Arg: %s\n&quot;</span> <span class="st">&quot;</span><span class="va">${arg}</span><span class="st">&quot;</span>
-  <span class="co"># ...</span>
-<span class="kw">done</span></code></pre></div>
-</section><section id="itereren-over-bestanden" class="slide level2">
-<h2>Itereren over bestanden</h2>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> <span class="fu">file</span> in *.jpg<span class="kw">;</span> <span class="kw">do</span>
-  <span class="bu">printf</span> <span class="st">&quot;Processing %s\n&quot;</span> <span class="st">&quot;</span><span class="va">${file}</span><span class="st">&quot;</span>
   <span class="co"># ...</span>
 <span class="kw">done</span></code></pre></div>
 </section></section>

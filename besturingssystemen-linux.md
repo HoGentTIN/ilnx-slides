@@ -683,6 +683,44 @@ if [ "${#}" -gt '2' ]; then
 fi
 ```
 
+## Case
+
+```bash
+case EXPR in
+  CASE1)
+    # ...
+    ;;
+  CASE2)
+    # ...
+    ;;
+  *)
+    # ...
+    ;;
+esac
+```
+
+## Case
+
+```bash
+option="${1}"
+
+case "${option}" in
+  -h|--help|-?)
+    usage
+    exit 0
+    ;;
+  -v|--verbose)
+    verbose=y
+    shift
+    ;;
+  *)
+    printf "Unrecognized option: %s\n" "${option}"
+    usage
+    exit 1
+    ;;
+esac
+```
+
 ## While-lus
 
 ```bash
