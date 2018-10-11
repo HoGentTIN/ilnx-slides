@@ -115,6 +115,10 @@ set -x; ls -ld ${HOME}/D[eo]*; set +x
 set -x; mkdir -p a/{b,c,d}/{e,f}; set +x
 ```
 
+## Linux directorystructuur
+
+![](https://linuxconfig.org/images/Directory-Filesystem-Hierarchy-Standard.jpg)
+
 ## Werken met directories
 
 | Commando | Taak                          |
@@ -124,6 +128,17 @@ set -x; mkdir -p a/{b,c,d}/{e,f}; set +x
 | `cd`     | Ga naar een andere directory  |
 | `mkdir`  | Maak een subdirectory aan     |
 | `rmdir`  | Verwijder een lege directory  |
+
+## Absoluut/relatief pad
+
+- *Absoluut* pad:
+    - begint met `/`
+    - ten opzichte van 'root directory' `/`
+    - vb. `/home/student`, `/tmp`, `/var/www`
+- *Relatief* pad:
+    - begint **niet** met `/`
+    - ten opzichte van **huidige** directory (`pwd`)
+    - `ls Documents`, `mkdir linux`
 
 ## Werken met bestanden
 
@@ -199,7 +214,7 @@ printf 'Het gebruikers-ID van %s is %d\n' "${USER}" "${UID}"
 
 - *standard input*: invoer toetsenbord
 - *standard output/error*: afdrukken op scherm (console)
- 
+
 ![](http://linux-training.be/funhtml/images/bash_ioredirection_keyboard_display.png)
 
 ## I/O Redirection

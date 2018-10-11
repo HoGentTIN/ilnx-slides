@@ -211,6 +211,9 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <p>Voorbeeld:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">set</span> <span class="ex">-x</span><span class="kw">;</span> <span class="fu">ls</span> -ld <span class="va">${HOME}</span>/D[eo]*<span class="kw">;</span> <span class="kw">set</span> <span class="ex">+x</span></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">set</span> <span class="ex">-x</span><span class="kw">;</span> <span class="fu">mkdir</span> -p a/<span class="dt">{b,c,d}/{e,f}</span><span class="kw">;</span> <span class="kw">set</span> <span class="ex">+x</span></a></code></pre></div>
+</section><section id="linux-directorystructuur" class="slide level2">
+<h2>Linux directorystructuur</h2>
+<p><img data-src="https://linuxconfig.org/images/Directory-Filesystem-Hierarchy-Standard.jpg" /></p>
 </section><section id="werken-met-directories" class="slide level2">
 <h2>Werken met directories</h2>
 <table>
@@ -243,6 +246,22 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 </tr>
 </tbody>
 </table>
+</section><section id="absoluutrelatief-pad" class="slide level2">
+<h2>Absoluut/relatief pad</h2>
+<ul>
+<li><em>Absoluut</em> pad:
+<ul>
+<li>begint met <code>/</code></li>
+<li>ten opzichte van ‘root directory’ <code>/</code></li>
+<li>vb. <code>/home/student</code>, <code>/tmp</code>, <code>/var/www</code></li>
+</ul></li>
+<li><em>Relatief</em> pad:
+<ul>
+<li>begint <strong>niet</strong> met <code>/</code></li>
+<li>ten opzichte van <strong>huidige</strong> directory (<code>pwd</code>)</li>
+<li><code>ls Documents</code>, <code>mkdir linux</code></li>
+</ul></li>
+</ul>
 </section><section id="werken-met-bestanden" class="slide level2">
 <h2>Werken met bestanden</h2>
 <table>
