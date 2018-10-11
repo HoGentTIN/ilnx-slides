@@ -9,38 +9,71 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
   <link rel="stylesheet" href="reveal.js/css/reveal.css">
-  <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #0000ff; } /* Keyword */
-code > span.ch { color: #008080; } /* Char */
-code > span.st { color: #008080; } /* String */
-code > span.co { color: #008000; } /* Comment */
-code > span.ot { color: #ff4000; } /* Other */
-code > span.al { color: #ff0000; } /* Alert */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #008000; font-weight: bold; } /* Warning */
-code > span.cn { } /* Constant */
-code > span.sc { color: #008080; } /* SpecialChar */
-code > span.vs { color: #008080; } /* VerbatimString */
-code > span.ss { color: #008080; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { } /* Variable */
-code > span.cf { color: #0000ff; } /* ControlFlow */
-code > span.op { } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #ff4000; } /* Preprocessor */
-code > span.do { color: #008000; } /* Documentation */
-code > span.an { color: #008000; } /* Annotation */
-code > span.cv { color: #008000; } /* CommentVar */
-code > span.at { } /* Attribute */
-code > span.in { color: #008000; } /* Information */
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; } /* Alert */
+code span.an { color: #008000; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #0000ff; } /* ControlFlow */
+code span.ch { color: #008080; } /* Char */
+code span.cn { } /* Constant */
+code span.co { color: #008000; } /* Comment */
+code span.cv { color: #008000; } /* CommentVar */
+code span.do { color: #008000; } /* Documentation */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.im { } /* Import */
+code span.in { color: #008000; } /* Information */
+code span.kw { color: #0000ff; } /* Keyword */
+code span.op { } /* Operator */
+code span.ot { color: #ff4000; } /* Other */
+code span.pp { color: #ff4000; } /* Preprocessor */
+code span.sc { color: #008080; } /* SpecialChar */
+code span.ss { color: #008080; } /* SpecialString */
+code span.st { color: #008080; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #008080; } /* VerbatimString */
+code span.wa { color: #008000; font-weight: bold; } /* Warning */
   </style>
   <link rel="stylesheet" href="reveal.js/css/theme/hogent.css" id="theme">
   <!-- Printing and PDF exports -->
@@ -59,26 +92,27 @@ code > span.in { color: #008000; } /* Information */
   <div class="reveal">
     <div class="slides">
 
-<section>
+<section id="title-slide">
   <h1 class="title">Besturingssystemen: Linux</h1>
   <p class="author">HoGent Bedrijf en Organisatie</p>
   <p class="date">2017-2018</p>
 </section>
 
-<section><section id="hoofdstuk-1.-linux-installeren" class="titleslide slide level1"><h1>Hoofdstuk 1. Linux installeren</h1></section></section>
-<section><section id="les-1.-linux-installeren" class="titleslide slide level1"><h1>Les 1. Linux installeren</h1></section></section>
-<section><section id="hoofdstuk-2.-linux-leren-kennen" class="titleslide slide level1"><h1>Hoofdstuk 2. Linux leren kennen</h1></section></section>
-<section><section id="les-2.-werking-van-de-command-line" class="titleslide slide level1"><h1>Les 2. Werking van de command line</h1></section><section id="hulp-zoeken" class="slide level2">
+<section><section id="hoofdstuk-1.-linux-installeren" class="title-slide slide level1"><h1>Hoofdstuk 1. Linux installeren</h1></section><section id="linux-installeren" class="slide level2">
+<h2>Linux installeren</h2>
+<p>zie slides leerpad Chamilo</p>
+</section></section>
+<section><section id="hoofdstuk-2.-linux-leren-kennen" class="title-slide slide level1"><h1>Hoofdstuk 2. Linux leren kennen</h1></section><section id="hulp-zoeken" class="slide level2">
 <h2>Hulp zoeken</h2>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># Hulp over het commando &#39;passwd&#39;</span>
-<span class="fu">man</span> passwd
-
-<span class="co"># Hulp over het configuratiebestand /etc/passwd</span>
-<span class="fu">man</span> 5 passwd
-
-<span class="co"># Zoek in alle man-pages naar de string &#39;passwd&#39;</span>
-<span class="fu">man</span> -k passwd
-<span class="fu">apropos</span> passwd</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># Hulp over het commando &#39;passwd&#39;</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="fu">man</span> passwd</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co"># Hulp over het configuratiebestand /etc/passwd</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="fu">man</span> 5 passwd</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co"># Zoek in alle man-pages naar de string &#39;passwd&#39;</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="fu">man</span> -k passwd</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="fu">apropos</span> passwd</a></code></pre></div>
 </section><section id="hulp-zoeken-1" class="slide level2">
 <h2>Hulp zoeken</h2>
 <ul>
@@ -91,29 +125,41 @@ code > span.in { color: #008000; } /* Information */
 </ul></li>
 <li>Secties, vb:
 <ul>
-<li>1 - cmmando's</li>
+<li>1 - commando’s</li>
 <li>5 - configuratiebestanden</li>
-<li>8 - systeembeheercommando's</li>
+<li>8 - systeembeheercommando’s</li>
 <li>Notatie: vb. <code>passwd(1)</code>, <code>passwd(5)</code></li>
 </ul></li>
 </ul>
+</section><section id="belangrijke-man-pages" class="slide level2">
+<h2>Belangrijke man-pages</h2>
+<p>… die niet over een commando gaan:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># directorystructuur Linux (Filesystem Hierarchy)</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="fu">man</span> hier</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co"># &quot;ingebouwde&quot; Bash commando&#39;s</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="fu">man</span> builtins</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co"># &quot;wildcards&quot; in bestandsnamen (bv. *.*, [a-z])</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="fu">man</span> 7 glob</a></code></pre></div>
 </section><section id="structuur-van-een-commandoregel" class="slide level2">
 <h2>Structuur van een commandoregel</h2>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="ex">COMMANDO</span> [OPTIES]... [ARGUMENTEN]...</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1">$ <span class="ex">COMMANDO</span> [OPTIES]... [ARGUMENTEN]...</a></code></pre></div>
 <ul>
-<li>&quot;Onderdelen&quot; gescheiden door <em>spaties</em></li>
-<li><em>Opties</em> veranderen het gedrag van een commando</li>
-<li><em>Argumenten</em> zijn de entiteiten waarop het commando uitgevoerd wordt</li>
+<li>“Onderdelen” gescheiden door <strong>spaties</strong></li>
+<li>1e woord = <strong>commando</strong></li>
+<li><strong>Opties</strong> veranderen het gedrag van een commando
+<ul>
+<li>beginnen met streepje (<code>-</code> of <code>--</code>)</li>
+</ul></li>
+<li><strong>Argumenten</strong> zijn de entiteiten waarop het commando uitgevoerd wordt</li>
 </ul>
 </section><section id="commando" class="slide level2">
 <h2>Commando</h2>
-<p>Het eerste &quot;woord&quot; van een opdrachtregel</p>
+<p>Het eerste “woord” van een opdrachtregel moet een <strong>commando</strong> zijn</p>
 <ul>
 <li>Alias of functie, gedefinieerd door gebruiker</li>
-<li>Ingebouwd in Bash
-<ul>
-<li>Zie <code>man builtins</code></li>
-</ul></li>
+<li>Ingebouwd in Bash (zie <code>man builtins</code>)</li>
 <li>Uitvoerbaar bestand in één van de directories in <code>${PATH}</code></li>
 <li>Absoluut pad naar uitvoerbaar bestand</li>
 </ul>
@@ -128,33 +174,44 @@ code > span.in { color: #008000; } /* Information */
 </ul></li>
 <li>Lange notatie: <code>--foo --bar</code></li>
 </ul>
-<p><strong>Let op!</strong> Niet alle commando's volgen de conventie! (bv <code>find</code>)</p>
+<p><strong>Let op!</strong> Niet alle commando’s volgen de conventie! (bv <code>find</code>)</p>
 </section><section id="substitutieexpansie" class="slide level2">
 <h2>Substitutie/expansie</h2>
 <p>Vóór uitvoeren van een commando vervangt Bash bepaalde uitdrukkingen:</p>
 <ul>
-<li><em>Brace expansion</em>, vb. <code>{1..10}</code>, <code>project/{bin,lib,out}</code></li>
-<li><em>Tilde expansion</em>: <code>~</code> wordt vervangen door home-directory, vb. <code>/home/student/</code></li>
+<li><em>Brace expansion</em>, vb. <code>{1..10}</code>, <code>dir/{subdir1,subdir2,subdir3}</code>
+<ul>
+<li>vb. <code>mkdir -p project/{src,lib,build}</code></li>
+</ul></li>
+<li><em>Tilde expansion</em>: <code>~</code> wordt vervangen door home-directory, vb. <code>/home/student/</code>
+<ul>
+<li>vb. <code>ls ~/.ssh</code></li>
+</ul></li>
 <li><em>Parameter expansion</em>: variabelennamen worden vervangen door waarde, vb. <code>${USER}</code> -&gt; <code>student</code></li>
 </ul>
 </section><section id="substitutieexpansie-1" class="slide level2">
 <h2>Substitutie/expansie</h2>
 <ul>
-<li><em>Command substitution</em>: <code>$(commando)</code> wordt vervangen door uitvoer van <code>commando</code></li>
-<li><em>Filename expansion</em> of &quot;globbing&quot;: wildcards in bestandsnamen, vb. <code>*</code>, <code>?</code>, <code>[abc]</code>, enz.</li>
-<li>...</li>
+<li><em>Command substitution</em>: <code>$(commando)</code> wordt vervangen door uitvoer van <code>commando</code>
+<ul>
+<li>vb. <code>date=$(date)</code></li>
+</ul></li>
+<li><em>Filename expansion</em> of “globbing”: wildcards in bestandsnamen, vb. <code>*</code>, <code>?</code>, <code>[abc]</code>, enz.
+<ul>
+<li>vb. <code>rm *.class</code></li>
+</ul></li>
+<li>…</li>
 </ul>
 </section><section id="resultaat-expansie" class="slide level2">
 <h2>Resultaat expansie</h2>
 <ul>
-<li><code>set -x</code> toont resultaat van expansie (&quot;debug mode&quot;)</li>
+<li><code>set -x</code> toont resultaat van expansie (“debug mode”)</li>
 <li><code>set +x</code> zet optie terug uit</li>
 </ul>
 <p>Voorbeeld:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">set</span> <span class="ex">-x</span><span class="kw">;</span> <span class="fu">ls</span> -ld <span class="va">${HOME}</span>/D[eo]*<span class="kw">;</span> <span class="kw">set</span> <span class="ex">+x</span>
-<span class="kw">set</span> <span class="ex">-x</span><span class="kw">;</span> <span class="fu">mkdir</span> -p a/<span class="dt">{b,c,d}/{e,f}</span><span class="kw">;</span> <span class="kw">set</span> <span class="ex">+x</span></code></pre></div>
-</section></section>
-<section><section id="les-3.-bestanden-en-directories" class="titleslide slide level1"><h1>Les 3. Bestanden en directories</h1></section><section id="werken-met-directories" class="slide level2">
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">set</span> <span class="ex">-x</span><span class="kw">;</span> <span class="fu">ls</span> -ld <span class="va">${HOME}</span>/D[eo]*<span class="kw">;</span> <span class="kw">set</span> <span class="ex">+x</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">set</span> <span class="ex">-x</span><span class="kw">;</span> <span class="fu">mkdir</span> -p a/<span class="dt">{b,c,d}/{e,f}</span><span class="kw">;</span> <span class="kw">set</span> <span class="ex">+x</span></a></code></pre></div>
+</section><section id="werken-met-directories" class="slide level2">
 <h2>Werken met directories</h2>
 <table>
 <thead>
@@ -226,9 +283,14 @@ code > span.in { color: #008000; } /* Information */
 </tr>
 </tbody>
 </table>
-</section></section>
-<section><section id="hoofdstuk-3.-werken-met-tekst" class="titleslide slide level1"><h1>Hoofdstuk 3. Werken met tekst</h1></section></section>
-<section><section id="les-4.-de-vim-editor-io-redirection" class="titleslide slide level1"><h1>Les 4. De Vim-editor, I/O Redirection</h1></section><section id="vim-survival-guide" class="slide level2">
+</section><section id="hoe-maak-je-een-bestand-aan" class="slide level2">
+<h2>Hoe maak je een bestand aan?</h2>
+<ol type="1">
+<li>Met teksteditor Vi/Vim: <code>vim bestand.txt</code></li>
+<li>Met teksteditor Nano: <code>nano bestand.txt</code></li>
+<li>Leeg bestand: <code>touch bestand.txt</code></li>
+</ol>
+</section><section id="vim-survival-guide" class="slide level2">
 <h2>Vim survival guide</h2>
 <ul>
 <li>Bij opstarten van Vim kom je terecht in <em>normal mode</em>.</li>
@@ -264,10 +326,34 @@ code > span.in { color: #008000; } /* Information */
 </tr>
 </tbody>
 </table>
-</section><section id="io-redirection" class="slide level2">
-<h2>I/O redirection</h2>
-</section><section id="streams" class="slide level2">
-<h2>Streams</h2>
+</section><section id="nano" class="slide level2">
+<h2>Nano</h2>
+<ul>
+<li>Ook een command-line teksteditor</li>
+<li>Iets toegankelijker dan Vim</li>
+<li>Shortcuts staan onderaan het scherm
+<ul>
+<li>vb. Exit: <code>^X</code> -&gt; Ctrl+X</li>
+</ul></li>
+</ul>
+</section></section>
+<section><section id="hoofdstuk-3.-werken-met-tekst" class="title-slide slide level1"><h1>Hoofdstuk 3. Werken met tekst</h1></section><section id="tekst-afdrukken-met-echo" class="slide level2">
+<h2>Tekst afdrukken met echo</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="bu">echo</span> <span class="st">&quot;Hallo wereld!&quot;</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="bu">echo</span> <span class="st">&quot;Hallo </span><span class="va">${USER}</span><span class="st">!&quot;</span>  # variabelen gebruiken</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="bu">echo</span> <span class="st">&#39;Hallo ${USER}!&#39;</span>  # enkele aanhalingstekens!</a></code></pre></div>
+</section><section id="tekst-afdrukken-met-printf" class="slide level2">
+<h2>Tekst afdrukken met printf</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="bu">printf</span> <span class="st">&#39;Hallo wereld!\n&#39;</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="bu">printf</span> <span class="st">&#39;Hallo %s!\n&#39;</span> <span class="st">&quot;</span><span class="va">${USER}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="bu">printf</span> <span class="st">&#39;Het gebruikers-ID van %s is %d\n&#39;</span> <span class="st">&quot;</span><span class="va">${USER}</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">${UID}</span><span class="st">&quot;</span> </a></code></pre></div>
+<ul>
+<li>vgl. <code>printf()</code> <a href="https://docs.oracle.com/javase/7/docs/api/java/io/PrintStream.html#printf(java.lang.String,%20java.lang.Object...)">methode in Java</a>!</li>
+<li>aangewezen in scripts, beter gedefinieerd dan <code>echo</code></li>
+</ul>
+</section><section id="input-en-output" class="slide level2">
+<h2>Input en output</h2>
+<p><img data-src="http://linux-training.be/funhtml/images/bash_stdin_stdout_stderr.svg" /></p>
 <ul>
 <li><em>stdin</em>, standard input
 <ul>
@@ -282,8 +368,15 @@ code > span.in { color: #008000; } /* Information */
 <li>vgl. <code>System.err</code></li>
 </ul></li>
 </ul>
-</section><section id="syntax" class="slide level2">
-<h2>Syntax</h2>
+</section><section id="normaal-gedrag" class="slide level2">
+<h2>Normaal gedrag</h2>
+<ul>
+<li><em>standard input</em>: invoer toetsenbord</li>
+<li><em>standard output/error</em>: afdrukken op scherm (console)</li>
+</ul>
+<p><img data-src="http://linux-training.be/funhtml/images/bash_ioredirection_keyboard_display.png" /></p>
+</section><section id="io-redirection" class="slide level2">
+<h2>I/O Redirection</h2>
 <table>
 <thead>
 <tr class="header">
@@ -314,50 +407,58 @@ code > span.in { color: #008000; } /* Information */
 </tr>
 </tbody>
 </table>
+</section><section id="io-redirection-1" class="slide level2">
+<h2>I/O Redirection</h2>
+<p><code>cmd &gt; file</code></p>
+<p><img data-src="http://linux-training.be/funhtml/images/bash_output_redirection.png" /></p>
+</section><section id="io-redirection-2" class="slide level2">
+<h2>I/O Redirection</h2>
+<p><code>cmd 2&gt; file</code></p>
+<p><img data-src="http://linux-training.be/funhtml/images/bash_error_redirection.png" /></p>
 </section><section id="combineren" class="slide level2">
 <h2>Combineren</h2>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># stdout en stderr apart wegschrijven</span>
-<span class="fu">find</span> / -type d <span class="op">&gt;</span> directories.txt <span class="op">2&gt;</span> errors.txt
-
-<span class="co"># stderr &quot;negeren&quot;</span>
-<span class="fu">find</span> / -type d <span class="op">&gt;</span> directories.txt <span class="op">2&gt;</span> /dev/null
-
-<span class="co"># stdout en stderr samen wegschrijven</span>
-<span class="fu">find</span> / -type d <span class="op">&gt;</span> all.txt <span class="op">2&gt;&amp;1</span>
-
-<span class="co"># invoer én uitvoer omleiden</span>
-<span class="fu">sort</span> <span class="op">&lt;</span> unsorted.txt <span class="op">&gt;</span> sorted.txt <span class="op">2&gt;</span> errors.txt</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># stdout en stderr apart wegschrijven</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="fu">find</span> / -type d <span class="op">&gt;</span> directories.txt <span class="op">2&gt;</span> errors.txt</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co"># stderr &quot;negeren&quot;</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="fu">find</span> / -type d <span class="op">&gt;</span> directories.txt <span class="op">2&gt;</span> /dev/null</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co"># stdout en stderr samen wegschrijven</span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="fu">find</span> / -type d <span class="op">&gt;</span> all.txt <span class="op">2&gt;&amp;1</span></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co"># invoer én uitvoer omleiden</span></a>
+<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="fu">sort</span> <span class="op">&lt;</span> unsorted.txt <span class="op">&gt;</span> sorted.txt <span class="op">2&gt;</span> errors.txt</a></code></pre></div>
 </section><section id="foutboodschappen-afdrukken" class="slide level2">
 <h2>Foutboodschappen afdrukken</h2>
-<p>(Equivalent van <code>System.err.println()</code>)</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="bu">echo</span> <span class="st">&quot;Error: </span><span class="va">${dir}</span><span class="st"> is not a directory&quot;</span> <span class="op">&gt;&amp;2</span></code></pre></div>
+<p>(Equivalent van <a href="https://docs.oracle.com/javase/7/docs/api/java/io/PrintStream.html#printf(java.lang.String,%20java.lang.Object...)">System.err.printf()</a>)</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="bu">printf</span> <span class="st">&quot;Error: %s is not a directory\n&quot;</span> <span class="st">&quot;</span><span class="va">${dir}</span><span class="st">&quot;</span> <span class="op">&gt;&amp;2</span></a></code></pre></div>
 </section><section id="here-documents" class="slide level2">
 <h2>Here documents</h2>
 <p>Als je meer dan één lijn wil afdrukken:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">cat</span> &lt;&lt; _EOF_
-Usage: <span class="va">${0}</span> [OPT]... [ARG]..
-
-OPTIONS:
-  -h, --help  Print this help message
-
-_EOF_</code></pre></div>
-<p><em>Let op:</em> geen whitespace toegelaten voor de eindemarkering</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="fu">cat</span> <span class="op">&lt;&lt; _EOF_</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">Usage: <span class="va">${0}</span> [OPT]... [ARG]..</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">OPTIONS:</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">  -h, --help  Print this help message</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">_EOF_</a></code></pre></div>
+<p><em>Let op:</em> geen spaties toegelaten vóór de eindemarkering</p>
 </section><section id="here-documents-1" class="slide level2">
 <h2>Here documents</h2>
 <p>Dit kan bv. ook:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">mysql</span> -uroot -p<span class="st">&quot;</span><span class="va">${db_password}</span><span class="st">&quot;</span> mysql &lt;&lt; _EOF_
-DROP DATABASE IF EXISTS drupa<span class="op">l</span>;
-CREATE DATABASE drupa<span class="op">l</span>;
-GRANT ALL PRIVILEGES ON drupa<span class="op">l</span> <span class="ex">TO</span> <span class="va">${drupal_usr}</span>@localhost
-  IDENTIFIED BY <span class="va">${drupal_password}</span>;
-_E<span class="op">O</span><span class="ex">F_</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="ex">mysql</span> -uroot -p<span class="st">&quot;</span><span class="va">${db_password}</span><span class="st">&quot;</span> mysql <span class="op">&lt;&lt; _EOF_</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">DROP DATABASE IF EXISTS drupal;</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">CREATE DATABASE drupal;</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">GRANT ALL PRIVILEGES ON drupal TO <span class="va">${drupal_usr}</span>@localhost</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">  IDENTIFIED BY <span class="va">${drupal_password}</span>;</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">_EOF_</a></code></pre></div>
 </section></section>
-<section><section id="les-5.-filters" class="titleslide slide level1"><h1>Les 5. Filters</h1></section><section id="filter" class="slide level2">
+<section><section id="werken-met-tekst-filters" class="title-slide slide level1"><h1>Werken met tekst: filters</h1></section><section id="filter" class="slide level2">
 <h2>Filter</h2>
 <ul>
 <li>Filter = commando dat:
 <ol type="1">
-<li>leest van <code>stdin</code> (of bestand),</li>
+<li>leest van <code>stdin</code> of bestand,</li>
 <li>tekst transformeert, en</li>
 <li>wegschrijft naar <code>stdout</code></li>
 </ol></li>
@@ -386,7 +487,7 @@ _E<span class="op">O</span><span class="ex">F_</span></code></pre></div>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>cut</code></td>
-<td style="text-align: left;">Selecteer &quot;kolommen&quot; uit tekstbestanden</td>
+<td style="text-align: left;">Selecteer “kolommen” uit tekstbestanden</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>fmt</code></td>
@@ -452,33 +553,31 @@ _E<span class="op">O</span><span class="ex">F_</span></code></pre></div>
 </table>
 </section><section id="sed-voorbeelden" class="slide level2">
 <h2>Sed: voorbeelden</h2>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># Zoeken en vervangen (1x per regel)</span>
-<span class="fu">sed</span> <span class="st">&#39;s/foo/bar/&#39;</span>
-
-<span class="co"># &quot;Globaal&quot;, meerdere keren per regel</span>
-<span class="fu">sed</span> <span class="st">&#39;s/foo/bar/g&#39;</span>
-
-<span class="co"># Regels die beginnen met &#39;#&#39; verwijderen</span>
-<span class="fu">sed</span> <span class="st">&#39;/^#/d&#39;</span>
-
-<span class="co"># Lege regels verwijderen</span>
-<span class="fu">sed</span> <span class="st">&#39;/^$/d&#39;</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># Zoeken en vervangen (1x per regel)</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="fu">sed</span> <span class="st">&#39;s/foo/bar/&#39;</span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="co"># &quot;Globaal&quot;, meerdere keren per regel</span></a>
+<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="fu">sed</span> <span class="st">&#39;s/foo/bar/g&#39;</span></a>
+<a class="sourceLine" id="cb11-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="co"># Regels die beginnen met &#39;#&#39; verwijderen</span></a>
+<a class="sourceLine" id="cb11-8" data-line-number="8"><span class="fu">sed</span> <span class="st">&#39;/^#/d&#39;</span></a>
+<a class="sourceLine" id="cb11-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb11-10" data-line-number="10"><span class="co"># Lege regels verwijderen</span></a>
+<a class="sourceLine" id="cb11-11" data-line-number="11"><span class="fu">sed</span> <span class="st">&#39;/^$/d&#39;</span></a></code></pre></div>
 </section><section id="awk-voorbeelden" class="slide level2">
 <h2>Awk: voorbeelden</h2>
 <p>Wat tussen accolades staat wordt uitgevoerd op elke regel</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># Druk 3e kolom af (afgebakend door &quot;whitespace&quot;)</span>
-<span class="fu">awk</span> <span class="st">&#39;{ print $4 }&#39;</span>
-
-<span class="co"># Enkel regels afdrukken die beginnen met #</span>
-<span class="fu">awk</span> <span class="st">&#39;/^#/ { print $0 }&#39;</span>
-
-<span class="co"># Druk kolom 2 en 4 af, gescheiden door ;</span>
-<span class="fu">awk</span> <span class="st">&#39;{ printf &quot;%s;%s&quot;, $2, $4 }&#39;</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co"># Druk 3e kolom af (afgebakend door &quot;whitespace&quot;)</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="fu">awk</span> <span class="st">&#39;{ print $4 }&#39;</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co"># Enkel regels afdrukken die beginnen met #</span></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="fu">awk</span> <span class="st">&#39;/^#/ { print $0 }&#39;</span></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co"># Druk kolom 2 en 4 af, gescheiden door ;</span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="fu">awk</span> <span class="st">&#39;{ printf &quot;%s;%s&quot;, $2, $4 }&#39;</span></a></code></pre></div>
 </section></section>
-<section><section id="hoofdstuk-4.-een-webserver-installeren" class="titleslide slide level1"><h1>Hoofdstuk 4. Een webserver installeren</h1></section></section>
-<section><section id="les-6.-een-webserver-installeren" class="titleslide slide level1"><h1>Les 6. Een webserver installeren</h1></section></section>
-<section><section id="les-7.-netwerkinstellingen-controleren" class="titleslide slide level1"><h1>Les 7. Netwerkinstellingen controleren</h1></section><section id="netwerkinstellingen" class="slide level2">
-<h2>Netwerkinstellingen</h2>
+<section><section id="hoofdstuk-4.-een-webserver-installeren" class="title-slide slide level1"><h1>Hoofdstuk 4. Een webserver installeren</h1></section><section id="netwerkinstellingen-controleren" class="slide level2">
+<h2>Netwerkinstellingen controleren</h2>
 <p>Om Internettoegang mogelijk te maken zijn er 3 instellingen nodig:</p>
 <ol type="1">
 <li>IP-adres en subnetmasker</li>
@@ -493,9 +592,8 @@ _E<span class="op">O</span><span class="ex">F_</span></code></pre></div>
 <li>DNS-server: <code>cat /etc/resolv.conf</code></li>
 </ol>
 </section></section>
-<section><section id="hoofdstuk-5.-gebruikers-groepen-en-permissies" class="titleslide slide level1"><h1>Hoofdstuk 5. Gebruikers, groepen en permissies</h1></section></section>
-<section><section id="les-8.-gebruikers-en-groepen" class="titleslide slide level1"><h1>Les 8. Gebruikers en groepen</h1></section><section id="commandos" class="slide level2">
-<h2>Commando's</h2>
+<section><section id="hoofdstuk-5.-gebruikers-groepen-en-permissies" class="title-slide slide level1"><h1>Hoofdstuk 5. Gebruikers, groepen en permissies</h1></section><section id="commandos-voor-gebruikers-en-groepen" class="slide level2">
+<h2>Commando’s voor gebruikers en groepen</h2>
 <ul>
 <li>Gebruikers: <code>useradd</code>, <code>usermod</code>, <code>userdel</code></li>
 <li>Groepen: <code>groupadd</code>, <code>groupmod</code>, <code>groupdel</code></li>
@@ -517,14 +615,14 @@ _E<span class="op">O</span><span class="ex">F_</span></code></pre></div>
 
 <ul>
 <li><p><em>primaire</em> groep aanpassen</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="ex">usermod</span> -g groep gebruiker</code></pre></div></li>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" data-line-number="1">$ <span class="ex">usermod</span> -g groep gebruiker</a></code></pre></div></li>
 <li><p>gebruiker toevoegen aan opgegeven groepen <em>en verwijderen uit alle andere groepen</em></p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="ex">usermod</span> -G groep1,groep2 gebruiker </code></pre></div></li>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb14-1" data-line-number="1">$ <span class="ex">usermod</span> -G groep1,groep2 gebruiker </a></code></pre></div></li>
 <li><p>gebruiker toevoegen aan opgegeven groep, blijft lid van andere groepen</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="ex">usermod</span> -aG groep gebruiker</code></pre></div></li>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb15-1" data-line-number="1">$ <span class="ex">usermod</span> -aG groep gebruiker</a></code></pre></div></li>
 </ul>
 </section></section>
-<section><section id="les-9.-bestandspermissies" class="titleslide slide level1"><h1>Les 9. Bestandspermissies</h1></section><section id="permissies" class="slide level2">
+<section><section id="bestandspermissies" class="title-slide slide level1"><h1>Bestandspermissies</h1></section><section id="permissies" class="slide level2">
 <h2>Permissies</h2>
 <ul>
 <li>= toegangsrechten voor bestanden en directories
@@ -622,8 +720,8 @@ r w x  r - x  - - -
 <li>symbolisch: <code>u+s</code></li>
 <li>octaal: 4</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="fu">ls</span> -l /bin/passwd
-<span class="ex">-rwsr-xr-x.</span> 1 root root 28k 2017-02-11 12:02 /bin/passwd</code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb19-1" data-line-number="1">$ <span class="fu">ls</span> -l /bin/passwd</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="ex">-rwsr-xr-x.</span> 1 root root 28k 2017-02-11 12:02 /bin/passwd</a></code></pre></div>
 </section><section id="speciale-permissies-sgid" class="slide level2">
 <h2>Speciale permissies: <em>SGID</em></h2>
 <ul>
@@ -633,19 +731,19 @@ r w x  r - x  - - -
 <li>symbolisch: <code>g+s</code></li>
 <li>octaal: 2</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="fu">ls</span> -l /usr/bin/write 
-<span class="ex">-rwxr-sr-x.</span> 1 root tty 20k 2017-09-22 10:55 /usr/bin/write</code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb20-1" data-line-number="1">$ <span class="fu">ls</span> -l /usr/bin/write </a>
+<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="ex">-rwxr-sr-x.</span> 1 root tty 20k 2017-09-22 10:55 /usr/bin/write</a></code></pre></div>
 </section><section id="speciale-permissies-restricted-deletion" class="slide level2">
 <h2>Speciale permissies: restricted deletion</h2>
 <ul>
 <li>restricted deletion, of <em>sticky bit</em></li>
 <li>toegepast op directories</li>
-<li>een bestand mag in zo'n directory enkel door de eigenaar verwijderd worden</li>
+<li>een bestand mag in zo’n directory enkel door de eigenaar verwijderd worden</li>
 <li>symbolisch: <code>+t</code></li>
 <li>octaal: 1</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">ls</span> -ld /tmp
-<span class="ex">drwxrwxrwt.</span> 16 root root 360 2017-12-04 13:05 /tmp/</code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="fu">ls</span> -ld /tmp</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="ex">drwxrwxrwt.</span> 16 root root 360 2017-12-04 13:05 /tmp/</a></code></pre></div>
 </section><section id="eigenaargroep-veranderen" class="slide level2">
 <h2>Eigenaar/groep veranderen:</h2>
 <p>Merk op: root-rechten nodig</p>
@@ -653,16 +751,16 @@ r w x  r - x  - - -
 chown user:group file
 chgrp group file</code></pre>
 </section></section>
-<section><section id="hoofdstuk-6.-scripts" class="titleslide slide level1"><h1>Hoofdstuk 6. scripts</h1></section></section>
-<section><section id="les-10.-variabelen-positionele-parameters-logische-operatoren" class="titleslide slide level1"><h1>Les 10. Variabelen, positionele parameters, logische operatoren</h1></section><section id="variabelen" class="slide level2">
+<section><section id="hoofdstuk-6.-scripts" class="title-slide slide level1"><h1>Hoofdstuk 6. scripts</h1></section></section>
+<section><section id="scripts-variabelen-positionele-parameters-logische-operatoren" class="title-slide slide level1"><h1>Scripts: Variabelen, positionele parameters, logische operatoren</h1></section><section id="variabelen" class="slide level2">
 <h2>Variabelen</h2>
 <p>Bash-variabelen zijn (vrijwel altijd) strings.</p>
 <p>Declaratie:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="va">variabele=</span>waarde</code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="va">variabele=</span>waarde</a></code></pre></div>
 <p>Waarde v/e variabele opvragen:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="va">${variable}</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="va">${variable}</span></a></code></pre></div>
 <p>Gebruik in strings (met dubbele aanhalingstekens):</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${USER}</span><span class="st">&quot;</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${USER}</span><span class="st">&quot;</span></a></code></pre></div>
 </section><section id="variabelen-1" class="slide level2">
 <h2>Variabelen</h2>
 <ul>
@@ -675,9 +773,9 @@ chgrp group file</code></pre>
 <li>vermijd <em>splitsen</em> van woorden</li>
 </ul></li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="va">bestand=</span><span class="st">&quot;Mijn bestand.txt&quot;</span>
-<span class="fu">touch</span> <span class="va">${bestand}</span>               <span class="co"># Fout</span>
-<span class="fu">touch</span> <span class="st">&quot;</span><span class="va">${bestand}</span><span class="st">&quot;</span>             <span class="co"># Juist</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="va">bestand=</span><span class="st">&quot;Mijn bestand.txt&quot;</span></a>
+<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="fu">touch</span> <span class="va">${bestand}</span>               # Fout</a>
+<a class="sourceLine" id="cb26-3" data-line-number="3"><span class="fu">touch</span> <span class="st">&quot;</span><span class="va">${bestand}</span><span class="st">&quot;</span>             # Juist</a></code></pre></div>
 <ul>
 <li>Onbestaande variabele wordt beschouwd als <em>lege string</em>.
 <ul>
@@ -687,15 +785,15 @@ chgrp group file</code></pre>
 </ul>
 </section><section id="scope" class="slide level2">
 <h2>Scope</h2>
-<p>Enkel binnen zelfde &quot;shell&quot;, niet binnen &quot;subshells&quot;</p>
+<p>Enkel binnen zelfde “shell”, niet binnen “subshells”</p>
 <ul>
 <li>Een script oproepen creëert een subshell</li>
-<li>Maak &quot;globale&quot;, of <em>omgevingsvariabele</em> met <code>export</code>:</li>
+<li>Maak “globale”, of <em>omgevingsvariabele</em> met <code>export</code>:</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="bu">export</span> <span class="va">VARIABLE1=</span>value
-
-<span class="va">VARIABLE2=</span>value
-<span class="bu">export</span> <span class="va">VARIABLE2</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="bu">export</span> <span class="va">VARIABLE1=</span>value</a>
+<a class="sourceLine" id="cb27-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb27-3" data-line-number="3"><span class="va">VARIABLE2=</span>value</a>
+<a class="sourceLine" id="cb27-4" data-line-number="4"><span class="bu">export</span> <span class="va">VARIABLE2</span></a></code></pre></div>
 <p>Conventie naamgeving:</p>
 <ul>
 <li>Lokale variabelen: kleine letters, bv: <code>foo_bar</code></li>
@@ -717,8 +815,8 @@ chgrp group file</code></pre>
 <td style="text-align: left;">Naam script</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>${1}</code>, <code>${2}</code>, ...</td>
-<td style="text-align: left;">Eerste, tweede, ... argument</td>
+<td style="text-align: left;"><code>${1}</code>, <code>${2}</code>, …</td>
+<td style="text-align: left;">Eerste, tweede, … argument</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>${10}</code></td>
@@ -749,11 +847,11 @@ chgrp group file</code></pre>
 </ul>
 </section><section id="positionele-parameters-instellen" class="slide level2">
 <h2>Positionele parameters instellen</h2>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">set</span> <span class="ex">par1</span> par2 par3
-<span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span>  <span class="co">#  =&gt; par1</span>
-<span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${2}</span><span class="st">&quot;</span>  <span class="co">#  =&gt; par2</span>
-<span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${3}</span><span class="st">&quot;</span>  <span class="co">#  =&gt; par3</span>
-<span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${4}</span><span class="st">&quot;</span>  <span class="co">#  =&gt;       (lege string)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw">set</span> <span class="ex">par1</span> par2 par3</a>
+<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span>  #  =<span class="op">&gt;</span> par1</a>
+<a class="sourceLine" id="cb28-3" data-line-number="3"><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${2}</span><span class="st">&quot;</span>  #  =<span class="op">&gt;</span> par2</a>
+<a class="sourceLine" id="cb28-4" data-line-number="4"><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${3}</span><span class="st">&quot;</span>  #  =<span class="op">&gt;</span> par3</a>
+<a class="sourceLine" id="cb28-5" data-line-number="5"><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${4}</span><span class="st">&quot;</span>  #  =<span class="op">&gt;</span>       (lege string)</a></code></pre></div>
 </section><section id="exit-status" class="slide level2">
 <h2>Exit-status</h2>
 <ul>
@@ -768,11 +866,11 @@ chgrp group file</code></pre>
 </ul>
 </section><section id="logische-operatoren" class="slide level2">
 <h2>Logische operatoren</h2>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">if</span> <span class="ex">COMMANDO</span><span class="kw">;</span> <span class="kw">then</span>
-  <span class="co"># A</span>
-<span class="kw">else</span>
-  <span class="co"># B</span>
-<span class="kw">fi</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">if</span> <span class="ex">COMMANDO</span><span class="kw">;</span> <span class="kw">then</span></a>
+<a class="sourceLine" id="cb29-2" data-line-number="2">  <span class="co"># A</span></a>
+<a class="sourceLine" id="cb29-3" data-line-number="3"><span class="kw">else</span></a>
+<a class="sourceLine" id="cb29-4" data-line-number="4">  <span class="co"># B</span></a>
+<a class="sourceLine" id="cb29-5" data-line-number="5"><span class="kw">fi</span></a></code></pre></div>
 <ul>
 <li><code>A</code>-blok wordt uitgevoerd als exit-status van <code>COMMANDO</code> 0 is (geslaagd, TRUE)</li>
 <li><code>B</code>-blok wordt uitgevoerd als exit-status van <code>COMMANDO</code> verschillend is van 0 (gefaald, FALSE)</li>
@@ -788,131 +886,131 @@ chgrp group file</code></pre>
 </ul></li>
 <li>Alias voor <code>test</code> is <code>[</code>
 <ul>
-<li><code>[</code> is een <em>commando</em>, geen &quot;haakje&quot; in de traditionele betekenis</li>
+<li><code>[</code> is een <em>commando</em>, geen “haakje” in de traditionele betekenis</li>
 <li>spaties vóór en na!</li>
 </ul></li>
 </ul>
 </section><section class="slide level2">
 
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># Fout:</span>
-<span class="ex">if</span>[<span class="va">$#</span>-eq 0]<span class="kw">;</span> <span class="kw">then</span>
-  <span class="bu">echo</span> <span class="st">&quot;Expected at least one argument&quot;</span>
-<span class="kw">fi</span>
-
-<span class="co"># Juist:</span>
-<span class="kw">if</span><span class="bu"> [</span> <span class="st">&quot;</span><span class="va">${#}</span><span class="st">&quot;</span> <span class="ot">-eq</span> <span class="st">&quot;0&quot;</span><span class="bu"> ]</span>; <span class="kw">then</span>
-  <span class="bu">echo</span> <span class="st">&quot;Expected at least one argument&quot;</span>
-<span class="kw">fi</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="co"># Fout:</span></a>
+<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="ex">if</span>[<span class="va">$#</span>-eq 0]<span class="kw">;</span> <span class="kw">then</span></a>
+<a class="sourceLine" id="cb30-3" data-line-number="3">  <span class="bu">echo</span> <span class="st">&quot;Expected at least one argument&quot;</span></a>
+<a class="sourceLine" id="cb30-4" data-line-number="4"><span class="kw">fi</span></a>
+<a class="sourceLine" id="cb30-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb30-6" data-line-number="6"><span class="co"># Juist:</span></a>
+<a class="sourceLine" id="cb30-7" data-line-number="7"><span class="kw">if</span><span class="bu"> [</span> <span class="st">&quot;</span><span class="va">${#}</span><span class="st">&quot;</span> <span class="ot">-eq</span> <span class="st">&quot;0&quot;</span><span class="bu"> ]</span>; <span class="kw">then</span></a>
+<a class="sourceLine" id="cb30-8" data-line-number="8">  <span class="bu">echo</span> <span class="st">&quot;Expected at least one argument&quot;</span></a>
+<a class="sourceLine" id="cb30-9" data-line-number="9"><span class="kw">fi</span></a></code></pre></div>
 </section></section>
-<section><section id="les-11.-logische-structuren" class="titleslide slide level1"><h1>Les 11. Logische structuren</h1></section><section id="tekst-afdrukken" class="slide level2">
+<section><section id="scripts-logische-structuren" class="title-slide slide level1"><h1>Scripts: Logische structuren</h1></section><section id="tekst-afdrukken" class="slide level2">
 <h2>Tekst afdrukken</h2>
 <p>Wat is het verschil?</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="va">var=</span><span class="st">&quot;world&quot;</span>
-
-<span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span>
-<span class="bu">echo</span> <span class="st">&#39;Hello ${var}&#39;</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="va">var=</span><span class="st">&quot;world&quot;</span></a>
+<a class="sourceLine" id="cb31-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb31-3" data-line-number="3"><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb31-4" data-line-number="4"><span class="bu">echo</span> <span class="st">&#39;Hello ${var}&#39;</span></a></code></pre></div>
 </section><section class="slide level2">
 
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="va">var=</span><span class="st">&quot;world&quot;</span>
-
-<span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span>    <span class="co"># Binnen &quot; wordt substitutie toegepast</span>
-<span class="bu">echo</span> <span class="st">&#39;Hello ${var}&#39;</span>    <span class="co"># Binnen &#39; NIET!</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="va">var=</span><span class="st">&quot;world&quot;</span></a>
+<a class="sourceLine" id="cb32-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb32-3" data-line-number="3"><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span>    # Binnen <span class="st">&quot; wordt substitutie toegepast</span></a>
+<a class="sourceLine" id="cb32-4" data-line-number="4"><span class="st">echo &#39;Hello </span><span class="va">${var}</span><span class="st">&#39;    # Binnen &#39; NIET!</span></a></code></pre></div>
 </section><section id="command-substitution" class="slide level2">
 <h2>Command substitution</h2>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="va">datum=$(</span><span class="fu">date</span><span class="va">)</span>
-
-<span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${datum}</span><span class="st">&quot;</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="va">datum=$(</span><span class="fu">date</span><span class="va">)</span></a>
+<a class="sourceLine" id="cb33-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb33-3" data-line-number="3"><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${datum}</span><span class="st">&quot;</span></a></code></pre></div>
 </section><section id="gebruik-printf" class="slide level2">
 <h2>Gebruik <code>printf</code></h2>
 <p><code>printf</code> is beter dan <code>echo</code></p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="va">var=</span><span class="st">&quot;world&quot;</span>
-
-<span class="bu">printf</span> <span class="st">&quot;Hello %s\n&quot;</span> <span class="st">&quot;</span><span class="va">${var}</span><span class="st">&quot;</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="va">var=</span><span class="st">&quot;world&quot;</span></a>
+<a class="sourceLine" id="cb34-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb34-3" data-line-number="3"><span class="bu">printf</span> <span class="st">&quot;Hello %s\n&quot;</span> <span class="st">&quot;</span><span class="va">${var}</span><span class="st">&quot;</span></a></code></pre></div>
 <ul>
 <li>Het gedrag is beter gedefinieerd over verschillende UNIX-varianten.</li>
 <li>Vgl. <code>printf()</code> method in Java!</li>
 </ul>
 </section><section id="if" class="slide level2">
 <h2>If</h2>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">if</span> <span class="ex">EXPR</span>
-<span class="kw">then</span>
-  <span class="co"># ...</span>
-<span class="kw">elif</span> <span class="ex">EXPR</span>
-  <span class="co"># ...</span>
-<span class="kw">else</span>
-  <span class="co"># ...</span>
-<span class="kw">fi</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw">if</span> <span class="ex">EXPR</span></a>
+<a class="sourceLine" id="cb35-2" data-line-number="2"><span class="kw">then</span></a>
+<a class="sourceLine" id="cb35-3" data-line-number="3">  <span class="co"># ...</span></a>
+<a class="sourceLine" id="cb35-4" data-line-number="4"><span class="kw">elif</span> <span class="ex">EXPR</span></a>
+<a class="sourceLine" id="cb35-5" data-line-number="5">  <span class="co"># ...</span></a>
+<a class="sourceLine" id="cb35-6" data-line-number="6"><span class="kw">else</span></a>
+<a class="sourceLine" id="cb35-7" data-line-number="7">  <span class="co"># ...</span></a>
+<a class="sourceLine" id="cb35-8" data-line-number="8"><span class="kw">fi</span></a></code></pre></div>
 </section><section id="if-1" class="slide level2">
 <h2>If</h2>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">if</span><span class="bu"> [</span> <span class="st">&quot;</span><span class="va">${#}</span><span class="st">&quot;</span> <span class="ot">-gt</span> <span class="st">&#39;2&#39;</span><span class="bu"> ]</span>; <span class="kw">then</span>
-  <span class="bu">printf</span> <span class="st">&quot;Too many arguments\n&quot;</span> <span class="op">&gt;&amp;2</span>
-  <span class="bu">exit</span> 1
-<span class="kw">fi</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="kw">if</span><span class="bu"> [</span> <span class="st">&quot;</span><span class="va">${#}</span><span class="st">&quot;</span> <span class="ot">-gt</span> <span class="st">&#39;2&#39;</span><span class="bu"> ]</span>; <span class="kw">then</span></a>
+<a class="sourceLine" id="cb36-2" data-line-number="2">  <span class="bu">printf</span> <span class="st">&quot;Too many arguments\n&quot;</span> <span class="op">&gt;&amp;2</span></a>
+<a class="sourceLine" id="cb36-3" data-line-number="3">  <span class="bu">exit</span> 1</a>
+<a class="sourceLine" id="cb36-4" data-line-number="4"><span class="kw">fi</span></a></code></pre></div>
 </section><section id="case" class="slide level2">
 <h2>Case</h2>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">case</span> EXPR<span class="kw"> in</span>
-  CASE1<span class="kw">)</span>
-    <span class="co"># ...</span>
-    <span class="kw">;;</span>
-  CASE2<span class="kw">)</span>
-    <span class="co"># ...</span>
-    <span class="kw">;;</span>
-  *<span class="kw">)</span>
-    <span class="co"># ...</span>
-    <span class="kw">;;</span>
-<span class="kw">esac</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="kw">case</span> EXPR<span class="kw"> in</span></a>
+<a class="sourceLine" id="cb37-2" data-line-number="2">  CASE1<span class="kw">)</span></a>
+<a class="sourceLine" id="cb37-3" data-line-number="3">    <span class="co"># ...</span></a>
+<a class="sourceLine" id="cb37-4" data-line-number="4">    <span class="kw">;;</span></a>
+<a class="sourceLine" id="cb37-5" data-line-number="5">  CASE2<span class="kw">)</span></a>
+<a class="sourceLine" id="cb37-6" data-line-number="6">    <span class="co"># ...</span></a>
+<a class="sourceLine" id="cb37-7" data-line-number="7">    <span class="kw">;;</span></a>
+<a class="sourceLine" id="cb37-8" data-line-number="8">  *<span class="kw">)</span></a>
+<a class="sourceLine" id="cb37-9" data-line-number="9">    <span class="co"># ...</span></a>
+<a class="sourceLine" id="cb37-10" data-line-number="10">    <span class="kw">;;</span></a>
+<a class="sourceLine" id="cb37-11" data-line-number="11"><span class="kw">esac</span></a></code></pre></div>
 </section><section id="case-1" class="slide level2">
 <h2>Case</h2>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="va">option=</span><span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span>
-
-<span class="kw">case</span> <span class="st">&quot;</span><span class="va">${option}</span><span class="st">&quot;</span><span class="kw"> in</span>
-  -h<span class="kw">|</span>--help<span class="kw">|</span>-?<span class="kw">)</span>
-    <span class="ex">usage</span>
-    <span class="bu">exit</span> 0
-    <span class="kw">;;</span>
-  -v<span class="kw">|</span>--verbose<span class="kw">)</span>
-    <span class="va">verbose=</span>y
-    <span class="bu">shift</span>
-    <span class="kw">;;</span>
-  *<span class="kw">)</span>
-    <span class="bu">printf</span> <span class="st">&quot;Unrecognized option: %s\n&quot;</span> <span class="st">&quot;</span><span class="va">${option}</span><span class="st">&quot;</span>
-    <span class="ex">usage</span>
-    <span class="bu">exit</span> 1
-    <span class="kw">;;</span>
-<span class="kw">esac</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="va">option=</span><span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb38-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb38-3" data-line-number="3"><span class="kw">case</span> <span class="st">&quot;</span><span class="va">${option}</span><span class="st">&quot;</span><span class="kw"> in</span></a>
+<a class="sourceLine" id="cb38-4" data-line-number="4">  -h<span class="kw">|</span>--help<span class="kw">|</span>-?<span class="kw">)</span></a>
+<a class="sourceLine" id="cb38-5" data-line-number="5">    <span class="ex">usage</span></a>
+<a class="sourceLine" id="cb38-6" data-line-number="6">    <span class="bu">exit</span> 0</a>
+<a class="sourceLine" id="cb38-7" data-line-number="7">    <span class="kw">;;</span></a>
+<a class="sourceLine" id="cb38-8" data-line-number="8">  -v<span class="kw">|</span>--verbose<span class="kw">)</span></a>
+<a class="sourceLine" id="cb38-9" data-line-number="9">    <span class="va">verbose=</span>y</a>
+<a class="sourceLine" id="cb38-10" data-line-number="10">    <span class="bu">shift</span></a>
+<a class="sourceLine" id="cb38-11" data-line-number="11">    <span class="kw">;;</span></a>
+<a class="sourceLine" id="cb38-12" data-line-number="12">  *<span class="kw">)</span></a>
+<a class="sourceLine" id="cb38-13" data-line-number="13">    <span class="bu">printf</span> <span class="st">&quot;Unrecognized option: %s\n&quot;</span> <span class="st">&quot;</span><span class="va">${option}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb38-14" data-line-number="14">    <span class="ex">usage</span></a>
+<a class="sourceLine" id="cb38-15" data-line-number="15">    <span class="bu">exit</span> 1</a>
+<a class="sourceLine" id="cb38-16" data-line-number="16">    <span class="kw">;;</span></a>
+<a class="sourceLine" id="cb38-17" data-line-number="17"><span class="kw">esac</span></a></code></pre></div>
 </section><section id="while-lus" class="slide level2">
 <h2>While-lus</h2>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">while</span> <span class="ex">EXPR</span><span class="kw">;</span> <span class="kw">do</span>
-  <span class="co"># ...</span>
-<span class="kw">done</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="kw">while</span> <span class="ex">EXPR</span><span class="kw">;</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb39-2" data-line-number="2">  <span class="co"># ...</span></a>
+<a class="sourceLine" id="cb39-3" data-line-number="3"><span class="kw">done</span></a></code></pre></div>
 </section><section id="until-lus" class="slide level2">
 <h2>Until-lus</h2>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">until</span> <span class="ex">EXPR</span><span class="kw">;</span> <span class="kw">do</span>
-  <span class="co"># ...</span>
-<span class="kw">done</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="kw">until</span> <span class="ex">EXPR</span><span class="kw">;</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb40-2" data-line-number="2">  <span class="co"># ...</span></a>
+<a class="sourceLine" id="cb40-3" data-line-number="3"><span class="kw">done</span></a></code></pre></div>
 </section><section id="for-lus" class="slide level2">
 <h2>For-lus</h2>
 <p>Itereren over een lijst</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> <span class="ex">ITEM</span> in LIST<span class="kw">;</span> <span class="kw">do</span>
-  <span class="co"># ...</span>
-<span class="kw">done</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> <span class="fu">file</span> in *.md<span class="kw">;</span> <span class="kw">do</span>
-  <span class="bu">printf</span> <span class="st">&quot;Processing file %s\n&quot;</span> <span class="st">&quot;</span><span class="va">${file}</span><span class="st">&quot;</span>
-  <span class="co"># ...</span>
-<span class="kw">done</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="kw">for</span> <span class="ex">ITEM</span> in LIST<span class="kw">;</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb41-2" data-line-number="2">  <span class="co"># ...</span></a>
+<a class="sourceLine" id="cb41-3" data-line-number="3"><span class="kw">done</span></a></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw">for</span> <span class="fu">file</span> in *.md<span class="kw">;</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb42-2" data-line-number="2">  <span class="bu">printf</span> <span class="st">&quot;Processing file %s\n&quot;</span> <span class="st">&quot;</span><span class="va">${file}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb42-3" data-line-number="3">  <span class="co"># ...</span></a>
+<a class="sourceLine" id="cb42-4" data-line-number="4"><span class="kw">done</span></a></code></pre></div>
 </section><section id="itereren-over-positionele-parameters-while" class="slide level2">
 <h2>Itereren over positionele parameters (<code>while</code>)</h2>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">while</span><span class="bu"> [</span> <span class="st">&quot;</span><span class="va">$#</span><span class="st">&quot;</span> <span class="ot">-gt</span> 0<span class="bu"> ]</span>; <span class="kw">do</span>
-  <span class="bu">printf</span> <span class="st">&quot;Arg: %s\n&quot;</span> <span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span>
-  <span class="co"># ...</span>
-  <span class="bu">shift</span>
-<span class="kw">done</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="kw">while</span><span class="bu"> [</span> <span class="st">&quot;</span><span class="va">$#</span><span class="st">&quot;</span> <span class="ot">-gt</span> 0<span class="bu"> ]</span>; <span class="kw">do</span></a>
+<a class="sourceLine" id="cb43-2" data-line-number="2">  <span class="bu">printf</span> <span class="st">&quot;Arg: %s\n&quot;</span> <span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb43-3" data-line-number="3">  <span class="co"># ...</span></a>
+<a class="sourceLine" id="cb43-4" data-line-number="4">  <span class="bu">shift</span></a>
+<a class="sourceLine" id="cb43-5" data-line-number="5"><span class="kw">done</span></a></code></pre></div>
 </section><section id="itereren-over-positionele-parameters-for" class="slide level2">
 <h2>Itereren over positionele parameters (<code>for</code>)</h2>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">for</span> <span class="ex">arg</span> in <span class="st">&quot;</span><span class="va">${@}</span><span class="st">&quot;</span><span class="kw">;</span> <span class="kw">do</span>
-  <span class="bu">printf</span> <span class="st">&quot;Arg: %s\n&quot;</span> <span class="st">&quot;</span><span class="va">${arg}</span><span class="st">&quot;</span>
-  <span class="co"># ...</span>
-<span class="kw">done</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="kw">for</span> <span class="ex">arg</span> in <span class="st">&quot;</span><span class="va">${@}</span><span class="st">&quot;</span><span class="kw">;</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb44-2" data-line-number="2">  <span class="bu">printf</span> <span class="st">&quot;Arg: %s\n&quot;</span> <span class="st">&quot;</span><span class="va">${arg}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb44-3" data-line-number="3">  <span class="co"># ...</span></a>
+<a class="sourceLine" id="cb44-4" data-line-number="4"><span class="kw">done</span></a></code></pre></div>
 </section></section>
     </div>
   </div>
@@ -925,12 +1023,14 @@ chgrp group file</code></pre>
       // Full list of configuration options available at:
       // https://github.com/hakimel/reveal.js#configuration
       Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
 
         // Optional reveal.js plugins
         dependencies: [
           { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
           { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
-              { src: 'reveal.js/plugin/notes/notes.js', async: true }
+          { src: 'reveal.js/plugin/notes/notes.js', async: true }
         ]
       });
     </script>

@@ -4,11 +4,11 @@
 
 # Hoofdstuk 1. Linux installeren
 
-# Les 1. Linux installeren
+## Linux installeren
+
+zie slides leerpad Chamilo
 
 # Hoofdstuk 2. Linux leren kennen
-
-# Les 2. Werking van de command line
 
 ## Hulp zoeken
 
@@ -32,10 +32,25 @@ apropos passwd
     - `n` - ga naar volgende zoekresultaat
     - `N` - ga naar vorige zoekresultaat
 - Secties, vb:
-    - 1 - cmmando's
+    - 1 - commando's
     - 5 - configuratiebestanden
     - 8 - systeembeheercommando's
     - Notatie: vb. `passwd(1)`, `passwd(5)`
+
+## Belangrijke man-pages
+
+... die niet over een commando gaan:
+
+```bash
+# directorystructuur Linux (Filesystem Hierarchy)
+man hier
+
+# "ingebouwde" Bash commando's
+man builtins
+
+# "wildcards" in bestandsnamen (bv. *.*, [a-z])
+man 7 glob
+```
 
 ## Structuur van een commandoregel
 
@@ -43,17 +58,18 @@ apropos passwd
 $ COMMANDO [OPTIES]... [ARGUMENTEN]...
 ```
 
-- "Onderdelen" gescheiden door *spaties*
-- *Opties* veranderen het gedrag van een commando
-- *Argumenten* zijn de entiteiten waarop het commando uitgevoerd wordt
+- "Onderdelen" gescheiden door **spaties**
+- 1e woord = **commando**
+- **Opties** veranderen het gedrag van een commando
+    - beginnen met streepje (`-` of `--`)
+- **Argumenten** zijn de entiteiten waarop het commando uitgevoerd wordt
 
 ## Commando
 
-Het eerste "woord" van een opdrachtregel
+Het eerste "woord" van een opdrachtregel moet een **commando** zijn
 
 - Alias of functie, gedefinieerd door gebruiker
-- Ingebouwd in Bash
-    - Zie `man builtins`
+- Ingebouwd in Bash (zie `man builtins`)
 - Uitvoerbaar bestand in één van de directories in `${PATH}`
 - Absoluut pad naar uitvoerbaar bestand
 
@@ -73,14 +89,18 @@ Wijzigen het gedrag van het commando
 
 Vóór uitvoeren van een commando vervangt Bash bepaalde uitdrukkingen:
 
-- *Brace expansion*, vb. `{1..10}`, `project/{bin,lib,out}`
+- *Brace expansion*, vb. `{1..10}`, `dir/{subdir1,subdir2,subdir3}`
+    - vb. `mkdir -p project/{src,lib,build}`
 - *Tilde expansion*: `~` wordt vervangen door home-directory, vb. `/home/student/`
+    - vb. `ls ~/.ssh`
 - *Parameter expansion*: variabelennamen worden vervangen door waarde, vb. `${USER}` -> `student`
 
 ## Substitutie/expansie
 
 - *Command substitution*: `$(commando)` wordt vervangen door uitvoer van `commando`
+    - vb. `date=$(date)`
 - *Filename expansion* of "globbing": wildcards in bestandsnamen, vb. `*`, `?`, `[abc]`, enz.
+    - vb. `rm *.class`
 - ...
 
 ## Resultaat expansie
@@ -94,8 +114,6 @@ Voorbeeld:
 set -x; ls -ld ${HOME}/D[eo]*; set +x
 set -x; mkdir -p a/{b,c,d}/{e,f}; set +x
 ```
-
-# Les 3. Bestanden en directories
 
 ## Werken met directories
 
@@ -119,9 +137,11 @@ set -x; mkdir -p a/{b,c,d}/{e,f}; set +x
 | `mv`     | Verplaats bestanden (of hernoemen!)             |
 | `rm`     | Verwijder bestanden of directories              |
 
-# Hoofdstuk 3. Werken met tekst
+## Hoe maak je een bestand aan?
 
-# Les 4. De Vim-editor, I/O Redirection
+1. Met teksteditor Vi/Vim: `vim bestand.txt`
+2. Met teksteditor Nano: `nano bestand.txt`
+3. Leeg bestand: `touch bestand.txt`
 
 ## Vim survival guide
 
@@ -136,9 +156,37 @@ set -x; mkdir -p a/{b,c,d}/{e,f}; set +x
 | Opslaan en afsluiten       | `:wq`    |
 | Afsluiten zonder opslaan   | `:q!`    |
 
-## I/O redirection
+## Nano
 
-## Streams
+- Ook een command-line teksteditor
+- Iets toegankelijker dan Vim
+- Shortcuts staan onderaan het scherm
+    - vb. Exit: `^X` -> Ctrl+X
+
+# Hoofdstuk 3. Werken met tekst
+
+## Tekst afdrukken met echo
+
+```bash
+echo "Hallo wereld!"
+echo "Hallo ${USER}!"  # variabelen gebruiken
+echo 'Hallo ${USER}!'  # enkele aanhalingstekens!
+```
+
+## Tekst afdrukken met printf
+
+```bash
+printf 'Hallo wereld!\n'
+printf 'Hallo %s!\n' "${USER}"
+printf 'Het gebruikers-ID van %s is %d\n' "${USER}" "${UID}" 
+```
+
+- vgl. `printf()` [methode in Java](https://docs.oracle.com/javase/7/docs/api/java/io/PrintStream.html#printf(java.lang.String,%20java.lang.Object...))!
+- aangewezen in scripts, beter gedefinieerd dan `echo`
+
+## Input en output
+
+![](http://linux-training.be/funhtml/images/bash_stdin_stdout_stderr.svg)
 
 - *stdin*, standard input
     - vgl. Java `System.in`
@@ -147,15 +195,34 @@ set -x; mkdir -p a/{b,c,d}/{e,f}; set +x
 - *stderr*, standard error
     - vgl. `System.err`
 
-## Syntax
+## Normaal gedrag
 
-| Syntax        | Betekenis                                          |
-| :---          | :---                                               |
-| `cmd > file`  | schrijf uitvoer van `cmd` weg naar `file`          |
-| `cmd >> file` | voeg toe aan einde van `file`                      |
-| `cmd 2> file` | schrijf foutboodschappen van `cmd` weg naar `file` |
-| `cmd < file`  | gebruik inhoud van `file` als invoer voor `cmd`    |
-| `cmd1 | cmd2` | gebruik uitvoer van `cmd1` als invoer voor `cmd2`  |
+- *standard input*: invoer toetsenbord
+- *standard output/error*: afdrukken op scherm (console)
+ 
+![](http://linux-training.be/funhtml/images/bash_ioredirection_keyboard_display.png)
+
+## I/O Redirection
+
+| Syntax            | Betekenis                                                 |
+| :---              | :---                                                      |
+| `cmd > file`      | schrijf uitvoer van `cmd` weg naar `file`                 |
+| `cmd >> file`     | voeg toe aan einde van `file`                             |
+| `cmd 2> file`     | schrijf foutboodschappen van `cmd` weg naar `file`        |
+| `cmd < file`      | gebruik inhoud van `file` als invoer voor `cmd`           |
+| `cmd1 | cmd2`     | gebruik uitvoer van `cmd1` als invoer voor `cmd2`         |
+
+## I/O Redirection
+
+`cmd > file`
+
+![](http://linux-training.be/funhtml/images/bash_output_redirection.png)
+
+## I/O Redirection
+
+`cmd 2> file`
+
+![](http://linux-training.be/funhtml/images/bash_error_redirection.png)
 
 ## Combineren
 
@@ -175,10 +242,10 @@ sort < unsorted.txt > sorted.txt 2> errors.txt
 
 ## Foutboodschappen afdrukken
 
-(Equivalent van `System.err.println()`)
+(Equivalent van [System.err.printf()](https://docs.oracle.com/javase/7/docs/api/java/io/PrintStream.html#printf(java.lang.String,%20java.lang.Object...)))
 
 ```bash
-echo "Error: ${dir} is not a directory" >&2
+printf "Error: %s is not a directory\n" "${dir}" >&2
 ```
 
 ## Here documents
@@ -196,7 +263,7 @@ OPTIONS:
 _EOF_
 ```
 
-*Let op:* geen whitespace toegelaten voor de eindemarkering
+*Let op:* geen spaties toegelaten vóór de eindemarkering
 
 ## Here documents
 
@@ -211,12 +278,12 @@ GRANT ALL PRIVILEGES ON drupal TO ${drupal_usr}@localhost
 _EOF_
 ```
 
-# Les 5. Filters
+# Werken met tekst: filters
 
 ## Filter
 
 - Filter = commando dat:
-    1. leest van `stdin` (of bestand),
+    1. leest van `stdin` of bestand,
     2. tekst transformeert, en
     3. wegschrijft naar `stdout`
 - Combineer filters via `|` (pipe) om complexe bewerkingen op tekst toe te passen
@@ -280,11 +347,7 @@ awk '{ printf "%s;%s", $2, $4 }'
 
 # Hoofdstuk 4. Een webserver installeren
 
-# Les 6. Een webserver installeren
-
-# Les 7. Netwerkinstellingen controleren
-
-## Netwerkinstellingen
+## Netwerkinstellingen controleren
 
 Om Internettoegang mogelijk te maken zijn er 3 instellingen nodig:
 
@@ -300,9 +363,7 @@ Om Internettoegang mogelijk te maken zijn er 3 instellingen nodig:
 
 # Hoofdstuk 5. Gebruikers, groepen en permissies
 
-# Les 8. Gebruikers en groepen
-
-## Commando's
+## Commando's voor gebruikers en groepen
 
 - Gebruikers: `useradd`, `usermod`, `userdel`
 - Groepen: `groupadd`, `groupmod`, `groupdel`
@@ -338,7 +399,7 @@ Om Internettoegang mogelijk te maken zijn er 3 instellingen nodig:
     $ usermod -aG groep gebruiker
     ```
 
-# Les 9. Bestandspermissies
+# Bestandspermissies
 
 ## Permissies
 
@@ -481,7 +542,7 @@ chgrp group file
 
 # Hoofdstuk 6. scripts
 
-# Les 10. Variabelen, positionele parameters, logische operatoren
+# Scripts: Variabelen, positionele parameters, logische operatoren
 
 ## Variabelen
 
@@ -619,7 +680,7 @@ if [ "${#}" -eq "0" ]; then
 fi
 ```
 
-# Les 11. Logische structuren
+# Scripts: Logische structuren
 
 ## Tekst afdrukken
 
