@@ -119,16 +119,6 @@ set -x; mkdir -p a/{b,c,d}/{e,f}; set +x
 
 ![](https://linuxconfig.org/images/Directory-Filesystem-Hierarchy-Standard.jpg)
 
-## Werken met directories
-
-| Commando | Taak                          |
-| :---     | :---                          |
-| `pwd`    | Toon huidige directory        |
-| `ls`     | Toon inhoud huidige directory |
-| `cd`     | Ga naar een andere directory  |
-| `mkdir`  | Maak een subdirectory aan     |
-| `rmdir`  | Verwijder een lege directory  |
-
 ## Absoluut/relatief pad
 
 - *Absoluut* pad:
@@ -139,6 +129,27 @@ set -x; mkdir -p a/{b,c,d}/{e,f}; set +x
     - begint **niet** met `/`
     - ten opzichte van **huidige** directory (`pwd`)
     - `ls Documents`, `mkdir linux`
+
+## Speciale directorynamen
+
+|      |                                           |
+| :--- | :---                                      |
+| `/`  | De "root directory"                       |
+| `.`  | De huidige directory (`pwd`)              |
+| `..` | De bovenliggende directory                |
+| `~`  | Je "home-directory" (vb. `/home/student`) |
+
+**Opm.** De "home directory" van de gebruiker "root" is `/root`
+
+## Werken met directories
+
+| Commando | Taak                          |
+| :---     | :---                          |
+| `pwd`    | Toon huidige directory        |
+| `ls`     | Toon inhoud huidige directory |
+| `cd`     | Ga naar een andere directory  |
+| `mkdir`  | Maak een subdirectory aan     |
+| `rmdir`  | Verwijder een lege directory  |
 
 ## Werken met bestanden
 
