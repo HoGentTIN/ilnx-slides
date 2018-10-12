@@ -653,21 +653,35 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <a class="sourceLine" id="cb15-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb15-3" data-line-number="3"><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span>    # Binnen <span class="st">&quot; wordt substitutie toegepast</span></a>
 <a class="sourceLine" id="cb15-4" data-line-number="4"><span class="st">echo &#39;Hello </span><span class="va">${var}</span><span class="st">&#39;    # Binnen &#39; NIET!</span></a></code></pre></div>
-</section><section id="command-substitution" class="slide level2">
-<h2>Command substitution</h2>
-<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="va">datum=$(</span><span class="fu">date</span><span class="va">)</span></a>
-<a class="sourceLine" id="cb16-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${datum}</span><span class="st">&quot;</span></a></code></pre></div>
 </section><section id="gebruik-printf" class="slide level2">
 <h2>Gebruik <code>printf</code></h2>
 <p><code>printf</code> is beter dan <code>echo</code></p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="va">var=</span><span class="st">&quot;world&quot;</span></a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="bu">printf</span> <span class="st">&quot;Hello %s\n&quot;</span> <span class="st">&quot;</span><span class="va">${var}</span><span class="st">&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="va">var=</span><span class="st">&quot;world&quot;</span></a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="bu">printf</span> <span class="st">&quot;Hello %s\n&quot;</span> <span class="st">&quot;</span><span class="va">${var}</span><span class="st">&quot;</span></a></code></pre></div>
 <ul>
 <li>Het gedrag is beter gedefinieerd over verschillende UNIX-varianten.</li>
 <li>Vgl. <code>printf()</code> method in Java!</li>
 </ul>
+</section><section id="fouten-opsporen" class="slide level2">
+<h2>Fouten opsporen</h2>
+<ul>
+<li>Syntax check: <code>bash -n script.sh</code></li>
+<li>ShellCheck: <code>shellcheck script.sh</code>
+<ul>
+<li>Gebruik editor-plugin waar mogelijk</li>
+</ul></li>
+<li>Druk veel info af (<code>printf</code>)</li>
+<li>Debug-mode:
+<ul>
+<li><code>bash -x script.sh</code></li>
+<li>In het script: <code>set -x</code> en <code>set +x</code></li>
+</ul></li>
+<li>Begin script met:</li>
+</ul>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">set</span> <span class="ex">-o</span> errexit   # abort on nonzero exitstatus</a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="kw">set</span> <span class="ex">-o</span> nounset   # abort on unbound variable</a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="kw">set</span> <span class="ex">-o</span> pipefail  # don<span class="st">&#39;t hide errors within pipes</span></a></code></pre></div>
 </section><section id="variabelen" class="slide level2">
 <h2>Variabelen</h2>
 <p>Bash-variabelen zijn (meestal) strings.</p>
@@ -739,20 +753,18 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 
 <ul>
 <li><p><em>primaire</em> groep aanpassen</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb23-1" data-line-number="1">$ <span class="ex">usermod</span> -g groep gebruiker</a></code></pre></div></li>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb23-1" data-line-number="1">$ <span class="fu">sudo</span> usermod -g groep gebruiker</a></code></pre></div></li>
 <li><p>gebruiker toevoegen aan opgegeven groepen <em>en verwijderen uit alle andere groepen</em></p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb24-1" data-line-number="1">$ <span class="ex">usermod</span> -G groep1,groep2 gebruiker </a></code></pre></div></li>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb24-1" data-line-number="1">$ <span class="fu">sudo</span> usermod -G groep1,groep2 gebruiker</a></code></pre></div></li>
 <li><p>gebruiker toevoegen aan opgegeven groep, blijft lid van andere groepen</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb25-1" data-line-number="1">$ <span class="ex">usermod</span> -aG groep gebruiker</a></code></pre></div></li>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb25-1" data-line-number="1">$ <span class="fu">sudo</span> usermod -aG groep gebruiker</a></code></pre></div></li>
 </ul>
 </section><section id="bestandspermissies" class="slide level2">
 <h2>Bestandspermissies</h2>
-<ul>
-<li>= toegangsrechten voor bestanden en directories
+<p>= toegangsrechten voor bestanden en directories</p>
 <ul>
 <li>Bestanden zijn eigendom van een gebruiker en groep</li>
 <li>cfr. <code>ls -l</code> voor een overzicht</li>
-</ul></li>
 </ul>
 </section><section id="bestandspermissies-1" class="slide level2">
 <h2>Bestandspermissies</h2>
@@ -992,73 +1004,206 @@ chgrp group file</code></pre>
 <a class="sourceLine" id="cb37-2" data-line-number="2">  <span class="bu">printf</span> <span class="st">&quot;Too many arguments\n&quot;</span> <span class="op">&gt;&amp;2</span></a>
 <a class="sourceLine" id="cb37-3" data-line-number="3">  <span class="bu">exit</span> 1</a>
 <a class="sourceLine" id="cb37-4" data-line-number="4"><span class="kw">fi</span></a></code></pre></div>
-</section><section id="case" class="slide level2">
-<h2>Case</h2>
-<div class="sourceCode" id="cb38"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="kw">case</span> EXPR<span class="kw"> in</span></a>
-<a class="sourceLine" id="cb38-2" data-line-number="2">  CASE1<span class="kw">)</span></a>
-<a class="sourceLine" id="cb38-3" data-line-number="3">    <span class="co"># ...</span></a>
-<a class="sourceLine" id="cb38-4" data-line-number="4">    <span class="kw">;;</span></a>
-<a class="sourceLine" id="cb38-5" data-line-number="5">  CASE2<span class="kw">)</span></a>
-<a class="sourceLine" id="cb38-6" data-line-number="6">    <span class="co"># ...</span></a>
-<a class="sourceLine" id="cb38-7" data-line-number="7">    <span class="kw">;;</span></a>
-<a class="sourceLine" id="cb38-8" data-line-number="8">  *<span class="kw">)</span></a>
-<a class="sourceLine" id="cb38-9" data-line-number="9">    <span class="co"># ...</span></a>
-<a class="sourceLine" id="cb38-10" data-line-number="10">    <span class="kw">;;</span></a>
-<a class="sourceLine" id="cb38-11" data-line-number="11"><span class="kw">esac</span></a></code></pre></div>
-</section><section id="case-1" class="slide level2">
-<h2>Case</h2>
-<div class="sourceCode" id="cb39"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="va">option=</span><span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb39-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb39-3" data-line-number="3"><span class="kw">case</span> <span class="st">&quot;</span><span class="va">${option}</span><span class="st">&quot;</span><span class="kw"> in</span></a>
-<a class="sourceLine" id="cb39-4" data-line-number="4">  -h<span class="kw">|</span>--help<span class="kw">|</span>-?<span class="kw">)</span></a>
-<a class="sourceLine" id="cb39-5" data-line-number="5">    <span class="ex">usage</span></a>
-<a class="sourceLine" id="cb39-6" data-line-number="6">    <span class="bu">exit</span> 0</a>
-<a class="sourceLine" id="cb39-7" data-line-number="7">    <span class="kw">;;</span></a>
-<a class="sourceLine" id="cb39-8" data-line-number="8">  -v<span class="kw">|</span>--verbose<span class="kw">)</span></a>
-<a class="sourceLine" id="cb39-9" data-line-number="9">    <span class="va">verbose=</span>y</a>
-<a class="sourceLine" id="cb39-10" data-line-number="10">    <span class="bu">shift</span></a>
-<a class="sourceLine" id="cb39-11" data-line-number="11">    <span class="kw">;;</span></a>
-<a class="sourceLine" id="cb39-12" data-line-number="12">  *<span class="kw">)</span></a>
-<a class="sourceLine" id="cb39-13" data-line-number="13">    <span class="bu">printf</span> <span class="st">&quot;Unrecognized option: %s\n&quot;</span> <span class="st">&quot;</span><span class="va">${option}</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb39-14" data-line-number="14">    <span class="ex">usage</span></a>
-<a class="sourceLine" id="cb39-15" data-line-number="15">    <span class="bu">exit</span> 1</a>
-<a class="sourceLine" id="cb39-16" data-line-number="16">    <span class="kw">;;</span></a>
-<a class="sourceLine" id="cb39-17" data-line-number="17"><span class="kw">esac</span></a></code></pre></div>
 </section><section id="while-lus" class="slide level2">
 <h2>While-lus</h2>
-<div class="sourceCode" id="cb40"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="kw">while</span> <span class="ex">EXPR</span><span class="kw">;</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb40-2" data-line-number="2">  <span class="co"># ...</span></a>
-<a class="sourceLine" id="cb40-3" data-line-number="3"><span class="kw">done</span></a></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="kw">while</span> <span class="ex">EXPR</span><span class="kw">;</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb38-2" data-line-number="2">  <span class="co"># ...</span></a>
+<a class="sourceLine" id="cb38-3" data-line-number="3"><span class="kw">done</span></a></code></pre></div>
 </section><section id="until-lus" class="slide level2">
 <h2>Until-lus</h2>
-<div class="sourceCode" id="cb41"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="kw">until</span> <span class="ex">EXPR</span><span class="kw">;</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb41-2" data-line-number="2">  <span class="co"># ...</span></a>
-<a class="sourceLine" id="cb41-3" data-line-number="3"><span class="kw">done</span></a></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="kw">until</span> <span class="ex">EXPR</span><span class="kw">;</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb39-2" data-line-number="2">  <span class="co"># ...</span></a>
+<a class="sourceLine" id="cb39-3" data-line-number="3"><span class="kw">done</span></a></code></pre></div>
 </section><section id="for-lus" class="slide level2">
 <h2>For-lus</h2>
 <p>Itereren over een lijst</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw">for</span> <span class="ex">ITEM</span> in LIST<span class="kw">;</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb42-2" data-line-number="2">  <span class="co"># ...</span></a>
-<a class="sourceLine" id="cb42-3" data-line-number="3"><span class="kw">done</span></a></code></pre></div>
-<div class="sourceCode" id="cb43"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="kw">for</span> <span class="fu">file</span> in *.md<span class="kw">;</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb43-2" data-line-number="2">  <span class="bu">printf</span> <span class="st">&quot;Processing file %s\n&quot;</span> <span class="st">&quot;</span><span class="va">${file}</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb43-3" data-line-number="3">  <span class="co"># ...</span></a>
-<a class="sourceLine" id="cb43-4" data-line-number="4"><span class="kw">done</span></a></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="kw">for</span> <span class="ex">ITEM</span> in LIST<span class="kw">;</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb40-2" data-line-number="2">  <span class="co"># ...</span></a>
+<a class="sourceLine" id="cb40-3" data-line-number="3"><span class="kw">done</span></a></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="kw">for</span> <span class="fu">file</span> in *.md<span class="kw">;</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb41-2" data-line-number="2">  <span class="bu">printf</span> <span class="st">&quot;Processing file %s\n&quot;</span> <span class="st">&quot;</span><span class="va">${file}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb41-3" data-line-number="3">  <span class="co"># ...</span></a>
+<a class="sourceLine" id="cb41-4" data-line-number="4"><span class="kw">done</span></a></code></pre></div>
 </section><section id="itereren-over-positionele-parameters-while" class="slide level2">
 <h2>Itereren over positionele parameters (<code>while</code>)</h2>
-<div class="sourceCode" id="cb44"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="kw">while</span><span class="bu"> [</span> <span class="st">&quot;</span><span class="va">$#</span><span class="st">&quot;</span> <span class="ot">-gt</span> 0<span class="bu"> ]</span>; <span class="kw">do</span></a>
-<a class="sourceLine" id="cb44-2" data-line-number="2">  <span class="bu">printf</span> <span class="st">&quot;Arg: %s\n&quot;</span> <span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb44-3" data-line-number="3">  <span class="co"># ...</span></a>
-<a class="sourceLine" id="cb44-4" data-line-number="4">  <span class="bu">shift</span></a>
-<a class="sourceLine" id="cb44-5" data-line-number="5"><span class="kw">done</span></a></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw">while</span><span class="bu"> [</span> <span class="st">&quot;</span><span class="va">$#</span><span class="st">&quot;</span> <span class="ot">-gt</span> 0<span class="bu"> ]</span>; <span class="kw">do</span></a>
+<a class="sourceLine" id="cb42-2" data-line-number="2">  <span class="bu">printf</span> <span class="st">&quot;Arg: %s\n&quot;</span> <span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb42-3" data-line-number="3">  <span class="co"># ...</span></a>
+<a class="sourceLine" id="cb42-4" data-line-number="4">  <span class="bu">shift</span></a>
+<a class="sourceLine" id="cb42-5" data-line-number="5"><span class="kw">done</span></a></code></pre></div>
 </section><section id="itereren-over-positionele-parameters-for" class="slide level2">
 <h2>Itereren over positionele parameters (<code>for</code>)</h2>
-<div class="sourceCode" id="cb45"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="kw">for</span> <span class="ex">arg</span> in <span class="st">&quot;</span><span class="va">${@}</span><span class="st">&quot;</span><span class="kw">;</span> <span class="kw">do</span></a>
-<a class="sourceLine" id="cb45-2" data-line-number="2">  <span class="bu">printf</span> <span class="st">&quot;Arg: %s\n&quot;</span> <span class="st">&quot;</span><span class="va">${arg}</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb45-3" data-line-number="3">  <span class="co"># ...</span></a>
-<a class="sourceLine" id="cb45-4" data-line-number="4"><span class="kw">done</span></a></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="kw">for</span> <span class="ex">arg</span> in <span class="st">&quot;</span><span class="va">${@}</span><span class="st">&quot;</span><span class="kw">;</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb43-2" data-line-number="2">  <span class="bu">printf</span> <span class="st">&quot;Arg: %s\n&quot;</span> <span class="st">&quot;</span><span class="va">${arg}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb43-3" data-line-number="3">  <span class="co"># ...</span></a>
+<a class="sourceLine" id="cb43-4" data-line-number="4"><span class="kw">done</span></a></code></pre></div>
 </section></section>
-<section><section id="hoofdstuk-7.-een-webserver-installeren" class="title-slide slide level1"><h1>Hoofdstuk 7. Een webserver installeren</h1></section><section id="netwerkinstellingen-controleren" class="slide level2">
+<section><section id="hoofdstuk-7.-een-webserver-installeren" class="title-slide slide level1"><h1>Hoofdstuk 7. Een webserver installeren</h1></section><section id="doelstelling" class="slide level2">
+<h2>Doelstelling</h2>
+<ul>
+<li>LAMP-stack: <strong>L</strong>inux + <strong>A</strong>pache + <strong>M</strong>ariaDB + <strong>P</strong>HP</li>
+<li>Installeren Wordpress</li>
+<li>Website bekijken vanop het fysieke systeem</li>
+</ul>
+</section><section id="installatie-software" class="slide level2">
+<h2>Installatie software</h2>
+<div class="sourceCode" id="cb44"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb44-1" data-line-number="1">$ <span class="fu">sudo</span> dnf install mariadb-server wordpress phpMyAdmin</a></code></pre></div>
+</section><section id="belangrijke-directories" class="slide level2">
+<h2>Belangrijke directories</h2>
+<ul>
+<li><code>/etc/httpd/</code>: configuratie Apache
+<ul>
+<li><code>/etc/httpd/conf/httpd.conf</code></li>
+<li><code>/etc/httpd/conf.d/*.conf</code></li>
+</ul></li>
+<li><code>/var/www/html/</code>: Apache DocumentRoot</li>
+<li><code>/var/log/httpd/</code>: logbestanden
+<ul>
+<li><code>access_log</code></li>
+<li><code>error_log</code></li>
+</ul></li>
+</ul>
+</section><section id="services-opstarten" class="slide level2">
+<h2>Services opstarten</h2>
+<div class="sourceCode" id="cb45"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb45-1" data-line-number="1">$ <span class="fu">sudo</span> systemctl start mariadb</a>
+<a class="sourceLine" id="cb45-2" data-line-number="2">$ <span class="fu">sudo</span> systemctl enable mariadb</a>
+<a class="sourceLine" id="cb45-3" data-line-number="3">$ <span class="fu">sudo</span> systemctl start httpd</a>
+<a class="sourceLine" id="cb45-4" data-line-number="4">$ <span class="fu">sudo</span> systemctl enable httpd</a></code></pre></div>
+<ul>
+<li><code>start</code>: <em>nu</em> opstarten</li>
+<li><code>enable</code>: automatisch opstarten bij <em>booten</em></li>
+</ul>
+</section><section id="test-de-services" class="slide level2">
+<h2>Test de services</h2>
+<div class="sourceCode" id="cb46"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb46-1" data-line-number="1">$ <span class="ex">systemctl</span> status httpd</a>
+<a class="sourceLine" id="cb46-2" data-line-number="2">$ <span class="ex">systemctl</span> status mariadb</a></code></pre></div>
+<ul>
+<li>Open webbrowser <em>op de VM</em>
+<ul>
+<li>surf naar <a href="http://localhost/" class="uri">http://localhost/</a></li>
+</ul></li>
+<li>PHP testen: maak bestand <code>/var/www/html/info.php</code></li>
+<li>Surf naar: <a href="http://localhost/info.php" class="uri">http://localhost/info.php</a></li>
+</ul>
+<div class="sourceCode" id="cb47"><pre class="sourceCode php"><code class="sourceCode php"><a class="sourceLine" id="cb47-1" data-line-number="1"><span class="kw">&lt;?php</span> <span class="fu">phpinfo</span><span class="ot">();</span> <span class="kw">?&gt;</span></a></code></pre></div>
+</section><section id="website-vanaf-fysiek-systeem-bekijken" class="slide level2">
+<h2>Website vanaf fysiek systeem bekijken</h2>
+<ul>
+<li>Controleer IP-adres VM: <code>ip a</code>
+<ul>
+<li>waarschijnlijk 192.168.56.101</li>
+</ul></li>
+<li>Open webbrowser <em>op fysiek systeem</em>
+<ul>
+<li>surf naar <a href="http://192.168.56.101/" class="uri">http://192.168.56.101/</a></li>
+</ul></li>
+</ul>
+</section><section id="routering-vm-fysiek-systeem" class="slide level2">
+<h2>Routering VM ⟷ fysiek systeem</h2>
+<ul>
+<li>Fysiek systeem → VM: <code>ping 192.168.56.101</code></li>
+<li>VM → fysiek systeem: <code>ping 192.168.56.1</code></li>
+</ul>
+<p>Controleer instellingen Host-Only Netwerkinterface VirtualBox.</p>
+</section><section id="firewall-instellingen-aanpassen" class="slide level2">
+<h2>Firewall-instellingen aanpassen</h2>
+<div class="sourceCode" id="cb48"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb48-1" data-line-number="1">$ <span class="fu">sudo</span> firewall-cmd --list-all  # = toon firewall-regels</a>
+<a class="sourceLine" id="cb48-2" data-line-number="2">$ <span class="fu">sudo</span> firewall-cmd --add-service http --permanent</a>
+<a class="sourceLine" id="cb48-3" data-line-number="3">$ <span class="fu">sudo</span> firewall-cmd --add-service https --permanent</a>
+<a class="sourceLine" id="cb48-4" data-line-number="4">$ <span class="fu">sudo</span> firewall-cmd --reload</a></code></pre></div>
+<p>Probeer opnieuw de website te bekijken vanaf het fysieke systeem</p>
+</section><section id="database-beveiligen" class="slide level2">
+<h2>Database beveiligen</h2>
+<div class="sourceCode" id="cb49"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb49-1" data-line-number="1">$ <span class="fu">sudo</span> mysql_secure_installation</a></code></pre></div>
+<ul>
+<li>Volg de instructies!</li>
+<li>kies MariaDB root-wachtwoord
+<ul>
+<li>≠ wachtwoord Linux root!</li>
+</ul></li>
+<li>bevestig andere vragen (ENTER)</li>
+</ul>
+<p><strong>Hou je wachtwoorden goed bij!</strong></p>
+</section><section id="database-voor-wordpress-aanmaken" class="slide level2">
+<h2>Database voor Wordpress aanmaken</h2>
+<ul>
+<li>Surf naar <a href="http://localhost/phpmyadmin/" class="uri">http://localhost/phpmyadmin/</a>, log in</li>
+<li>Klik op “User accounts” &gt; “Add user account”
+<ul>
+<li>User name: <code>wordpress</code></li>
+<li>Host name: Local / <code>localhost</code></li>
+<li>Password: kies er een of “Generate”</li>
+</ul></li>
+<li>Create database with same name and grant all privileges: <em>aanvinken</em></li>
+<li>Ga naar onderaan de pagina, klik rechtsonder op “Go”</li>
+</ul>
+</section><section id="database-testen-root" class="slide level2">
+<h2>Database testen: root</h2>
+<div class="sourceCode" id="cb50"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb50-1" data-line-number="1">$ <span class="ex">mysql</span> -uroot -pR2rrbLV02TA1hAjN mysql</a>
+<a class="sourceLine" id="cb50-2" data-line-number="2"><span class="ex">...</span></a>
+<a class="sourceLine" id="cb50-3" data-line-number="3"><span class="ex">MariaDB</span> [mysql]<span class="op">&gt;</span> SHOW DATABASES<span class="kw">;</span></a>
+<a class="sourceLine" id="cb50-4" data-line-number="4"><span class="ex">MariaDB</span> [mysql]<span class="op">&gt;</span> SELECT user,password from user<span class="kw">;</span></a>
+<a class="sourceLine" id="cb50-5" data-line-number="5"><span class="ex">MariaDB</span> [mysql]<span class="op">&gt;</span> quit</a></code></pre></div>
+<ul>
+<li><code>-uroot</code>: inloggen als MariaDB-root</li>
+<li><code>-pR2rrbLV02TA1hAjN</code>: gekozen wachtwoord
+<ul>
+<li>(GEEN spatie na <code>-p</code>)</li>
+</ul></li>
+<li><code>mysql</code>: inloggen op database <code>mysql</code></li>
+</ul>
+</section><section id="database-testen-wordpress" class="slide level2">
+<h2>Database testen: wordpress</h2>
+<div class="sourceCode" id="cb51"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb51-1" data-line-number="1">$ <span class="ex">mysql</span> -uwordpress -pPu7QxGKPlvEdw6Gr wordpress</a>
+<a class="sourceLine" id="cb51-2" data-line-number="2"><span class="ex">...</span></a>
+<a class="sourceLine" id="cb51-3" data-line-number="3"><span class="ex">MariaDB</span> [wordpress]<span class="op">&gt;</span> SHOW TABLES<span class="kw">;</span></a>
+<a class="sourceLine" id="cb51-4" data-line-number="4"><span class="ex">MariaDB</span> [wordpress]<span class="op">&gt;</span> quit</a></code></pre></div>
+</section><section id="wordpress-belangrijke-bestanden" class="slide level2">
+<h2>Wordpress: Belangrijke bestanden</h2>
+<ul>
+<li><code>/usr/share/wordpress/</code>: installatie Wordpress</li>
+<li><code>/etc/wordpress/wp-config.php</code>: configuratie</li>
+<li><code>/etc/httpd/conf.d/wordpress.conf</code>: Apache-configuratie</li>
+</ul>
+</section><section id="wordpress-apache-configuratie" class="slide level2">
+<h2>Wordpress: Apache-configuratie</h2>
+<p>In <code>/etc/httpd/conf.d/wordpress.conf</code>:</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode apache"><code class="sourceCode apache"><a class="sourceLine" id="cb52-1" data-line-number="1"><span class="co"># Zoek naar</span></a>
+<a class="sourceLine" id="cb52-2" data-line-number="2">Require<span class="st"> local</span></a>
+<a class="sourceLine" id="cb52-3" data-line-number="3"><span class="co"># Vervang door</span></a>
+<a class="sourceLine" id="cb52-4" data-line-number="4">Require<span class="st"> all granted</span></a></code></pre></div>
+<p>Daarna: <code>sudo sytemctl restart httpd</code></p>
+</section><section id="wordpress-database-instellingen" class="slide level2">
+<h2>Wordpress: database-instellingen</h2>
+<p>In <code>/etc/wordpress/wp-config.php</code>:</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode php"><code class="sourceCode php"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="co">/** The name of the database for WordPress */</span></a>
+<a class="sourceLine" id="cb53-2" data-line-number="2"><span class="fu">define</span><span class="ot">(</span><span class="st">&#39;DB_NAME&#39;</span><span class="ot">,</span> <span class="st">&#39;wordpress&#39;</span><span class="ot">);</span></a>
+<a class="sourceLine" id="cb53-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb53-4" data-line-number="4"><span class="co">/** MySQL database username */</span></a>
+<a class="sourceLine" id="cb53-5" data-line-number="5"><span class="fu">define</span><span class="ot">(</span><span class="st">&#39;DB_USER&#39;</span><span class="ot">,</span> <span class="st">&#39;wordpress&#39;</span><span class="ot">);</span></a>
+<a class="sourceLine" id="cb53-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb53-7" data-line-number="7"><span class="co">/** MySQL database password */</span></a>
+<a class="sourceLine" id="cb53-8" data-line-number="8"><span class="fu">define</span><span class="ot">(</span><span class="st">&#39;DB_PASSWORD&#39;</span><span class="ot">,</span> <span class="st">&#39;R2rrbLV02TA1hAjN&#39;</span><span class="ot">);</span></a></code></pre></div>
+</section><section id="wordpress-keys-en-salts" class="slide level2">
+<h2>Wordpress: Keys en Salts</h2>
+<ul>
+<li>Ga naar <a href="https://api.wordpress.org/secret-key/1.1/salt/" class="uri">https://api.wordpress.org/secret-key/1.1/salt/</a></li>
+<li>Copy-paste naar <code>wp-config.php</code></li>
+</ul>
+</section><section id="wordpress-installatie-plugins-en-updates" class="slide level2">
+<h2>Wordpress: installatie plugins en updates</h2>
+<p>In <code>/etc/wordpress/wp-config.php</code>:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode php"><code class="sourceCode php"><a class="sourceLine" id="cb54-1" data-line-number="1"><span class="co">/* ENABLE file changes */</span></a>
+<a class="sourceLine" id="cb54-2" data-line-number="2"><span class="fu">define</span><span class="ot">(</span><span class="st">&#39;DISALLOW_FILE_MODS&#39;</span><span class="ot">,</span> <span class="kw">false</span><span class="ot">);</span></a></code></pre></div>
+</section><section id="installatie-wordpress" class="slide level2">
+<h2>Installatie Wordpress</h2>
+<ul>
+<li>Surf naar <a href="http://192.168.56.101/wordpress/" class="uri">http://192.168.56.101/wordpress/</a></li>
+<li>Kies titel, gebruikersnaam, wachtwoord, enz.</li>
+<li>Log in</li>
+<li>Klaar!</li>
+</ul>
+</section><section id="netwerkinstellingen-controleren" class="slide level2">
 <h2>Netwerkinstellingen controleren</h2>
 <p>Om Internettoegang mogelijk te maken zijn er 3 instellingen nodig:</p>
 <ol type="1">
@@ -1073,6 +1218,99 @@ chgrp group file</code></pre>
 <li>Default gateway: <code>ip route</code> (<code>ip r</code>)</li>
 <li>DNS-server: <code>cat /etc/resolv.conf</code></li>
 </ol>
+</section><section id="wat-is-het-ip-adres-van" class="slide level2">
+<h2>Wat is het IP-adres van…?</h2>
+<div class="sourceCode" id="cb55"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb55-1" data-line-number="1">$ <span class="ex">nslookup</span> www.hogent.be</a>
+<a class="sourceLine" id="cb55-2" data-line-number="2">$ <span class="ex">dig</span> www.hogent.be</a></code></pre></div>
+<p>Wat is <em>mijn publiek</em> IP-adres?</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb56-1" data-line-number="1">$ <span class="ex">curl</span> icanhazip.com</a>
+<a class="sourceLine" id="cb56-2" data-line-number="2"><span class="ex">81.164.175.191</span></a></code></pre></div>
+</section><section id="logbestanden" class="slide level2">
+<h2>Logbestanden</h2>
+<p>Voorbeeld voor Apache:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb57-1" data-line-number="1">$ <span class="fu">sudo</span> journalctl</a>
+<a class="sourceLine" id="cb57-2" data-line-number="2">$ <span class="fu">sudo</span> journalctl -u httpd</a>
+<a class="sourceLine" id="cb57-3" data-line-number="3">$ <span class="fu">sudo</span> journalctl -flu httpd</a>
+<a class="sourceLine" id="cb57-4" data-line-number="4">$ <span class="fu">sudo</span> tail -f /var/log/httpd/access_log</a>
+<a class="sourceLine" id="cb57-5" data-line-number="5">$ <span class="fu">sudo</span> tail -f /var/log/httpd/error_log</a></code></pre></div>
+</section></section>
+<section><section id="hoofdstuk-8.-complexere-scripts" class="title-slide slide level1"><h1>Hoofdstuk 8. Complexere scripts</h1></section><section id="case" class="slide level2">
+<h2>Case</h2>
+<div class="sourceCode" id="cb58"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb58-1" data-line-number="1"><span class="kw">case</span> EXPR<span class="kw"> in</span></a>
+<a class="sourceLine" id="cb58-2" data-line-number="2">  PATROON1<span class="kw">)</span></a>
+<a class="sourceLine" id="cb58-3" data-line-number="3">    <span class="co"># ...</span></a>
+<a class="sourceLine" id="cb58-4" data-line-number="4">    <span class="kw">;;</span></a>
+<a class="sourceLine" id="cb58-5" data-line-number="5">  PATROON2<span class="kw">)</span></a>
+<a class="sourceLine" id="cb58-6" data-line-number="6">    <span class="co"># ...</span></a>
+<a class="sourceLine" id="cb58-7" data-line-number="7">    <span class="kw">;;</span></a>
+<a class="sourceLine" id="cb58-8" data-line-number="8">  *<span class="kw">)</span></a>
+<a class="sourceLine" id="cb58-9" data-line-number="9">    <span class="co"># ...</span></a>
+<a class="sourceLine" id="cb58-10" data-line-number="10">    <span class="kw">;;</span></a>
+<a class="sourceLine" id="cb58-11" data-line-number="11"><span class="kw">esac</span></a></code></pre></div>
+</section><section id="case-1" class="slide level2">
+<h2>Case</h2>
+<div class="sourceCode" id="cb59"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb59-1" data-line-number="1"><span class="va">option=</span><span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb59-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb59-3" data-line-number="3"><span class="kw">case</span> <span class="st">&quot;</span><span class="va">${option}</span><span class="st">&quot;</span><span class="kw"> in</span></a>
+<a class="sourceLine" id="cb59-4" data-line-number="4">  -h<span class="kw">|</span>--help<span class="kw">|</span>-?<span class="kw">)</span></a>
+<a class="sourceLine" id="cb59-5" data-line-number="5">    <span class="ex">usage</span></a>
+<a class="sourceLine" id="cb59-6" data-line-number="6">    <span class="bu">exit</span> 0</a>
+<a class="sourceLine" id="cb59-7" data-line-number="7">    <span class="kw">;;</span></a>
+<a class="sourceLine" id="cb59-8" data-line-number="8">  -v<span class="kw">|</span>--verbose<span class="kw">)</span></a>
+<a class="sourceLine" id="cb59-9" data-line-number="9">    <span class="va">verbose=</span>y</a>
+<a class="sourceLine" id="cb59-10" data-line-number="10">    <span class="bu">shift</span></a>
+<a class="sourceLine" id="cb59-11" data-line-number="11">    <span class="kw">;;</span></a>
+<a class="sourceLine" id="cb59-12" data-line-number="12">  *<span class="kw">)</span></a>
+<a class="sourceLine" id="cb59-13" data-line-number="13">    <span class="bu">printf</span> <span class="st">&quot;Unrecognized option: %s\n&quot;</span> <span class="st">&quot;</span><span class="va">${option}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb59-14" data-line-number="14">    <span class="ex">usage</span></a>
+<a class="sourceLine" id="cb59-15" data-line-number="15">    <span class="bu">exit</span> 1</a>
+<a class="sourceLine" id="cb59-16" data-line-number="16">    <span class="kw">;;</span></a>
+<a class="sourceLine" id="cb59-17" data-line-number="17"><span class="kw">esac</span></a></code></pre></div>
+</section><section id="communicatie-scriptomgeving" class="slide level2">
+<h2>Communicatie script/omgeving</h2>
+<p>Informatie uitwisselen tussen script en omgeving:</p>
+<ul>
+<li>I/O: <code>stdin</code>, <code>stdout</code>, <code>stderr</code></li>
+<li>Positionele parameters: <code>$1</code>, <code>$2</code>, enz.</li>
+<li>Exit-status (0-255)</li>
+<li>Omgevingsvariabelen, vb:</li>
+</ul>
+<div class="sourceCode" id="cb60"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb60-1" data-line-number="1"><span class="va">VAGRANT_LOG=</span>debug <span class="ex">vagrant</span> up</a></code></pre></div>
+</section><section id="functies-in-bash" class="slide level2">
+<h2>Functies in Bash</h2>
+<div class="sourceCode" id="cb61"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb61-1" data-line-number="1"><span class="fu">functie_naam()</span> <span class="kw">{</span></a>
+<a class="sourceLine" id="cb61-2" data-line-number="2">    <span class="co"># code</span></a>
+<a class="sourceLine" id="cb61-3" data-line-number="3"><span class="kw">}</span></a></code></pre></div>
+<ul>
+<li>Een functie gedraagt zich als een script!</li>
+<li>Zelfde scope variabelen als script!</li>
+</ul>
+</section><section id="functies-in-bash-voorbeeld" class="slide level2">
+<h2>Functies in Bash: voorbeeld</h2>
+<div class="sourceCode" id="cb62"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb62-1" data-line-number="1"><span class="co"># Usage: copy_iso_to_usb ISO_FILE DEVICE</span></a>
+<a class="sourceLine" id="cb62-2" data-line-number="2"><span class="co"># Copy an ISO file to a USB device, showing progress with pv (pipe viewer)</span></a>
+<a class="sourceLine" id="cb62-3" data-line-number="3"><span class="co"># e.g. copy_iso_to_usb FedoraWorkstation.iso /dev/sdc</span></a>
+<a class="sourceLine" id="cb62-4" data-line-number="4"><span class="fu">copy_iso_to_usb()</span> <span class="kw">{</span></a>
+<a class="sourceLine" id="cb62-5" data-line-number="5">  <span class="bu">local</span> <span class="va">iso=</span><span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb62-6" data-line-number="6">  <span class="bu">local</span> <span class="va">destination=</span><span class="st">&quot;</span><span class="va">${2}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb62-7" data-line-number="7">  <span class="bu">local</span> <span class="va">iso_size</span></a>
+<a class="sourceLine" id="cb62-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb62-9" data-line-number="9">  <span class="va">iso_size=$(</span><span class="fu">stat</span> -c <span class="st">&#39;%s&#39;</span> <span class="st">&quot;</span><span class="va">${iso}</span><span class="st">&quot;</span><span class="va">)</span></a>
+<a class="sourceLine" id="cb62-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb62-11" data-line-number="11">  <span class="bu">printf</span> <span class="st">&quot;Copying %s (%&#39;dB) to %s\n&quot;</span> \</a>
+<a class="sourceLine" id="cb62-12" data-line-number="12">    <span class="st">&quot;</span><span class="va">${iso}</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">${iso_size}</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">${destination}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb62-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb62-14" data-line-number="14">  <span class="fu">dd</span> if=<span class="st">&quot;</span><span class="va">${iso}</span><span class="st">&quot;</span> \</a>
+<a class="sourceLine" id="cb62-15" data-line-number="15">    <span class="kw">|</span> <span class="ex">pv</span> --size <span class="st">&quot;</span><span class="va">${iso_size}</span><span class="st">&quot;</span> \</a>
+<a class="sourceLine" id="cb62-16" data-line-number="16">    <span class="kw">|</span> <span class="fu">sudo</span> dd of=<span class="st">&quot;</span><span class="va">${destination}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb62-17" data-line-number="17"><span class="kw">}</span></a></code></pre></div>
+</section><section id="tips" class="slide level2">
+<h2>Tips</h2>
+<ul>
+<li>Zet positionele parameters om in beschrijvende namen</li>
+<li>Gebruik lokale variabelen</li>
+<li>Functie afsluiten = <code>return STATUS</code></li>
+</ul>
 </section></section>
     </div>
   </div>

@@ -413,14 +413,6 @@ echo "Hello ${var}"    # Binnen " wordt substitutie toegepast
 echo 'Hello ${var}'    # Binnen ' NIET!
 ```
 
-## Command substitution
-
-```bash
-datum=$(date)
-
-echo "${datum}"
-```
-
 ## Gebruik `printf`
 
 `printf` is beter dan `echo`
@@ -433,6 +425,23 @@ printf "Hello %s\n" "${var}"
 
 - Het gedrag is beter gedefinieerd over verschillende UNIX-varianten.
 - Vgl. `printf()` method in Java!
+
+## Fouten opsporen
+
+- Syntax check: `bash -n script.sh`
+- ShellCheck: `shellcheck script.sh`
+    - Gebruik editor-plugin waar mogelijk
+- Druk veel info af (`printf`)
+- Debug-mode:
+    - `bash -x script.sh`
+    - In het script: `set -x` en `set +x`
+- Begin script met:
+
+```bash
+set -o errexit   # abort on nonzero exitstatus
+set -o nounset   # abort on unbound variable
+set -o pipefail  # don't hide errors within pipes
+```
 
 ## Variabelen
 
@@ -515,26 +524,27 @@ Conventie naamgeving:
 - *primaire* groep aanpassen
 
     ```bash
-    $ usermod -g groep gebruiker
+    $ sudo usermod -g groep gebruiker
     ```
 
 - gebruiker toevoegen aan opgegeven groepen *en verwijderen uit alle andere groepen*
 
     ```bash
-    $ usermod -G groep1,groep2 gebruiker 
+    $ sudo usermod -G groep1,groep2 gebruiker
     ```
 
 - gebruiker toevoegen aan opgegeven groep, blijft lid van andere groepen
 
     ```bash
-    $ usermod -aG groep gebruiker
+    $ sudo usermod -aG groep gebruiker
     ```
 
 ## Bestandspermissies
 
-- = toegangsrechten voor bestanden en directories
-    - Bestanden zijn eigendom van een gebruiker en groep
-    - cfr. `ls -l` voor een overzicht
+= toegangsrechten voor bestanden en directories
+
+- Bestanden zijn eigendom van een gebruiker en groep
+- cfr. `ls -l` voor een overzicht
 
 ## Bestandspermissies
 
@@ -544,7 +554,6 @@ Instelbaar op niveau van:
 - `g`: groep, group
 - `o`: andere gebruikers, others
 - `a`: iedereen, all
-
 
 ## Soorten permissies
 
@@ -825,6 +834,184 @@ done
 
 # Hoofdstuk 7. Een webserver installeren
 
+## Doelstelling
+
+- LAMP-stack: **L**inux + **A**pache + **M**ariaDB + **P**HP
+- Installeren Wordpress
+- Website bekijken vanop het fysieke systeem
+
+## Installatie software
+
+```bash
+$ sudo dnf install mariadb-server wordpress phpMyAdmin
+```
+
+## Belangrijke directories
+
+- `/etc/httpd/`: configuratie Apache
+    - `/etc/httpd/conf/httpd.conf`
+    - `/etc/httpd/conf.d/*.conf`
+- `/var/www/html/`: Apache DocumentRoot
+- `/var/log/httpd/`: logbestanden
+    - `access_log`
+    - `error_log`
+
+## Services opstarten
+
+```bash
+$ sudo systemctl start mariadb
+$ sudo systemctl enable mariadb
+$ sudo systemctl start httpd
+$ sudo systemctl enable httpd
+```
+
+- `start`: *nu* opstarten
+- `enable`: automatisch opstarten bij *booten*
+
+## Test de services
+
+```bash
+$ systemctl status httpd
+$ systemctl status mariadb
+```
+
+- Open webbrowser *op de VM*
+    - surf naar <http://localhost/>
+- PHP testen: maak bestand
+  `/var/www/html/info.php`
+- Surf naar: <http://localhost/info.php>
+
+```php
+<?php phpinfo(); ?>
+```
+
+## Website vanaf fysiek systeem bekijken
+
+- Controleer IP-adres VM: `ip a`
+    - waarschijnlijk 192.168.56.101
+- Open webbrowser *op fysiek systeem*
+    - surf naar <http://192.168.56.101/>
+
+## Routering VM ⟷ fysiek systeem
+
+- Fysiek systeem → VM: `ping 192.168.56.101`
+- VM → fysiek systeem: `ping 192.168.56.1`
+
+Controleer instellingen Host-Only Netwerkinterface VirtualBox.
+
+## Firewall-instellingen aanpassen
+
+```bash
+$ sudo firewall-cmd --list-all  # = toon firewall-regels
+$ sudo firewall-cmd --add-service http --permanent
+$ sudo firewall-cmd --add-service https --permanent
+$ sudo firewall-cmd --reload
+```
+
+Probeer opnieuw de website te bekijken vanaf het fysieke systeem
+
+## Database beveiligen
+
+```bash
+$ sudo mysql_secure_installation
+```
+
+- Volg de instructies!
+- kies MariaDB root-wachtwoord
+    - ≠ wachtwoord Linux root!
+- bevestig andere vragen (ENTER)
+
+**Hou je wachtwoorden goed bij!**
+
+## Database voor Wordpress aanmaken
+
+- Surf naar <http://localhost/phpmyadmin/>, log in
+- Klik op "User accounts" → "Add user account"
+    - User name: `wordpress`
+    - Host name: Local / `localhost`
+    - Password: kies er een of "Generate"
+- Create database with same name and grant all privileges: *aanvinken*
+- Ga naar onderaan de pagina, klik rechtsonder op "Go"
+
+## Database testen: root
+
+```bash
+$ mysql -uroot -pR2rrbLV02TA1hAjN mysql
+...
+MariaDB [mysql]> SHOW DATABASES;
+MariaDB [mysql]> SELECT user,password from user;
+MariaDB [mysql]> quit
+```
+
+- `-uroot`: inloggen als MariaDB-root
+- `-pR2rrbLV02TA1hAjN`: gekozen wachtwoord
+    - (GEEN spatie na `-p`)
+- `mysql`: inloggen op database `mysql`
+
+## Database testen: wordpress
+
+```bash
+$ mysql -uwordpress -pPu7QxGKPlvEdw6Gr wordpress
+...
+MariaDB [wordpress]> SHOW TABLES;
+MariaDB [wordpress]> quit
+```
+
+## Wordpress: Belangrijke bestanden
+
+- `/usr/share/wordpress/`: installatie Wordpress
+- `/etc/wordpress/wp-config.php`: configuratie
+- `/etc/httpd/conf.d/wordpress.conf`: Apache-configuratie
+
+## Wordpress: Apache-configuratie
+
+In `/etc/httpd/conf.d/wordpress.conf`:
+
+```apache
+# Zoek naar
+Require local
+# Vervang door
+Require all granted
+```
+
+Daarna: `sudo sytemctl restart httpd`
+
+## Wordpress: database-instellingen
+
+In `/etc/wordpress/wp-config.php`:
+
+```php
+/** The name of the database for WordPress */
+define('DB_NAME', 'wordpress');
+
+/** MySQL database username */
+define('DB_USER', 'wordpress');
+
+/** MySQL database password */
+define('DB_PASSWORD', 'R2rrbLV02TA1hAjN');
+```
+
+## Wordpress: Keys en Salts
+
+- Ga naar <https://api.wordpress.org/secret-key/1.1/salt/>
+- Copy-paste naar `wp-config.php`
+
+## Wordpress: installatie plugins en updates
+
+In `/etc/wordpress/wp-config.php`:
+
+```php
+/* ENABLE file changes */
+define('DISALLOW_FILE_MODS', false);
+```
+
+## Installatie Wordpress
+
+- Surf naar <http://192.168.56.101/wordpress/>
+- Kies titel, gebruikersnaam, wachtwoord, enz.
+- Log in
+- Klaar!
+
 ## Netwerkinstellingen controleren
 
 Om Internettoegang mogelijk te maken zijn er 3 instellingen nodig:
@@ -839,6 +1026,31 @@ Om Internettoegang mogelijk te maken zijn er 3 instellingen nodig:
 2. Default gateway: `ip route` (`ip r`)
 3. DNS-server: `cat /etc/resolv.conf`
 
+## Wat is het IP-adres van...?
+
+```bash
+$ nslookup www.hogent.be
+$ dig www.hogent.be
+```
+
+Wat is *mijn publiek* IP-adres?
+
+```bash
+$ curl icanhazip.com
+81.164.175.191
+```
+
+## Logbestanden
+
+Voorbeeld voor Apache:
+
+```bash
+$ sudo journalctl
+$ sudo journalctl -u httpd
+$ sudo journalctl -flu httpd
+$ sudo tail -f /var/log/httpd/access_log
+$ sudo tail -f /var/log/httpd/error_log
+```
 
 # Hoofdstuk 8. Complexere scripts
 
@@ -846,10 +1058,10 @@ Om Internettoegang mogelijk te maken zijn er 3 instellingen nodig:
 
 ```bash
 case EXPR in
-  CASE1)
+  PATROON1)
     # ...
     ;;
-  CASE2)
+  PATROON2)
     # ...
     ;;
   *)
@@ -880,3 +1092,54 @@ case "${option}" in
 esac
 ```
 
+## Communicatie script/omgeving
+
+Informatie uitwisselen tussen script en omgeving:
+
+- I/O: `stdin`, `stdout`, `stderr`
+- Positionele parameters: `$1`, `$2`, enz.
+- Exit-status (0-255)
+- Omgevingsvariabelen, vb:
+
+```bash
+VAGRANT_LOG=debug vagrant up
+```
+
+## Functies in Bash
+
+```bash
+functie_naam() {
+    # code
+}
+```
+
+- Een functie gedraagt zich als een script!
+- Zelfde scope variabelen als script!
+
+## Functies in Bash: voorbeeld
+
+```bash
+# Usage: copy_iso_to_usb ISO_FILE DEVICE
+# Copy an ISO file to a USB device, showing progress with pv (pipe viewer)
+# e.g. copy_iso_to_usb FedoraWorkstation.iso /dev/sdc
+copy_iso_to_usb() {
+  local iso="${1}"
+  local destination="${2}"
+  local iso_size
+
+  iso_size=$(stat -c '%s' "${iso}")
+
+  printf "Copying %s (%'dB) to %s\n" \
+    "${iso}" "${iso_size}" "${destination}"
+
+  dd if="${iso}" \
+    | pv --size "${iso_size}" \
+    | sudo dd of="${destination}"
+}
+```
+
+## Tips
+
+- Zet positionele parameters om in beschrijvende namen
+- Gebruik lokale variabelen
+- Functie afsluiten = `return STATUS`
