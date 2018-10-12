@@ -272,13 +272,12 @@ sort < unsorted.txt > sorted.txt 2> errors.txt
 (Equivalent van [System.err.printf()](https://docs.oracle.com/javase/7/docs/api/java/io/PrintStream.html#printf(java.lang.String,%20java.lang.Object...)))
 
 ```bash
-printf "Error: %s is not a directory\n" "${dir}" >&2
+printf 'Error: %s is not a directory\n' "${dir}" >&2
 ```
 
 ## Here documents
 
 Als je meer dan één lijn wil afdrukken:
-
 
 ```bash
 cat << _EOF_
@@ -314,7 +313,7 @@ _EOF_
 - Combineer filters via `|` (pipe) om complexe bewerkingen op tekst toe te passen
     - De *UNIX-filosofie*
 
-## Filters: overzicht
+## Filters: overzicht (1)
 
 | Commando | Doel                                                            |
 | :---     | :---                                                            |
@@ -327,7 +326,7 @@ _EOF_
 | `join`   | Voeg twee tekstbestanden samen ahv een gemeenschappelijke kolom |
 | `nl`     | Voeg regelnummers toe aan een bestand                           |
 
-## Filters: overzicht
+## Filters: overzicht (2)
 
 | Commando | Doel                                                     |
 | :---     | :---                                                     |
@@ -374,25 +373,24 @@ awk '{ printf "%s;%s", $2, $4 }'
 
 ## Een script schrijven
 
-1. Maak bestand aan (bv. `mijn-script.sh`) met een teksteditor, bv.
+1. Maak bestand aan (bv. `script.sh`) met een teksteditor, bv.
 
-    ```bash
-    #! /bin/bash
-    echo "Hallo ${USER}"
-    ```
+```bash
+#! /bin/bash
+echo "Hallo ${USER}"
+```
 
-3. Sla op en sluit af
-4. Maak bestand uitvoerbaar: `chmod +x mijn-script.sh`
-5. Voer uit: `./mijn-script.sh`
+2. Maak bestand uitvoerbaar: `chmod +x script.sh`
+3. Voer uit: `./script.sh`
 
 ## De "shebang"
 
 - Eerste regel van een script
 - Begint met `#!` (`#` = hash; `!` = bang)
 - Absoluut pad naar de interpreter voor het script, bv:
-    - `/usr/bin/python`
-    - `/usr/bin/ruby`
-    - `/usr/bin/env bash` (zoek in `${PATH}` naar `bash`)
+  - `#! /usr/bin/python`
+  - `#! /usr/bin/ruby`
+  - `#! /usr/bin/env bash` (zoek in `${PATH}` naar `bash`)
 
 ## Tekst afdrukken
 
@@ -404,13 +402,14 @@ var="world"
 echo "Hello ${var}"
 echo 'Hello ${var}'
 ```
+
 ---
 
 ```bash
 var="world"
 
-echo "Hello ${var}"    # Binnen " wordt substitutie toegepast
-echo 'Hello ${var}'    # Binnen ' NIET!
+echo "Hello ${var}"    # Binnen " " wordt substitutie toegepast
+echo 'Hello ${var}'    # Binnen ' ' NIET!
 ```
 
 ## Gebruik `printf`
@@ -420,7 +419,7 @@ echo 'Hello ${var}'    # Binnen ' NIET!
 ```bash
 var="world"
 
-printf "Hello %s\n" "${var}"
+printf 'Hello %s\n' "${var}"
 ```
 
 - Het gedrag is beter gedefinieerd over verschillende UNIX-varianten.
@@ -447,25 +446,16 @@ set -o pipefail  # don't hide errors within pipes
 
 Bash-variabelen zijn (meestal) strings.
 
-Declaratie:
-
-```bash
-variabele=waarde
-```
-
-Waarde v/e variabele opvragen:
-
-```bash
-${variable}
-```
-
-Gebruik in strings (met dubbele aanhalingstekens):
+- Declaratie: `variabele=waarde`
+    - **geen** spaties rond `=`
+- Waarde v/e variabele opvragen: `${variable}`
+- Gebruik in strings (met dubbele aanhalingstekens):
 
 ```bash
 echo "Hello ${USER}"
 ```
 
-## Variabelen
+## Variabelen: tips
 
 - Gebruik zoveel mogelijk de notatie `${var}`
     - *accolades*
@@ -480,9 +470,9 @@ touch "${bestand}"             # Juist
 
 - Onbestaande variabele wordt beschouwd als *lege string*.
     - Oorzaak van veel fouten in shell-scripts!
-    - `set -o nounset` ⇒ script afgebroken
+    - `set -o nounset` ⇒ script afbreken
 
-## Scope
+## Zichtbaarheid variabelen (scope)
 
 Enkel binnen zelfde "shell", niet binnen "subshells"
 
@@ -560,8 +550,8 @@ Instelbaar op niveau van:
 - `r`: lezen, read
 - `w`: schrijven, write
 - `x`: execute
-    - uitvoeren als commando (file)
-    - toegang met `cd` (directory)
+    - bestand: uitvoeren als commando
+    - directory: toegang met `cd`
 
 ## Instellen met symbolische notatie
 
@@ -606,6 +596,7 @@ Voorbeelden:
 - directories: altijd lezen (r) en execute (x) *samen* toekennen of afnemen
 - gebruiker heeft altijd meer rechten dan groep/others
 - `root` negeert bestandspermissies (mag alles), vb. `/etc/shadow`
+- tip: octale permissies opvragen: `stat -c %a BESTAND`
 
 ## Permissies van nieuwe bestanden: `umask`
 
@@ -690,10 +681,10 @@ Bij uitvoeren van script zijn opties en argumenten beschikbaar via variabelen, *
 | `${1}`, `${2}`, ...   | Eerste, tweede, ... argument                 |
 | `${10}`               | Tiende argument (accolades verplicht!)       |
 | `${*}`                | Alle argumenten: `${1} ${2} ${3}...`         |
-| `${@}`                | Alle argumeniten: `"${1}" "${2}" "${3}"...`  |
+| `${@}`                | Alle argumenten: `"${1}" "${2}" "${3}"...`   |
 | `${#}`                | Aantal positionele parameters                |
 
-## Positionele parameters
+## Positionele parameters: shift
 
 Het commando `shift` schuift positionele parameters op:
 
@@ -775,7 +766,7 @@ fi
 
 ```bash
 if [ "${#}" -gt '2' ]; then
-  printf "Too many arguments\n" >&2
+  printf 'Expected at most 2 arguments, got ${#}\n' >&2
   exit 1
 fi
 ```
@@ -808,7 +799,7 @@ done
 
 ```bash
 for file in *.md; do
-  printf "Processing file %s\n" "${file}"
+  printf 'Processing file %s\n' "${file}"
   # ...
 done
 ```
@@ -817,7 +808,7 @@ done
 
 ```bash
 while [ "$#" -gt 0 ]; do
-  printf "Arg: %s\n" "${1}"
+  printf 'Arg: %s\n' "${1}"
   # ...
   shift
 done
@@ -827,7 +818,7 @@ done
 
 ```bash
 for arg in "${@}"; do
-  printf "Arg: %s\n" "${arg}"
+  printf 'Arg: %s\n' "${arg}"
   # ...
 done
 ```
@@ -1085,7 +1076,7 @@ case "${option}" in
     shift
     ;;
   *)
-    printf "Unrecognized option: %s\n" "${option}"
+    printf 'Unrecognized option: %s\n' "${option}"
     usage
     exit 1
     ;;
@@ -1113,8 +1104,29 @@ functie_naam() {
 }
 ```
 
-- Een functie gedraagt zich als een script!
-- Zelfde scope variabelen als script!
+Een functie gedraagt zich als een script!
+
+- oproepen: `functie_naam arg1 arg2 arg3`
+- positionele parameters: `${1}`, `${2}`, enz.
+- `return STATUS` ipv `exit`
+
+## Scope variabelen bij functies
+
+Wat is de uitvoer van dit script?
+
+```bash
+#! /usr/bin/env bash
+var_a=a
+
+foo() {
+  var_b=b
+  echo "${var_a} ${var_b}"
+}
+
+foo
+
+echo "${var_a} ${var_b}"
+```
 
 ## Functies in Bash: voorbeeld
 
@@ -1141,5 +1153,5 @@ copy_iso_to_usb() {
 ## Tips
 
 - Zet positionele parameters om in beschrijvende namen
-- Gebruik lokale variabelen
-- Functie afsluiten = `return STATUS`
+- Gebruik lokale variabelen in functies
+- Deel script op in (herbruikbare) functies
