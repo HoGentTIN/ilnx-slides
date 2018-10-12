@@ -72,6 +72,7 @@ Het eerste "woord" van een opdrachtregel moet een **commando** zijn
 - Ingebouwd in Bash (zie `man builtins`)
 - Uitvoerbaar bestand in één van de directories in `${PATH}`
 - Absoluut pad naar uitvoerbaar bestand
+- `which COMMANDO`
 
 **Let op!** Bash zoekt nooit in de huidige directory!
 
@@ -304,9 +305,7 @@ GRANT ALL PRIVILEGES ON drupal TO ${drupal_usr}@localhost
 _EOF_
 ```
 
-# Werken met tekst: filters
-
-## Filter
+## Filters
 
 - Filter = commando dat:
     1. leest van `stdin` of bestand,
@@ -315,7 +314,7 @@ _EOF_
 - Combineer filters via `|` (pipe) om complexe bewerkingen op tekst toe te passen
     - De *UNIX-filosofie*
 
-## Filters
+## Filters: overzicht
 
 | Commando | Doel                                                            |
 | :---     | :---                                                            |
@@ -328,7 +327,7 @@ _EOF_
 | `join`   | Voeg twee tekstbestanden samen ahv een gemeenschappelijke kolom |
 | `nl`     | Voeg regelnummers toe aan een bestand                           |
 
-## Filters
+## Filters: overzicht
 
 | Commando | Doel                                                     |
 | :---     | :---                                                     |
@@ -371,21 +370,127 @@ awk '/^#/ { print $0 }'
 awk '{ printf "%s;%s", $2, $4 }'
 ```
 
-# Hoofdstuk 4. Een webserver installeren
+# Hoofdstuk 4. Scripting: intro
 
-## Netwerkinstellingen controleren
+## Een script schrijven
 
-Om Internettoegang mogelijk te maken zijn er 3 instellingen nodig:
+1. Maak bestand aan (bv. `mijn-script.sh`) met een teksteditor, bv.
 
-1. IP-adres en subnetmasker
-2. Default gateway
-3. DNS-server
+    ```bash
+    #! /bin/bash
+    echo "Hallo ${USER}"
+    ```
 
-## Netwerkinstellingen opvragen
+3. Sla op en sluit af
+4. Maak bestand uitvoerbaar: `chmod +x mijn-script.sh`
+5. Voer uit: `./mijn-script.sh`
 
-1. IP-adress/netmask: `ip address` (`ip a`)
-2. Default gateway: `ip route` (`ip r`)
-3. DNS-server: `cat /etc/resolv.conf`
+## De "shebang"
+
+- Eerste regel van een script
+- Begint met `#!` (`#` = hash; `!` = bang)
+- Absoluut pad naar de interpreter voor het script, bv:
+    - `/usr/bin/python`
+    - `/usr/bin/ruby`
+    - `/usr/bin/env bash` (zoek in `${PATH}` naar `bash`)
+
+## Tekst afdrukken
+
+Wat is het verschil?
+
+```bash
+var="world"
+
+echo "Hello ${var}"
+echo 'Hello ${var}'
+```
+---
+
+```bash
+var="world"
+
+echo "Hello ${var}"    # Binnen " wordt substitutie toegepast
+echo 'Hello ${var}'    # Binnen ' NIET!
+```
+
+## Command substitution
+
+```bash
+datum=$(date)
+
+echo "${datum}"
+```
+
+## Gebruik `printf`
+
+`printf` is beter dan `echo`
+
+```bash
+var="world"
+
+printf "Hello %s\n" "${var}"
+```
+
+- Het gedrag is beter gedefinieerd over verschillende UNIX-varianten.
+- Vgl. `printf()` method in Java!
+
+## Variabelen
+
+Bash-variabelen zijn (meestal) strings.
+
+Declaratie:
+
+```bash
+variabele=waarde
+```
+
+Waarde v/e variabele opvragen:
+
+```bash
+${variable}
+```
+
+Gebruik in strings (met dubbele aanhalingstekens):
+
+```bash
+echo "Hello ${USER}"
+```
+
+## Variabelen
+
+- Gebruik zoveel mogelijk de notatie `${var}`
+    - *accolades*
+- Gebruik dubbele aanhalingstekens: `"${var}"`
+    - vermijd *splitsen* van woorden
+
+```bash
+bestand="Mijn bestand.txt"
+touch ${bestand}               # Fout
+touch "${bestand}"             # Juist
+```
+
+- Onbestaande variabele wordt beschouwd als *lege string*.
+    - Oorzaak van veel fouten in shell-scripts!
+    - `set -o nounset` ⇒ script afgebroken
+
+## Scope
+
+Enkel binnen zelfde "shell", niet binnen "subshells"
+
+- Een script oproepen creëert een subshell
+- Maak "globale", of *omgevingsvariabele* met `export`:
+
+```bash
+export VARIABLE1=value
+
+VARIABLE2=value
+export VARIABLE2
+```
+
+Conventie naamgeving:
+
+- Lokale variabelen: kleine letters, bv: `foo_bar`
+- Omgevingsvariabelen: hoofdletters, bv. `FOO_BAR`
 
 # Hoofdstuk 5. Gebruikers, groepen en permissies
 
@@ -425,15 +530,13 @@ Om Internettoegang mogelijk te maken zijn er 3 instellingen nodig:
     $ usermod -aG groep gebruiker
     ```
 
-# Bestandspermissies
-
-## Permissies
+## Bestandspermissies
 
 - = toegangsrechten voor bestanden en directories
     - Bestanden zijn eigendom van een gebruiker en groep
     - cfr. `ls -l` voor een overzicht
 
-## Permissies
+## Bestandspermissies
 
 Instelbaar op niveau van:
 
@@ -566,67 +669,7 @@ chown user:group file
 chgrp group file
 ```
 
-# Hoofdstuk 6. scripts
-
-# Scripts: Variabelen, positionele parameters, logische operatoren
-
-## Variabelen
-
-Bash-variabelen zijn (vrijwel altijd) strings.
-
-Declaratie:
-
-```bash
-variabele=waarde
-```
-
-Waarde v/e variabele opvragen:
-
-```bash
-${variable}
-```
-
-Gebruik in strings (met dubbele aanhalingstekens):
-
-```bash
-echo "Hello ${USER}"
-```
-
-## Variabelen
-
-- Gebruik zoveel mogelijk de notatie `${var}`
-    - *accolades*
-- Gebruik dubbele aanhalingstekens: `"${var}"`
-    - vermijd *splitsen* van woorden
-
-```bash
-bestand="Mijn bestand.txt"
-touch ${bestand}               # Fout
-touch "${bestand}"             # Juist
-```
-
-- Onbestaande variabele wordt beschouwd als *lege string*.
-    - Oorzaak van veel fouten in shell-scripts!
-    - `set -o nounset` ⇒ script afgebroken
-
-## Scope
-
-Enkel binnen zelfde "shell", niet binnen "subshells"
-
-- Een script oproepen creëert een subshell
-- Maak "globale", of *omgevingsvariabele* met `export`:
-
-```bash
-export VARIABLE1=value
-
-VARIABLE2=value
-export VARIABLE2
-```
-
-Conventie naamgeving:
-
-- Lokale variabelen: kleine letters, bv: `foo_bar`
-- Omgevingsvariabelen: hoofdletters, bv. `FOO_BAR`
+# Hoofdstuk 6. Scripts schrijven
 
 ## Positionele parameters
 
@@ -706,48 +749,6 @@ if [ "${#}" -eq "0" ]; then
 fi
 ```
 
-# Scripts: Logische structuren
-
-## Tekst afdrukken
-
-Wat is het verschil?
-
-```bash
-var="world"
-
-echo "Hello ${var}"
-echo 'Hello ${var}'
-```
----
-
-```bash
-var="world"
-
-echo "Hello ${var}"    # Binnen " wordt substitutie toegepast
-echo 'Hello ${var}'    # Binnen ' NIET!
-```
-
-## Command substitution
-
-```bash
-datum=$(date)
-
-echo "${datum}"
-```
-
-## Gebruik `printf`
-
-`printf` is beter dan `echo`
-
-```bash
-var="world"
-
-printf "Hello %s\n" "${var}"
-```
-
-- Het gedrag is beter gedefinieerd over verschillende UNIX-varianten.
-- Vgl. `printf()` method in Java!
-
 ## If
 
 ```bash
@@ -768,44 +769,6 @@ if [ "${#}" -gt '2' ]; then
   printf "Too many arguments\n" >&2
   exit 1
 fi
-```
-
-## Case
-
-```bash
-case EXPR in
-  CASE1)
-    # ...
-    ;;
-  CASE2)
-    # ...
-    ;;
-  *)
-    # ...
-    ;;
-esac
-```
-
-## Case
-
-```bash
-option="${1}"
-
-case "${option}" in
-  -h|--help|-?)
-    usage
-    exit 0
-    ;;
-  -v|--verbose)
-    verbose=y
-    shift
-    ;;
-  *)
-    printf "Unrecognized option: %s\n" "${option}"
-    usage
-    exit 1
-    ;;
-esac
 ```
 
 ## While-lus
@@ -858,5 +821,62 @@ for arg in "${@}"; do
   printf "Arg: %s\n" "${arg}"
   # ...
 done
+```
+
+# Hoofdstuk 7. Een webserver installeren
+
+## Netwerkinstellingen controleren
+
+Om Internettoegang mogelijk te maken zijn er 3 instellingen nodig:
+
+1. IP-adres en subnetmasker
+2. Default gateway
+3. DNS-server
+
+## Netwerkinstellingen opvragen
+
+1. IP-adress/netmask: `ip address` (`ip a`)
+2. Default gateway: `ip route` (`ip r`)
+3. DNS-server: `cat /etc/resolv.conf`
+
+
+# Hoofdstuk 8. Complexere scripts
+
+## Case
+
+```bash
+case EXPR in
+  CASE1)
+    # ...
+    ;;
+  CASE2)
+    # ...
+    ;;
+  *)
+    # ...
+    ;;
+esac
+```
+
+## Case
+
+```bash
+option="${1}"
+
+case "${option}" in
+  -h|--help|-?)
+    usage
+    exit 0
+    ;;
+  -v|--verbose)
+    verbose=y
+    shift
+    ;;
+  *)
+    printf "Unrecognized option: %s\n" "${option}"
+    usage
+    exit 1
+    ;;
+esac
 ```
 
