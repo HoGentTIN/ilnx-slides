@@ -1,5 +1,6 @@
 ## Presentation makefile
 
+SOURCE := besturingssystemen-linux.md
 OUTPUT := docs
 
 # Directory for reveal.js
@@ -15,7 +16,7 @@ STYLE := hogent
 STYLE_FILE := $(REVEAL_JS_DIR)/css/theme/$(STYLE).css
 
 ## Presentation
-$(OUTPUT)/index.html: besturingssystemen-linux.md $(REVEAL_JS_DIR) $(STYLE_FILE)
+$(OUTPUT)/index.html: $(SOURCE) $(REVEAL_JS_DIR) $(STYLE_FILE)
 	pandoc \
 		--standalone \
 		--to=revealjs \
@@ -42,13 +43,13 @@ $(REVEAL_JS_DIR):
 
 all: $(STYLE_FILE) $(OUTPUT)/index.html
 
-handouts.pdf: basic-commands-el7.md.md
+handouts.pdf: $(SOURCE)
 	pandoc --variable mainfont="DejaVu Sans" \
 		--variable monofont="DejaVu Sans Mono" \
 		--variable fontsize=11pt \
 		--variable geometry:margin=1.5cm \
 		-f markdown  $< \
-		--latex-engine=lualatex \
+		--pdf-engine=lualatex \
 		-o $@
 
 ## Cleanup
