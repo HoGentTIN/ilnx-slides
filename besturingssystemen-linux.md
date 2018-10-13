@@ -979,7 +979,7 @@ define('DB_NAME', 'wordpress');
 define('DB_USER', 'wordpress');
 
 /** MySQL database password */
-define('DB_PASSWORD', 'R2rrbLV02TA1hAjN');
+define('DB_PASSWORD', 'Pu7QxGKPlvEdw6Gr');
 ```
 
 ## Wordpress: Keys en Salts
