@@ -1,6 +1,6 @@
 % Besturingssystemen: Linux
 % HoGent Bedrijf en Organisatie
-% 2017-2018
+% 2018-2019
 
 # Hoofdstuk 1. Linux installeren
 
