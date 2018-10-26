@@ -338,6 +338,21 @@ _EOF_
 | `uniq`   | Verwijder dubbele rijen uit een gesorteerd tekstbestand  |
 | `wc`     | Tel karakters, woorden of lijnen in een tekstbestand     |
 
+## Filters: voorbeelden
+
+```bash
+# Invoer uit bestand
+grep 'Williams' tennis.txt
+sort -k2 tennis.txt
+
+# Invoer via stdin
+cat tennis.txt | grep 'Williams'
+cat tennis.txt | tr 'a-z' 'A-Z'
+
+# Combinatie
+sort music.txt | uniq
+```
+
 ## Sed: voorbeelden
 
 ```bash
@@ -359,7 +374,7 @@ sed '/^$/d'
 Wat tussen accolades staat wordt uitgevoerd op elke regel
 
 ```bash
-# Druk 3e kolom af (afgebakend door "whitespace")
+# Druk 4e kolom af (afgebakend door "whitespace")
 awk '{ print $4 }'
 
 # Enkel regels afdrukken die beginnen met #
