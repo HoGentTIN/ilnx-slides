@@ -555,16 +555,16 @@ Conventie naamgeving:
 
 Instelbaar op niveau van:
 
-- `u`: gebruiker, user
-- `g`: groep, group
-- `o`: andere gebruikers, others
-- `a`: iedereen, all
+- `u`: gebruiker, **u**ser
+- `g`: groep, **g**roup
+- `o`: andere gebruikers, **o**thers
+- `a`: iedereen, **a**ll
 
 ## Soorten permissies
 
-- `r`: lezen, read
-- `w`: schrijven, write
-- `x`: execute
+- `r`: lezen, **r**ead
+- `w`: schrijven, **w**rite
+- `x`: e**x**ecute
     - bestand: uitvoeren als commando
     - directory: toegang met `cd`
 
@@ -609,7 +609,7 @@ Voorbeelden:
 
 - sommige permissie-combinaties komen nooit voor in de praktijk, bv. 1, 2, 3
 - directories: altijd lezen (r) en execute (x) *samen* toekennen of afnemen
-- gebruiker heeft altijd meer rechten dan groep/others
+- gebruiker heeft altijd meer rechten dan group/others
 - `root` negeert bestandspermissies (mag alles), vb. `/etc/shadow`
 - tip: octale permissies opvragen: `stat -c %a BESTAND`
 
@@ -701,7 +701,7 @@ Bij uitvoeren van script zijn opties en argumenten beschikbaar via variabelen, *
 
 ## Positionele parameters: shift
 
-Het commando `shift` schuift positionele parameters op:
+Het commando `shift` schuift positionele parameters op naar links:
 
 - `${1}` verdwijnt
 - `${2}` wordt `${1}`
@@ -781,7 +781,7 @@ fi
 
 ```bash
 if [ "${#}" -gt '2' ]; then
-  printf 'Expected at most 2 arguments, got ${#}\n' >&2
+  printf 'Expected at most 2 arguments, got %d\n' "${#}" >&2
   exit 1
 fi
 ```
@@ -898,7 +898,7 @@ $ systemctl status mariadb
 - Open webbrowser *op fysiek systeem*
     - surf naar <http://192.168.56.101/>
 
-## Routering VM ⟷ fysiek systeem
+## Routering VM ⟷  fysiek systeem
 
 - Fysiek systeem → VM: `ping 192.168.56.101`
 - VM → fysiek systeem: `ping 192.168.56.1`
@@ -1167,6 +1167,15 @@ copy_iso_to_usb() {
 
 ## Tips
 
+- Begin elk script met `set -o ...`
 - Zet positionele parameters om in beschrijvende namen
 - Gebruik lokale variabelen in functies
 - Deel script op in (herbruikbare) functies
+- Maak lijnen niet te lang (gebruik `\` op het einde van een regel)
+- Gebruik "lange" opties: maakt script leesbaarder
+
+```bash
+set -o nounset  # stop bij onbestaande variabele
+set -o errexit  # stop bij fout (exitstatus ≠ 0) in commando
+set -o pipefail # stop bij fout in pipeline
+```
