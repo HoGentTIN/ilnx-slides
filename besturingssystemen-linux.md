@@ -802,7 +802,7 @@ until EXPR; do
 done
 ```
 
-## For-lus
+## For-lus (1/4)
 
 Itereren over een lijst
 
@@ -816,6 +816,44 @@ done
 for file in *.md; do
   printf 'Processing file %s\n' "${file}"
   # ...
+done
+```
+
+## For-lus met teller (1/3)
+
+```bash
+for i in {1..10}; do
+  echo "${i}"
+done
+```
+
+```bash
+for i in {2..20..2}; do
+  echo "${i}"
+done
+```
+
+## For-lus met teller (2/3)
+
+```bash
+for i in $(seq 1 10); do
+  echo "${i}"
+done
+```
+
+```bash
+for i in $(seq 2 2 20); do
+  echo "${i}"
+done
+```
+
+## For-lus met teller (3/3)
+
+"Klassieke" for-lus, komt slechts uitzonderlijk voor
+
+```bash
+for ((i=0; i<=10; i++)); do
+  echo "${i}"
 done
 ```
 
