@@ -802,6 +802,19 @@ until EXPR; do
 done
 ```
 
+## While lus met teller
+
+```bash
+counter=0
+
+while [ "${counter}" -le '10' ]; do
+  echo "${counter}"
+  counter=$((counter + 1))
+done
+```
+
+`$(( ... ))` is *arithmetic expansion*
+
 ## For-lus (1/4)
 
 Itereren over een lijst
