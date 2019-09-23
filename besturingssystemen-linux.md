@@ -1,16 +1,124 @@
 % Besturingssystemen: Linux
 % HoGent Bedrijf en Organisatie
-% 2018-2019
+% 2019-2020
+
+# Intro
+
+## Academiejaar 2019-2020
+
+Lectoren:
+
+- Nathalie Declercq
+- Thomas Pollet
+- Bert Van Vreckem
+
+## Waarom Linux?
+
+---
+
+> Ik ga sowieso geen systeem- en netwerkbeheer volgen, waarom moet ik me dan hier mee bezig houden?
+
+## Linux is overal
+
+... en je kan er gewoon niet meer omheen
+
+- Grootste websites
+    - webdev => jouw apps zullen op Linux draaien
+    - e-business: Drupal
+- MacOS X
+    - Ook UNIX
+    - Bash-shell + commando's
+
+---
+
+- Moderne tools voor software release management
+    - Continuous Integration/Delivery
+    - Docker
+- Embedded systemen
+    - Arduino, Raspberry Pi, ...
+    - Multimedia-apparatuur, TV's,  NAS, ...
+
+---
+
+> Ik wil me specialiseren in Windows. Linux interesseert mij niet
+
+## Ook in de Windows-wereld
+
+- Azure cloud platform draait >50% Linux VMs
+- Microsoft loves Linux!
+
+---
+
+> The '70's called, they want their terminal back!
+
+## De kracht van de CLI
+
+- Command line interface (CLI) is de sleutel tot **automatisering**
+    - Miljoenen servers beheren gaat niet via GUI
+    - Ook in Windows ziet men dit nu in (PowerShell)
+- CLI Instructies zijn **bondiger** en makkelijker reproduceerbaar dan GUI instructies
+
+## Leerpad Linux
+
+- Overzicht hoofdstukken
+- Per hoofdstuk:
+    - Voorbereiding
+    - Achtergrondinformatie
+    - Slides
+    - Oefeningen met oplossingen
+    - Toetsingsvragen
+    - Labo-opdrachten
+
+## Verloop contactmoment
+
+- Klassikale instructie
+- Werken aan labo-oefeningen
+    - individuele feedback
+    - extra klassikale uitleg
+- Korte intro volgende sessie
+
+## Buiten contactmomenten
+
+- Bereid volgende sessie voor
+    - Leerpad: voorbereiding, achtergrondinfo, toetsingsvragen
+- Werk verder aan labo's
+
+---
+
+Van een sysadmin wordt **zelfstandigheid** verwacht
+
+De werkwijze in deze cursus is een eerste stap in die richting!
 
 # Hoofdstuk 1. Linux installeren
 
+## Laboverslagen bijhouden
+
+- Gebeurt ahv Github repo met startinfo
+- Ga naar Chamilo, klik door op link naar *classroom.github.com/...*
+- Je krijgt persoonlijke, private Github-repo voor laboverslagen, scripts, ...
+
+## Software downloaden
+
+- Via de websites
+    - Traag, WiFi overbelast
+- GSCHB.4.037, GAARB.0.032
+    - Bekabeld netwerk
+    - <http://netlabfs/public/>
+- USB-stick doorgeven
+
 ## Linux installeren
 
-zie slides leerpad Chamilo
+1. Installeer VirtualBox, Git client
+    - Leerpad Besturingssystemen, 6.1 "Installatie Software"
+    - Leerpad Linux, 1.2 "Achtergrondinformatie"
+2. Maak nieuwe VM voor Linux
+    - Labo 1 - via leerpad (1.5) of Github repo
+    - Volg de instructies!
+3. Installeer Fedora
 
 # Hoofdstuk 2. Linux leren kennen
 
-## Hulp zoeken
+## Hulp zoeken (1)
 
 ```bash
 # Hulp over het commando 'passwd'
@@ -24,7 +132,7 @@ man -k passwd
 apropos passwd
 ```
 
-## Hulp zoeken
+## Hulp zoeken (2)
 
 - Binnen man-page:
     - `q` - man-page verlaten
@@ -86,7 +194,7 @@ Wijzigen het gedrag van het commando
 
 **Let op!** Niet alle commando's volgen de conventie! (bv `find`)
 
-## Substitutie/expansie
+## Substitutie/expansie (1)
 
 Vóór uitvoeren van een commando vervangt Bash bepaalde uitdrukkingen:
 
@@ -96,7 +204,7 @@ Vóór uitvoeren van een commando vervangt Bash bepaalde uitdrukkingen:
     - vb. `ls ~/.ssh`
 - *Parameter expansion*: variabelennamen worden vervangen door waarde, vb. `${USER}` -> `student`
 
-## Substitutie/expansie
+## Substitutie/expansie (2)
 
 - *Command substitution*: `$(commando)` wordt vervangen door uitvoer van `commando`
     - vb. `date=$(date)`
@@ -118,7 +226,7 @@ set -x; mkdir -p a/{b,c,d}/{e,f}; set +x
 
 ## Linux directorystructuur
 
-![](https://linuxconfig.org/images/Directory-Filesystem-Hierarchy-Standard.jpg)
+![ ](https://linuxconfig.org/images/Directory-Filesystem-Hierarchy-Standard.jpg)
 
 ## Absoluut/relatief pad
 
@@ -213,7 +321,7 @@ printf 'Het gebruikers-ID van %s is %d\n' "${USER}" "${UID}"
 
 ## Input en output
 
-![](http://linux-training.be/funhtml/images/bash_stdin_stdout_stderr.svg)
+![ ](http://linux-training.be/funhtml/images/bash_stdin_stdout_stderr.svg)
 
 - *stdin*, standard input
     - vgl. Java `System.in`
@@ -227,9 +335,9 @@ printf 'Het gebruikers-ID van %s is %d\n' "${USER}" "${UID}"
 - *standard input*: invoer toetsenbord
 - *standard output/error*: afdrukken op scherm (console)
 
-![](http://linux-training.be/funhtml/images/bash_ioredirection_keyboard_display.png)
+![ ](http://linux-training.be/funhtml/images/bash_ioredirection_keyboard_display.png)
 
-## I/O Redirection
+## I/O Redirection (1)
 
 | Syntax            | Betekenis                                                 |
 | :---              | :---                                                      |
@@ -239,17 +347,17 @@ printf 'Het gebruikers-ID van %s is %d\n' "${USER}" "${UID}"
 | `cmd < file`      | gebruik inhoud van `file` als invoer voor `cmd`           |
 | `cmd1 | cmd2`     | gebruik uitvoer van `cmd1` als invoer voor `cmd2`         |
 
-## I/O Redirection
+## I/O Redirection (2)
 
 `cmd > file`
 
-![](http://linux-training.be/funhtml/images/bash_output_redirection.png)
+![ ](http://linux-training.be/funhtml/images/bash_output_redirection.png)
 
-## I/O Redirection
+## I/O Redirection (3)
 
 `cmd 2> file`
 
-![](http://linux-training.be/funhtml/images/bash_error_redirection.png)
+![ ](http://linux-training.be/funhtml/images/bash_error_redirection.png)
 
 ## Combineren
 
@@ -275,7 +383,7 @@ sort < unsorted.txt > sorted.txt 2> errors.txt
 printf 'Error: %s is not a directory\n' "${dir}" >&2
 ```
 
-## Here documents
+## Here documents (1)
 
 Als je meer dan één lijn wil afdrukken:
 
@@ -291,7 +399,7 @@ _EOF_
 
 *Let op:* geen spaties toegelaten vóór de eindemarkering
 
-## Here documents
+## Here documents (2)
 
 Dit kan bv. ook:
 
@@ -386,14 +494,49 @@ awk '{ printf "%s;%s", $2, $4 }'
 
 # Hoofdstuk 4. Scripting: intro
 
+## Vooraf: Git configuratie (1)
+
+ 1 - Configureer Git in je VM
+
+  ```shell
+  sudo dnf install git
+  git config --global user.name "Voornaam Naam"
+  git config --global user.email "emailadres@student.hogent.be"
+  git config --global push.default simple
+  git config --global pull.rebase true
+  git config --global core.autocrlf=input
+  ```
+
+## Vooraf: Git configuratie (2)
+
+2 - Maak een sleutelpaar
+
+```shell
+ssh-keygen
+```
+
+3 - Registreer publieke sleutel op Github
+
+```shell
+cat ~/.ssh/id_rsa.pub
+```
+
+4 - Kloon Git-repo in je VM
+
+```shell
+git clone git@github.com:HoGentTIN/linux-1819-USERNAME.git
+```
+
+met USERNAME jouw Github gebruikersnaam
+
 ## Een script schrijven
 
 1. Maak bestand aan (bv. `script.sh`) met een teksteditor, bv.
 
-```bash
-#! /bin/bash
-echo "Hallo ${USER}"
-```
+    ```bash
+    #! /bin/bash
+    echo "Hallo ${USER}"
+    ```
 
 2. Maak bestand uitvoerbaar: `chmod +x script.sh`
 3. Voer uit: `./script.sh`
@@ -403,9 +546,9 @@ echo "Hallo ${USER}"
 - Eerste regel van een script
 - Begint met `#!` (`#` = hash; `!` = bang)
 - Absoluut pad naar de interpreter voor het script, bv:
-  - `#! /usr/bin/python`
-  - `#! /usr/bin/ruby`
-  - `#! /usr/bin/env bash` (zoek in `${PATH}` naar `bash`)
+    - `#! /usr/bin/python`
+    - `#! /usr/bin/ruby`
+    - `#! /usr/bin/env bash` (zoek in `${PATH}` naar `bash`)
 
 ## Tekst afdrukken
 
@@ -440,7 +583,15 @@ printf 'Hello %s\n' "${var}"
 - Het gedrag is beter gedefinieerd over verschillende UNIX-varianten.
 - Vgl. `printf()` method in Java!
 
-## Fouten opsporen
+## Fouten opsporen (1)
+
+- Werk altijd **stap voor stap**
+- **Test** voortdurend het resultaat van elke wijziging
+- Hou minstens **2 vensters** open naast elkaar:
+    - Editor
+    - Terminal voor testen
+
+## Fouten opsporen (2)
 
 - Syntax check: `bash -n script.sh`
 - ShellCheck: `shellcheck script.sh`
@@ -449,7 +600,10 @@ printf 'Hello %s\n' "${var}"
 - Debug-mode:
     - `bash -x script.sh`
     - In het script: `set -x` en `set +x`
-- Begin script met:
+
+## Fouten voorkomen
+
+Begin elk script met:
 
 ```bash
 set -o errexit   # abort on nonzero exitstatus
@@ -483,6 +637,8 @@ touch ${bestand}               # Fout
 touch "${bestand}"             # Juist
 ```
 
+---
+
 - Onbestaande variabele wordt beschouwd als *lege string*.
     - Oorzaak van veel fouten in shell-scripts!
     - `set -o nounset` ⇒ script afbreken
@@ -500,6 +656,8 @@ export VARIABLE1=value
 VARIABLE2=value
 export VARIABLE2
 ```
+
+---
 
 Conventie naamgeving:
 
@@ -526,32 +684,32 @@ Conventie naamgeving:
 
 ---
 
-- *primaire* groep aanpassen
+*primaire* groep aanpassen
 
-    ```bash
-    $ sudo usermod -g groep gebruiker
-    ```
+```bash
+sudo usermod -g groep gebruiker
+```
 
-- gebruiker toevoegen aan opgegeven groepen *en verwijderen uit alle andere groepen*
+gebruiker toevoegen aan opgegeven groepen *en verwijderen uit alle andere groepen*
 
-    ```bash
-    $ sudo usermod -G groep1,groep2 gebruiker
-    ```
+```bash
+sudo usermod -G groep1,groep2 gebruiker
+```
 
-- gebruiker toevoegen aan opgegeven groep, blijft lid van andere groepen
+gebruiker toevoegen aan opgegeven groep, blijft lid van andere groepen
 
-    ```bash
-    $ sudo usermod -aG groep gebruiker
-    ```
+```bash
+sudo usermod -aG groep gebruiker
+```
 
-## Bestandspermissies
+## Bestandspermissies (1)
 
 = toegangsrechten voor bestanden en directories
 
 - Bestanden zijn eigendom van een gebruiker en groep
 - cfr. `ls -l` voor een overzicht
 
-## Bestandspermissies
+## Bestandspermissies (2)
 
 Instelbaar op niveau van:
 
@@ -572,7 +730,7 @@ Instelbaar op niveau van:
 
 permissies instellen met `chmod`, symbolische notatie
 
-```
+```text
 chmod MODUS FILE
 chmod u+r FILE
       g-w
@@ -589,8 +747,7 @@ Voorbeelden:
 
 ## Instellen met octale notatie
 
-
-```
+```text
   u      g      o
 r w x  r - x  - - -
 1 1 1  1 0 1  0 0 0
@@ -609,7 +766,7 @@ Voorbeelden:
 
 - sommige permissie-combinaties komen nooit voor in de praktijk, bv. 1, 2, 3
 - directories: altijd lezen (r) en execute (x) *samen* toekennen of afnemen
-- gebruiker heeft altijd meer rechten dan group/others
+- permissies owner ≥ group ≥ others
 - `root` negeert bestandspermissies (mag alles), vb. `/etc/shadow`
 - tip: octale permissies opvragen: `stat -c %a BESTAND`
 
@@ -624,15 +781,15 @@ Voorbeelden:
 
 ## Voorbeeld `umask`
 
-`umask 0002`, wat worden de permissies?
+`umask 0027`, wat worden de permissies?
 
-```
+```text
   file      directory
 
   0 6 6 6     0 7 7 7      basis
-- 0 0 0 2   - 0 0 0 2      umask
+- 0 0 2 7   - 0 0 2 7      umask
 ---------   ---------
-  0 6 6 4     0 7 7 5      permissies
+  0 6 4 0     0 7 5 0      permissies
 ```
 
 ## Speciale permissies: *SUID*
@@ -661,7 +818,7 @@ $ ls -l /usr/bin/write
 -rwxr-sr-x. 1 root tty 20k 2017-09-22 10:55 /usr/bin/write
 ```
 
-## Speciale permissies: restricted deletion
+## Speciale permissies: *restricted deletion*
 
 - restricted deletion, of *sticky bit*
 - toegepast op directories
@@ -678,7 +835,7 @@ drwxrwxrwt. 16 root root 360 2017-12-04 13:05 /tmp/
 
 Merk op: root-rechten nodig
 
-```
+```console
 chown user file
 chown user:group file
 chgrp group file
@@ -764,7 +921,7 @@ if [ "${#}" -eq "0" ]; then
 fi
 ```
 
-## If
+## If (1)
 
 ```bash
 if EXPR
@@ -777,7 +934,7 @@ else
 fi
 ```
 
-## If
+## If (2)
 
 ```bash
 if [ "${#}" -gt '2' ]; then
@@ -815,7 +972,7 @@ done
 
 `$(( ... ))` is *arithmetic expansion*
 
-## For-lus (1/4)
+## For-lus
 
 Itereren over een lijst
 
@@ -1142,7 +1299,7 @@ define('DISALLOW_FILE_MODS', false);
 
 # Hoofdstuk 8. Complexere scripts
 
-## Case
+## Case (1)
 
 ```bash
 case EXPR in
@@ -1158,7 +1315,7 @@ case EXPR in
 esac
 ```
 
-## Case
+## Case (2)
 
 ```bash
 option="${1}"
@@ -1247,12 +1404,10 @@ copy_iso_to_usb() {
 }
 ```
 
-## Tips
+## Tips (1)
 
 - Begin elk script met `set -o ...`
 - Zet positionele parameters om in beschrijvende namen
-- Gebruik lokale variabelen in functies
-- Deel script op in (herbruikbare) functies
 - Maak lijnen niet te lang (gebruik `\` op het einde van een regel)
 - Gebruik "lange" opties: maakt script leesbaarder
 
@@ -1261,3 +1416,10 @@ set -o nounset  # stop bij onbestaande variabele
 set -o errexit  # stop bij fout (exitstatus ≠ 0) in commando
 set -o pipefail # stop bij fout in pipeline
 ```
+
+## Tips (2)
+
+- Gebruik lokale variabelen in functies
+- Deel script op in (herbruikbare) functies
+
+Meer tips op: <https://gitpitch.com/bertvv/presentation-clean-bash>
