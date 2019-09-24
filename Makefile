@@ -1,63 +1,102 @@
-## Presentation makefile
+## Reveal.js presentation Makefile
+#
+# This Makefile will convert Markdown files into Reveal.js presentations using
+# Pandoc.
 
-SOURCE := besturingssystemen-linux.md
-OUTPUT := docs
+.POSIX:     # Get reliable POSIX behaviour
+.SUFFIXES:  # Ignore built-in inference rules
+
+#
+# Variables
+#
+
+# Source files: all Markdown files
+sources := $(wildcard *.md)
+
+# Directory for presentation files
+output_dir := docs
+# Output files: Reveal.js presentations
+presentations := $(patsubst %.md,$(output_dir)/%.html,$(sources))  # Na
+
+# Directory for PDF handouts
+handout_dir := .
+# Handout files
+handouts := $(patsubst %.md,$(handout_dir)/%.pdf,$(sources))  # Na
+
+## Reveal.js configuration
 
 # Directory for reveal.js
-REVEAL_JS_DIR := $(OUTPUT)/reveal.js
-
+reveal_js_dir := $(output_dir)/reveal.js
 # File name of the reveal.js tarball
-REVEAL_JS_TAR := 3.4.0.tar.gz
-
+reveal_js_tar := 3.8.0.tar.gz
 # Download URL
-REVEAL_JS_URL := https://github.com/hakimel/reveal.js/archive/$(REVEAL_JS_TAR)
+reveal_js_url := https://github.com/hakimel/reveal.js/archive/$(reveal_js_tar)
 
-STYLE := hogent
-STYLE_FILE := $(REVEAL_JS_DIR)/css/theme/$(STYLE).css
+presentation_theme := hogent
+presentation_theme_file := $(reveal_js_dir)/css/theme/$(presentation_theme).css
 
-## Presentation
-$(OUTPUT)/index.html: $(SOURCE) $(REVEAL_JS_DIR) $(STYLE_FILE)
+## Handouts configuration
+
+main_font := 'Montserrat'
+mono_font := 'Fira Code'
+font_size := '11pt'
+margin := '1.5cm'
+highlight_style := 'haddock'
+pdf_engine := 'xelatex'
+
+#
+# Build targets
+#
+
+help: ## Show this help message
+	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+	@printf "\033[36m%-20s\033[0m Generate individual presentations, with NAME one of:\n" "$(output_dir)/NAME.html"
+	@printf "                         \033[36m%s\033[0m\n" $(presentations)
+	@printf "\033[36m%-20s\033[0m Generate individual handouts, with NAME one of:\n" "$(handout_dir)/NAME.pdf"
+	@printf "                         \033[36m%s\033[0m\n" $(handouts)
+
+all: $(presentations) ## Convert all Markdown files into a Reveal.js presentation
+
+handouts: $(handouts) ## Convert all Markdown files into handouts (PDF)
+
+## Generate presentation from Markdown source
+$(output_dir)/%.html: %.md $(reveal_js_dir) $(presentation_theme_file)
 	pandoc \
 		--standalone \
 		--to=revealjs \
 		--template=default.revealjs \
-		--variable=theme:hogent \
-		--highlight-style=haddock \
+		--variable=theme:$(presentation_theme) \
+		--highlight-style=$(highlight_style) \
 		--output $@ $<
 
 # Highlight styles: espresso or zenburn (not enough contrast in the others)
 # Theme: black, moon, night
 
-$(STYLE_FILE): $(STYLE).css
-	cp $(STYLE).css $(STYLE_FILE)
-
-#$(OUTPUT)/img/*: img/*
-#	cp -r img/* $(OUTPUT)/img
+## Copy custom style file to the correct location
+$(presentation_theme_file): $(presentation_theme).css $(reveal_js_dir)
+	cp $(presentation_theme).css $(presentation_theme_file)
 
 ## Download and install reveal.js locally
-$(REVEAL_JS_DIR):
-	wget $(REVEAL_JS_URL)
-	tar xzf $(REVEAL_JS_TAR)
-	rm $(REVEAL_JS_TAR)
-	mv -T reveal.js* $(REVEAL_JS_DIR)
+$(reveal_js_dir):
+	wget $(reveal_js_url)
+	tar xzf $(reveal_js_tar)
+	rm $(reveal_js_tar)
+	mv -T reveal.js* $(reveal_js_dir)
 
-all: $(STYLE_FILE) $(OUTPUT)/index.html
-
-handouts.pdf: $(SOURCE)
-	pandoc --variable mainfont="DejaVu Sans" \
-		--variable monofont="DejaVu Sans Mono" \
-		--variable fontsize=11pt \
-		--variable geometry:margin=1.5cm \
+$(handout_dir)/%.pdf: %.md
+	pandoc --variable mainfont=$(main_font) \
+		--variable monofont=$(mono_font) \
+		--variable fontsize=$(font_size) \
+		--variable geometry:margin=$(margin) \
+		--highlight-style=$(highlight_style) \
 		-f markdown  $< \
-		--pdf-engine=lualatex \
+		--pdf-engine=$(pdf_engine) \
 		-o $@
 
-## Cleanup
-clean:
-	rm -f $(OUTPUT)/*.html
-	rm -f $(OUTPUT)/*.pdf
+clean: ## Delete presentations and handouts
+	rm -f $(output_dir)/*.html
+	rm -f $(handout_dir)/*.pdf
 
-## Thorough cleanup (also removes reveal.js)
-mrproper: clean
-	rm -rf $(REVEAL_JS_DIR)
+mrproper: clean ## Thorough cleanup (also removes reveal.js)
+	rm -rf $(reveal_js_dir)
 
