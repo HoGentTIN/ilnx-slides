@@ -298,6 +298,24 @@ set -x; mkdir -p a/{b,c,d}/{e,f}; set +x
 - Shortcuts staan onderaan het scherm
     - vb. Exit: `^X` -> Ctrl+X
 
+## Archief aanmaken
+
+vgl. zip-bestand
+
+```console
+tar cjf documents.tar.bz2 Documents/
+tar xf documents.tar.bz2
+```
+
+- `tar` = Tape ARchive
+- Opties:
+  - *c* - *C*reate
+  - *x* - e*X*tract
+  - *j* - compressie met bzip2
+  - *z* - compressie met g*Z*ip
+  - *f* - naam van het archiefbestand (*F*ile)
+  - *v* - toon uitgepakte bestanden (*V*erbose)
+
 # Hoofdstuk 3. Werken met tekst
 
 ## Tekst afdrukken met echo
