@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>Installatie Fedora in VirtualBox</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="reveal.js/css/reveal.css">
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="reveal.js/css/theme/hogent.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'reveal.js/css/print/pdf.css' : 'reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Installatie Fedora in VirtualBox</h1>
+</section>
+
+<section><section id="voorbereiding" class="title-slide slide level1"><h1>Voorbereiding</h1></section><section id="installatie" class="slide level2">
+<h2>Installatie</h2>
+<ul>
+<li>Installeer VirtualBox</li>
+<li>Download Fedora Workstation Live ISO</li>
+</ul>
+</section><section id="extension-pack-installeren" class="slide level2">
+<h2>Extension pack installeren</h2>
+<ul>
+<li>Preferences &gt; Extensions</li>
+</ul>
+</section><section id="maak-een-host-onlynetwerk-aan" class="slide level2">
+<h2>Maak een Host-onlynetwerk aan</h2>
+<ul>
+<li>Tools &gt; Network &gt; Create</li>
+<li>Controleer instellingen:
+<ul>
+<li>IP: 192.168.56.1</li>
+<li>netmask: 255.255.255.0</li>
+<li>DHCP server: aanvinken
+<ul>
+<li>Server address: 192.168.56.100</li>
+<li>Server mask: 255.255.255.0</li>
+<li>Lower address: 192.168.56.101</li>
+<li>Upper address: 192.168.56.254</li>
+</ul></li>
+</ul></li>
+</ul>
+</section></section>
+<section><section id="vm-voorbereiden" class="title-slide slide level1"><h1>VM voorbereiden</h1></section><section id="nieuwe-vm-aanmaken" class="slide level2">
+<h2>Nieuwe VM aanmaken</h2>
+<ul>
+<li>Voldoende grote HDD (dynamically allocated)</li>
+<li>Voldoende geheugen (&gt;= 2GiB)</li>
+<li>Graphics controller: <strong>VBoxSVGA</strong>
+<ul>
+<li>Videogeheugen (128MB)</li>
+<li>3D acceleration</li>
+</ul></li>
+<li>Network: 2 adapters aanzetten
+<ul>
+<li>Adapter 1: NAT</li>
+<li>Adapter 2: Host-only</li>
+</ul></li>
+</ul>
+</section><section id="vm-opstarten" class="slide level2">
+<h2>VM opstarten</h2>
+<ul>
+<li>Booten vanaf Fedora Workstation Live ISO</li>
+</ul>
+</section><section id="installeer-naar-harde-schijf" class="slide level2">
+<h2>Installeer naar harde schijf</h2>
+</section><section id="opnieuw-opstarten" class="slide level2">
+<h2>Opnieuw opstarten</h2>
+<ul>
+<li>ISO verwijderen uit VM!</li>
+</ul>
+</section></section>
+<section><section id="configuratie-vm-optioneel" class="title-slide slide level1"><h1>Configuratie VM (optioneel)</h1></section><section id="screensaver-lock-uitzetten" class="slide level2">
+<h2>Screensaver/-lock uitzetten</h2>
+</section><section id="software-installerenupdates" class="slide level2">
+<h2>Software installeren/updates</h2>
+<pre class="console"><code>sudo yum install git vim-enhanced
+sudo yum upgrade</code></pre>
+<ul>
+<li>Upgrades enkel over performante netwerkverbinding!</li>
+<li>Rebooten enkel nodig na kernel update</li>
+</ul>
+</section><section id="vm-geconfigureerd-naar-wens" class="slide level2">
+<h2>VM geconfigureerd naar wens?</h2>
+<ul>
+<li>Creëer snapshot</li>
+<li>Correct afsluiten!</li>
+</ul>
+</section></section>
+<section><section id="thats-it" class="title-slide slide level1"><h1>That’s it!</h1></section></section>
+    </div>
+  </div>
+
+  <script src="reveal.js/lib/js/head.min.js"></script>
+  <script src="reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: 'reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>
