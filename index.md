@@ -242,7 +242,7 @@ set -x; mkdir -p a/{b,c,d}/{e,f}; set +x
 ## Speciale directorynamen
 
 |      |                                           |
-| :--- | :---                                      |
+|:-----|:------------------------------------------|
 | `/`  | De "root directory"                       |
 | `.`  | De huidige directory (`pwd`)              |
 | `..` | De bovenliggende directory                |
@@ -253,7 +253,7 @@ set -x; mkdir -p a/{b,c,d}/{e,f}; set +x
 ## Werken met directories
 
 | Commando | Taak                          |
-| :---     | :---                          |
+|:---------|:------------------------------|
 | `pwd`    | Toon huidige directory        |
 | `ls`     | Toon inhoud huidige directory |
 | `cd`     | Ga naar een andere directory  |
@@ -263,7 +263,7 @@ set -x; mkdir -p a/{b,c,d}/{e,f}; set +x
 ## Werken met bestanden
 
 | Commando | Taak                                            |
-| :---     | :---                                            |
+|:---------|:------------------------------------------------|
 | `cat`    | Toon inhoud van een bestand                     |
 | `less`   | Toon inhoud, per pagina (navigeer met pijltjes) |
 | `touch`  | Maak leeg bestand aan                           |
@@ -271,6 +271,55 @@ set -x; mkdir -p a/{b,c,d}/{e,f}; set +x
 | `cp`     | Kopieer bestanden                               |
 | `mv`     | Verplaats bestanden (of hernoemen!)             |
 | `rm`     | Verwijder bestanden of directories              |
+
+## Meerdere bestanden opgeven: globbing
+
+Commando uitvoeren op meer dan 1 bestand?
+
+- Geef elk bestand apart op (spatie ertussen)
+    - `cp a.txt b.doc c.jpg /tmp`
+- Gebruik *globbing*-patronen
+    - `cp /media/usbstick/*.jpg ~/Pictures/`
+
+## Globbing-patronen
+
+| Patroon  | Betekenis                      | Voorbeeld           |
+|:---------|:-------------------------------|:--------------------|
+| `?`      | Eén willekeurig teken          | `ls /bin/??`        |
+| `*`      | Willekeurige string (ook leeg) | `ls *.txt`, `ls a*` |
+| `[...]`  | Elk teken opgesomd tussen `[]` | `ls /bin/[A+_]*`    |
+| `[A-Z]`  | Van A t/m Z                    | `ls /bin/*[A-D1-3]` |
+| `[!...]` | *Niet* 1 v/d opgesomde tekens  | `ls /bin/[!a-z]`    |
+
+## Let op
+
+**Globbing &ne; Reguliere expressies!!!**
+
+- Globbing:
+    - Bestandsnamen opgeven
+    - `case` statement in Bash scripting
+    - Véél beperkter dan regex!
+- Reguliere expressies:
+    - Tekstpatronen *binnen* bestanden opzoeken
+
+## Enkele "Anti-patterns"
+
+Gebruik nooit regex om bestanden te selecteren!
+
+```bash
+# Fout:
+ls /bin | grep 'a.*'
+# Beter:
+ls /bin/a*
+```
+
+In dit soort gevallen is `find` overbodig:
+
+```bash
+find . -maxdepth 1 -type f -name 'a*' -exec cp {} /tmp \;
+# Beter:
+cp a* /tmp
+```
 
 ## Hoe maak je een bestand aan?
 
@@ -284,7 +333,7 @@ set -x; mkdir -p a/{b,c,d}/{e,f}; set +x
 - Als je tekst wil invoeren moet je naar *insert mode*.
 
 | Taak                       | Commando |
-| :---                       | :---     |
+|:---------------------------|:---------|
 | Normal mode -> insert mode | `i`      |
 | Insert mode -> normal mode | `<Esc>`  |
 | Opslaan                    | `:w`     |
@@ -357,13 +406,13 @@ printf 'Het gebruikers-ID van %s is %d\n' "${USER}" "${UID}"
 
 ## I/O Redirection (1)
 
-| Syntax            | Betekenis                                                 |
-| :---              | :---                                                      |
-| `cmd > file`      | schrijf uitvoer van `cmd` weg naar `file`                 |
-| `cmd >> file`     | voeg toe aan einde van `file`                             |
-| `cmd 2> file`     | schrijf foutboodschappen van `cmd` weg naar `file`        |
-| `cmd < file`      | gebruik inhoud van `file` als invoer voor `cmd`           |
-| `cmd1 | cmd2`     | gebruik uitvoer van `cmd1` als invoer voor `cmd2`         |
+| Syntax        | Betekenis                                          |
+|:--------------|:---------------------------------------------------|
+| `cmd > file`  | schrijf uitvoer van `cmd` weg naar `file`          |
+| `cmd >> file` | voeg toe aan einde van `file`                      |
+| `cmd 2> file` | schrijf foutboodschappen van `cmd` weg naar `file` |
+| `cmd < file`  | gebruik inhoud van `file` als invoer voor `cmd`    |
+| `cmd1 | cmd2` | gebruik uitvoer van `cmd1` als invoer voor `cmd2`  |
 
 ## I/O Redirection (2)
 
@@ -442,7 +491,7 @@ _EOF_
 ## Filters: overzicht (1)
 
 | Commando | Doel                                                            |
-| :---     | :---                                                            |
+|:---------|:----------------------------------------------------------------|
 | `awk`    | Veelzijdige tool voor bewerken van tekst                        |
 | `cat`    | Druk inhoud bestand(en) af op stdout                            |
 | `cut`    | Selecteer "kolommen" uit tekstbestanden                         |
@@ -455,7 +504,7 @@ _EOF_
 ## Filters: overzicht (2)
 
 | Commando | Doel                                                     |
-| :---     | :---                                                     |
+|:---------|:---------------------------------------------------------|
 | `paste`  | Voeg twee tekstbestanden regel per regel samen           |
 | `sed`    | Veelzijdige tool voor bewerken van tekst (Stream EDitor) |
 | `sort`   | Sorteer tekst                                            |
@@ -865,14 +914,14 @@ chgrp group file
 
 Bij uitvoeren van script zijn opties en argumenten beschikbaar via variabelen, *positionele parameters*
 
-| Variabele             | Betekenis                                    |
-| :-------------------- | :------------------------------------------- |
-| `${0}`                | Naam script                                  |
-| `${1}`, `${2}`, ...   | Eerste, tweede, ... argument                 |
-| `${10}`               | Tiende argument (accolades verplicht!)       |
-| `${*}`                | Alle argumenten: `${1} ${2} ${3}...`         |
-| `${@}`                | Alle argumenten: `"${1}" "${2}" "${3}"...`   |
-| `${#}`                | Aantal positionele parameters                |
+| Variabele           | Betekenis                                  |
+|:--------------------|:-------------------------------------------|
+| `${0}`              | Naam script                                |
+| `${1}`, `${2}`, ... | Eerste, tweede, ... argument               |
+| `${10}`             | Tiende argument (accolades verplicht!)     |
+| `${*}`              | Alle argumenten: `${1} ${2} ${3}...`       |
+| `${@}`              | Alle argumenten: `"${1}" "${2}" "${3}"...` |
+| `${#}`              | Aantal positionele parameters              |
 
 ## Positionele parameters: shift
 
