@@ -7,8 +7,9 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="reveal.js/css/reset.css">
   <link rel="stylesheet" href="reveal.js/css/reveal.css">
-  <style type="text/css">
+  <style>
       code{white-space: pre-wrap;}
       span.smallcaps{font-variant: small-caps;}
       span.underline{text-decoration: underline;}
@@ -38,8 +39,8 @@
 <section><section id="voorbereiding" class="title-slide slide level1"><h1>Voorbereiding</h1></section><section id="installatie" class="slide level2">
 <h2>Installatie</h2>
 <ul>
-<li>Installeer VirtualBox</li>
-<li>Download Fedora Workstation Live ISO</li>
+<li><a href="https://www.virtualbox.org/wiki/Downloads">Installeer VirtualBox</a> en het Extension Pack</li>
+<li>Download <a href="https://getfedora.org/en/workstation/download/">Fedora Workstation Live ISO</a></li>
 </ul>
 </section><section id="extension-pack-installeren" class="slide level2">
 <h2>Extension pack installeren</h2>
@@ -69,7 +70,7 @@
 <ul>
 <li>Voldoende grote HDD (dynamically allocated)</li>
 <li>Voldoende geheugen (&gt;= 2GiB)</li>
-<li>Graphics controller: <strong>VBoxSVGA</strong>
+<li>Graphics controller:
 <ul>
 <li>Videogeheugen (128MB)</li>
 <li>3D acceleration</li>
@@ -97,8 +98,8 @@
 <h2>Screensaver/-lock uitzetten</h2>
 </section><section id="software-installerenupdates" class="slide level2">
 <h2>Software installeren/updates</h2>
-<pre class="console"><code>sudo yum install git vim-enhanced
-sudo yum upgrade</code></pre>
+<pre class="console"><code>sudo dnf install git vim-enhanced bash-completion
+sudo dnf upgrade</code></pre>
 <ul>
 <li>Upgrades enkel over performante netwerkverbinding!</li>
 <li>Rebooten enkel nodig na kernel update</li>
@@ -110,11 +111,10 @@ sudo yum upgrade</code></pre>
 <li>Correct afsluiten!</li>
 </ul>
 </section></section>
-<section><section id="thats-it" class="title-slide slide level1"><h1>That’s it!</h1></section></section>
+<section id="thats-it" class="title-slide slide level1"><h1>That’s it!</h1></section>
     </div>
   </div>
 
-  <script src="reveal.js/lib/js/head.min.js"></script>
   <script src="reveal.js/js/reveal.js"></script>
 
   <script>

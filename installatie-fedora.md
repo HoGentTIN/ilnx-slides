@@ -6,8 +6,8 @@ title: Installatie Fedora in VirtualBox
 
 ## Installatie
 
-- Installeer VirtualBox
-- Download Fedora Workstation Live ISO
+- [Installeer VirtualBox](https://www.virtualbox.org/wiki/Downloads) en het Extension Pack
+- Download [Fedora Workstation Live ISO](https://getfedora.org/en/workstation/download/)
 
 ## Extension pack installeren
 
@@ -31,7 +31,7 @@ title: Installatie Fedora in VirtualBox
 
 - Voldoende grote HDD (dynamically allocated)
 - Voldoende geheugen (>= 2GiB)
-- Graphics controller: **VBoxSVGA**
+- Graphics controller:
     - Videogeheugen (128MB)
     - 3D acceleration
 - Network: 2 adapters aanzetten
@@ -55,8 +55,8 @@ title: Installatie Fedora in VirtualBox
 ## Software installeren/updates
 
 ```console
-sudo yum install git vim-enhanced
-sudo yum upgrade
+sudo dnf install git vim-enhanced bash-completion
+sudo dnf upgrade
 ```
 
 - Upgrades enkel over performante netwerkverbinding!
