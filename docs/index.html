@@ -95,15 +95,16 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <section id="title-slide">
   <h1 class="title">Besturingssystemen: Linux</h1>
   <p class="author">HoGent Bedrijf en Organisatie</p>
-  <p class="date">2019-2020</p>
+  <p class="date">2020-2021</p>
 </section>
 
-<section><section id="intro" class="title-slide slide level1"><h1>Intro</h1></section><section id="academiejaar-2019-2020" class="slide level2">
-<h2>Academiejaar 2019-2020</h2>
+<section><section id="intro" class="title-slide slide level1"><h1>Intro</h1></section><section id="academiejaar-2020-2021" class="slide level2">
+<h2>Academiejaar 2020-2021</h2>
 <p>Lectoren:</p>
 <ul>
 <li>Nathalie Declercq</li>
 <li>Thomas Pollet</li>
+<li>Andy Van Maele</li>
 <li>Bert Van Vreckem</li>
 </ul>
 </section><section id="waarom-linux" class="slide level2">
@@ -224,7 +225,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <li>GSCHB.4.037, GAARB.0.032
 <ul>
 <li>Bekabeld netwerk</li>
-<li><a href="http://netlabfs/public/" class="uri">http://netlabfs/public/</a></li>
+<li><a href="http://tin.hogent.be/public/" class="uri">http://tin.hogent.be/public/</a></li>
 </ul></li>
 <li>USB-stick doorgeven</li>
 </ul>
@@ -509,8 +510,8 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>[A-Z]</code></td>
-<td style="text-align: left;">Van A t/m Z (ook: <code>[A-Ma-m0-5]</code>)</td>
-<td style="text-align: left;"><code>ls /bin/*[0-9]</code></td>
+<td style="text-align: left;">Van A t/m Z</td>
+<td style="text-align: left;"><code>ls /bin/*[A-D1-3]</code></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>[!...]</code></td>
@@ -520,15 +521,16 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 </tbody>
 </table>
 </section><section id="let-op" class="slide level2">
-<h2>Let op!!!</h2>
+<h2>Let op</h2>
 <p><strong>Globbing ≠ Reguliere expressies!!!</strong></p>
 <ul>
 <li>Globbing:
 <ul>
 <li>Bestandsnamen opgeven</li>
 <li><code>case</code> statement in Bash scripting</li>
+<li>Véél beperkter dan regex!</li>
 </ul></li>
-<li>Reguliere expressies
+<li>Reguliere expressies:
 <ul>
 <li>Tekstpatronen <em>binnen</em> bestanden opzoeken</li>
 </ul></li>
@@ -537,9 +539,9 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <h2>Enkele “Anti-patterns”</h2>
 <p>Gebruik nooit regex om bestanden te selecteren!</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Fout:</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="fu">ls</span> /usr/bin <span class="kw">|</span> <span class="fu">grep</span> <span class="st">&#39;a.*&#39;</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="fu">ls</span> /bin <span class="kw">|</span> <span class="fu">grep</span> <span class="st">&#39;a.*&#39;</span></span>
 <span id="cb5-3"><a href="#cb5-3"></a><span class="co"># Beter:</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="fu">ls</span> /usr/bin/a*</span></code></pre></div>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="fu">ls</span> /bin/a*</span></code></pre></div>
 <p>In dit soort gevallen is <code>find</code> overbodig:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">find</span> . -maxdepth 1 -type f -name <span class="st">&#39;a*&#39;</span> -exec cp {} <span class="ex">/tmp</span> <span class="dt">\;</span></span>
 <span id="cb6-2"><a href="#cb6-2"></a><span class="co"># Beter:</span></span>

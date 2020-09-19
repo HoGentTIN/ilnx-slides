@@ -1,15 +1,16 @@
 % Besturingssystemen: Linux
 % HoGent Bedrijf en Organisatie
-% 2019-2020
+% 2020-2021
 
 # Intro
 
-## Academiejaar 2019-2020
+## Academiejaar 2020-2021
 
 Lectoren:
 
 - Nathalie Declercq
 - Thomas Pollet
+- Andy Van Maele
 - Bert Van Vreckem
 
 ## Waarom Linux?
@@ -101,9 +102,7 @@ De werkwijze in deze cursus is een eerste stap in die richting!
 
 - Via de websites
     - Traag, WiFi overbelast
-- GSCHB.4.037, GAARB.0.032
-    - Bekabeld netwerk
-    - <http://netlabfs/public/>
+- <http://tin.hogent.be/public/>
 - USB-stick doorgeven
 
 ## Linux installeren
@@ -358,12 +357,12 @@ tar xf documents.tar.bz2
 
 - `tar` = Tape ARchive
 - Opties:
-  - *c* - *C*reate
-  - *x* - e*X*tract
-  - *j* - compressie met bzip2
-  - *z* - compressie met g*Z*ip
-  - *f* - naam van het archiefbestand (*F*ile)
-  - *v* - toon uitgepakte bestanden (*V*erbose)
+    - *c* - *C*reate
+    - *x* - e*X*tract
+    - *j* - compressie met bzip2
+    - *z* - compressie met g*Z*ip
+    - *f* - naam van het archiefbestand (*F*ile)
+    - *v* - toon uitgepakte bestanden (*V*erbose)
 
 # Hoofdstuk 3. Werken met tekst
 
@@ -425,6 +424,18 @@ printf 'Het gebruikers-ID van %s is %d\n' "${USER}" "${UID}"
 `cmd 2> file`
 
 ![ ](http://linux-training.be/funhtml/images/bash_error_redirection.png)
+
+## Pipes
+
+Probeer het volgende eens!
+
+```console
+$ sudo dnf install fortune cowsay lolcat figlet
+$ echo ${USER} | figlet
+$ fortune
+$ fortune | cowsay
+$ fortune | cowsay | lolcat
+```
 
 ## Combineren
 
