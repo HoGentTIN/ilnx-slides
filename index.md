@@ -288,7 +288,7 @@ Commando uitvoeren op meer dan 1 bestand?
 | `*`      | Willekeurige string (ook leeg) | `ls *.txt`, `ls a*` |
 | `[...]`  | Elk teken opgesomd tussen `[]` | `ls /bin/[A+_]*`    |
 | `[A-Z]`  | Van A t/m Z                    | `ls /bin/*[A-D1-3]` |
-| `[!...]` | *Niet* 1 v/d opgesomde tekens  | `ls /bin/[!a-z]`    |
+| `[!...]` | *Niet* 1 v/d opgesomde tekens  | `ls /bin/[!a-z]*`   |
 
 ## Let op
 
