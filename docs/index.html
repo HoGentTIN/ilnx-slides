@@ -222,11 +222,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <ul>
 <li>Traag, WiFi overbelast</li>
 </ul></li>
-<li>GSCHB.4.037, GAARB.0.032
-<ul>
-<li>Bekabeld netwerk</li>
 <li><a href="http://tin.hogent.be/public/" class="uri">http://tin.hogent.be/public/</a></li>
-</ul></li>
 <li>USB-stick doorgeven</li>
 </ul>
 </section><section id="linux-installeren" class="slide level2">
@@ -516,7 +512,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <tr class="odd">
 <td style="text-align: left;"><code>[!...]</code></td>
 <td style="text-align: left;"><em>Niet</em> 1 v/d opgesomde tekens</td>
-<td style="text-align: left;"><code>ls /bin/[!a-z]</code></td>
+<td style="text-align: left;"><code>ls /bin/[!a-z]*</code></td>
 </tr>
 </tbody>
 </table>
@@ -695,43 +691,51 @@ tar xf documents.tar.bz2</code></pre>
 <h2>I/O Redirection (3)</h2>
 <p><code>cmd 2&gt; file</code></p>
 <p><img data-src="http://linux-training.be/funhtml/images/bash_error_redirection.png" /></p>
+</section><section id="pipes" class="slide level2">
+<h2>Pipes</h2>
+<p>Probeer het volgende eens!</p>
+<pre class="console"><code>$ sudo dnf install fortune cowsay lolcat figlet
+$ echo ${USER} | figlet
+$ fortune
+$ fortune | cowsay
+$ fortune | cowsay | lolcat</code></pre>
 </section><section id="combineren" class="slide level2">
 <h2>Combineren</h2>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># stdout en stderr apart wegschrijven</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="fu">find</span> / -type d <span class="op">&gt;</span> directories.txt <span class="op">2&gt;</span> errors.txt</span>
-<span id="cb10-3"><a href="#cb10-3"></a></span>
-<span id="cb10-4"><a href="#cb10-4"></a><span class="co"># stderr &quot;negeren&quot;</span></span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="fu">find</span> / -type d <span class="op">&gt;</span> directories.txt <span class="op">2&gt;</span> /dev/null</span>
-<span id="cb10-6"><a href="#cb10-6"></a></span>
-<span id="cb10-7"><a href="#cb10-7"></a><span class="co"># stdout en stderr samen wegschrijven</span></span>
-<span id="cb10-8"><a href="#cb10-8"></a><span class="fu">find</span> / -type d <span class="op">&gt;</span> all.txt <span class="op">2&gt;&amp;1</span></span>
-<span id="cb10-9"><a href="#cb10-9"></a></span>
-<span id="cb10-10"><a href="#cb10-10"></a><span class="co"># invoer én uitvoer omleiden</span></span>
-<span id="cb10-11"><a href="#cb10-11"></a><span class="fu">sort</span> <span class="op">&lt;</span> unsorted.txt <span class="op">&gt;</span> sorted.txt <span class="op">2&gt;</span> errors.txt</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># stdout en stderr apart wegschrijven</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="fu">find</span> / -type d <span class="op">&gt;</span> directories.txt <span class="op">2&gt;</span> errors.txt</span>
+<span id="cb11-3"><a href="#cb11-3"></a></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="co"># stderr &quot;negeren&quot;</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="fu">find</span> / -type d <span class="op">&gt;</span> directories.txt <span class="op">2&gt;</span> /dev/null</span>
+<span id="cb11-6"><a href="#cb11-6"></a></span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="co"># stdout en stderr samen wegschrijven</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a><span class="fu">find</span> / -type d <span class="op">&gt;</span> all.txt <span class="op">2&gt;&amp;1</span></span>
+<span id="cb11-9"><a href="#cb11-9"></a></span>
+<span id="cb11-10"><a href="#cb11-10"></a><span class="co"># invoer én uitvoer omleiden</span></span>
+<span id="cb11-11"><a href="#cb11-11"></a><span class="fu">sort</span> <span class="op">&lt;</span> unsorted.txt <span class="op">&gt;</span> sorted.txt <span class="op">2&gt;</span> errors.txt</span></code></pre></div>
 </section><section id="foutboodschappen-afdrukken" class="slide level2">
 <h2>Foutboodschappen afdrukken</h2>
 <p>(Equivalent van <a href="https://docs.oracle.com/javase/7/docs/api/java/io/PrintStream.html#printf(java.lang.String,%20java.lang.Object...)">System.err.printf()</a>)</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a><span class="bu">printf</span> <span class="st">&#39;Error: %s is not a directory\n&#39;</span> <span class="st">&quot;</span><span class="va">${dir}</span><span class="st">&quot;</span> <span class="op">&gt;&amp;2</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1"></a><span class="bu">printf</span> <span class="st">&#39;Error: %s is not a directory\n&#39;</span> <span class="st">&quot;</span><span class="va">${dir}</span><span class="st">&quot;</span> <span class="op">&gt;&amp;2</span></span></code></pre></div>
 </section><section id="here-documents-1" class="slide level2">
 <h2>Here documents (1)</h2>
 <p>Als je meer dan één lijn wil afdrukken:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">cat</span> <span class="op">&lt;&lt; _EOF_</span></span>
-<span id="cb12-2"><a href="#cb12-2"></a>Usage: <span class="va">${0}</span> [OPT]... [ARG]..</span>
-<span id="cb12-3"><a href="#cb12-3"></a></span>
-<span id="cb12-4"><a href="#cb12-4"></a>OPTIONS:</span>
-<span id="cb12-5"><a href="#cb12-5"></a>  -h, --help  Print this help message</span>
-<span id="cb12-6"><a href="#cb12-6"></a></span>
-<span id="cb12-7"><a href="#cb12-7"></a><span class="op">_EOF_</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">cat</span> <span class="op">&lt;&lt; _EOF_</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>Usage: <span class="va">${0}</span> [OPT]... [ARG]..</span>
+<span id="cb13-3"><a href="#cb13-3"></a></span>
+<span id="cb13-4"><a href="#cb13-4"></a>OPTIONS:</span>
+<span id="cb13-5"><a href="#cb13-5"></a>  -h, --help  Print this help message</span>
+<span id="cb13-6"><a href="#cb13-6"></a></span>
+<span id="cb13-7"><a href="#cb13-7"></a><span class="op">_EOF_</span></span></code></pre></div>
 <p><em>Let op:</em> geen spaties toegelaten vóór de eindemarkering</p>
 </section><section id="here-documents-2" class="slide level2">
 <h2>Here documents (2)</h2>
 <p>Dit kan bv. ook:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a><span class="ex">mysql</span> -uroot -p<span class="st">&quot;</span><span class="va">${db_password}</span><span class="st">&quot;</span> mysql <span class="op">&lt;&lt; _EOF_</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a>DROP DATABASE IF EXISTS drupal;</span>
-<span id="cb13-3"><a href="#cb13-3"></a>CREATE DATABASE drupal;</span>
-<span id="cb13-4"><a href="#cb13-4"></a>GRANT ALL PRIVILEGES ON drupal TO <span class="va">${drupal_usr}</span>@localhost</span>
-<span id="cb13-5"><a href="#cb13-5"></a>  IDENTIFIED BY <span class="va">${drupal_password}</span>;</span>
-<span id="cb13-6"><a href="#cb13-6"></a><span class="op">_EOF_</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1"></a><span class="ex">mysql</span> -uroot -p<span class="st">&quot;</span><span class="va">${db_password}</span><span class="st">&quot;</span> mysql <span class="op">&lt;&lt; _EOF_</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>DROP DATABASE IF EXISTS drupal;</span>
+<span id="cb14-3"><a href="#cb14-3"></a>CREATE DATABASE drupal;</span>
+<span id="cb14-4"><a href="#cb14-4"></a>GRANT ALL PRIVILEGES ON drupal TO <span class="va">${drupal_usr}</span>@localhost</span>
+<span id="cb14-5"><a href="#cb14-5"></a>  IDENTIFIED BY <span class="va">${drupal_password}</span>;</span>
+<span id="cb14-6"><a href="#cb14-6"></a><span class="op">_EOF_</span></span></code></pre></div>
 </section><section id="filters" class="slide level2">
 <h2>Filters</h2>
 <ul>
@@ -832,65 +836,47 @@ tar xf documents.tar.bz2</code></pre>
 </table>
 </section><section id="filters-voorbeelden" class="slide level2">
 <h2>Filters: voorbeelden</h2>
-<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># Invoer uit bestand</span></span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="fu">grep</span> <span class="st">&#39;Williams&#39;</span> tennis.txt</span>
-<span id="cb14-3"><a href="#cb14-3"></a><span class="fu">sort</span> -k2 tennis.txt</span>
-<span id="cb14-4"><a href="#cb14-4"></a></span>
-<span id="cb14-5"><a href="#cb14-5"></a><span class="co"># Invoer via stdin</span></span>
-<span id="cb14-6"><a href="#cb14-6"></a><span class="fu">cat</span> tennis.txt <span class="kw">|</span> <span class="fu">grep</span> <span class="st">&#39;Williams&#39;</span></span>
-<span id="cb14-7"><a href="#cb14-7"></a><span class="fu">cat</span> tennis.txt <span class="kw">|</span> <span class="fu">tr</span> <span class="st">&#39;a-z&#39;</span> <span class="st">&#39;A-Z&#39;</span></span>
-<span id="cb14-8"><a href="#cb14-8"></a></span>
-<span id="cb14-9"><a href="#cb14-9"></a><span class="co"># Combinatie</span></span>
-<span id="cb14-10"><a href="#cb14-10"></a><span class="fu">sort</span> music.txt <span class="kw">|</span> <span class="fu">uniq</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># Invoer uit bestand</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="fu">grep</span> <span class="st">&#39;Williams&#39;</span> tennis.txt</span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="fu">sort</span> -k2 tennis.txt</span>
+<span id="cb15-4"><a href="#cb15-4"></a></span>
+<span id="cb15-5"><a href="#cb15-5"></a><span class="co"># Invoer via stdin</span></span>
+<span id="cb15-6"><a href="#cb15-6"></a><span class="fu">cat</span> tennis.txt <span class="kw">|</span> <span class="fu">grep</span> <span class="st">&#39;Williams&#39;</span></span>
+<span id="cb15-7"><a href="#cb15-7"></a><span class="fu">cat</span> tennis.txt <span class="kw">|</span> <span class="fu">tr</span> <span class="st">&#39;a-z&#39;</span> <span class="st">&#39;A-Z&#39;</span></span>
+<span id="cb15-8"><a href="#cb15-8"></a></span>
+<span id="cb15-9"><a href="#cb15-9"></a><span class="co"># Combinatie</span></span>
+<span id="cb15-10"><a href="#cb15-10"></a><span class="fu">sort</span> music.txt <span class="kw">|</span> <span class="fu">uniq</span></span></code></pre></div>
 </section><section id="sed-voorbeelden" class="slide level2">
 <h2>Sed: voorbeelden</h2>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># Zoeken en vervangen (1x per regel)</span></span>
-<span id="cb15-2"><a href="#cb15-2"></a><span class="fu">sed</span> <span class="st">&#39;s/foo/bar/&#39;</span></span>
-<span id="cb15-3"><a href="#cb15-3"></a></span>
-<span id="cb15-4"><a href="#cb15-4"></a><span class="co"># &quot;Globaal&quot;, meerdere keren per regel</span></span>
-<span id="cb15-5"><a href="#cb15-5"></a><span class="fu">sed</span> <span class="st">&#39;s/foo/bar/g&#39;</span></span>
-<span id="cb15-6"><a href="#cb15-6"></a></span>
-<span id="cb15-7"><a href="#cb15-7"></a><span class="co"># Regels die beginnen met &#39;#&#39; verwijderen</span></span>
-<span id="cb15-8"><a href="#cb15-8"></a><span class="fu">sed</span> <span class="st">&#39;/^#/d&#39;</span></span>
-<span id="cb15-9"><a href="#cb15-9"></a></span>
-<span id="cb15-10"><a href="#cb15-10"></a><span class="co"># Lege regels verwijderen</span></span>
-<span id="cb15-11"><a href="#cb15-11"></a><span class="fu">sed</span> <span class="st">&#39;/^$/d&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># Zoeken en vervangen (1x per regel)</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="fu">sed</span> <span class="st">&#39;s/foo/bar/&#39;</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a></span>
+<span id="cb16-4"><a href="#cb16-4"></a><span class="co"># &quot;Globaal&quot;, meerdere keren per regel</span></span>
+<span id="cb16-5"><a href="#cb16-5"></a><span class="fu">sed</span> <span class="st">&#39;s/foo/bar/g&#39;</span></span>
+<span id="cb16-6"><a href="#cb16-6"></a></span>
+<span id="cb16-7"><a href="#cb16-7"></a><span class="co"># Regels die beginnen met &#39;#&#39; verwijderen</span></span>
+<span id="cb16-8"><a href="#cb16-8"></a><span class="fu">sed</span> <span class="st">&#39;/^#/d&#39;</span></span>
+<span id="cb16-9"><a href="#cb16-9"></a></span>
+<span id="cb16-10"><a href="#cb16-10"></a><span class="co"># Lege regels verwijderen</span></span>
+<span id="cb16-11"><a href="#cb16-11"></a><span class="fu">sed</span> <span class="st">&#39;/^$/d&#39;</span></span></code></pre></div>
 </section><section id="awk-voorbeelden" class="slide level2">
 <h2>Awk: voorbeelden</h2>
 <p>Wat tussen accolades staat wordt uitgevoerd op elke regel</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># Druk 4e kolom af (afgebakend door &quot;whitespace&quot;)</span></span>
-<span id="cb16-2"><a href="#cb16-2"></a><span class="fu">awk</span> <span class="st">&#39;{ print $4 }&#39;</span></span>
-<span id="cb16-3"><a href="#cb16-3"></a></span>
-<span id="cb16-4"><a href="#cb16-4"></a><span class="co"># Enkel regels afdrukken die beginnen met #</span></span>
-<span id="cb16-5"><a href="#cb16-5"></a><span class="fu">awk</span> <span class="st">&#39;/^#/ { print $0 }&#39;</span></span>
-<span id="cb16-6"><a href="#cb16-6"></a></span>
-<span id="cb16-7"><a href="#cb16-7"></a><span class="co"># Druk kolom 2 en 4 af, gescheiden door ;</span></span>
-<span id="cb16-8"><a href="#cb16-8"></a><span class="fu">awk</span> <span class="st">&#39;{ printf &quot;%s;%s&quot;, $2, $4 }&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># Druk 4e kolom af (afgebakend door &quot;whitespace&quot;)</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="fu">awk</span> <span class="st">&#39;{ print $4 }&#39;</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a></span>
+<span id="cb17-4"><a href="#cb17-4"></a><span class="co"># Enkel regels afdrukken die beginnen met #</span></span>
+<span id="cb17-5"><a href="#cb17-5"></a><span class="fu">awk</span> <span class="st">&#39;/^#/ { print $0 }&#39;</span></span>
+<span id="cb17-6"><a href="#cb17-6"></a></span>
+<span id="cb17-7"><a href="#cb17-7"></a><span class="co"># Druk kolom 2 en 4 af, gescheiden door ;</span></span>
+<span id="cb17-8"><a href="#cb17-8"></a><span class="fu">awk</span> <span class="st">&#39;{ printf &quot;%s;%s&quot;, $2, $4 }&#39;</span></span></code></pre></div>
 </section></section>
-<section><section id="hoofdstuk-4.-scripting-intro" class="title-slide slide level1"><h1>Hoofdstuk 4. Scripting: intro</h1></section><section id="vooraf-git-configuratie-1" class="slide level2">
-<h2>Vooraf: Git configuratie (1)</h2>
-<p>1 - Configureer Git in je VM</p>
-<pre class="shell"><code>sudo dnf install git
-git config --global user.name &quot;Voornaam Naam&quot;
-git config --global user.email &quot;emailadres@student.hogent.be&quot;
-git config --global push.default simple
-git config --global pull.rebase true
-git config --global core.autocrlf=input</code></pre>
-</section><section id="vooraf-git-configuratie-2" class="slide level2">
-<h2>Vooraf: Git configuratie (2)</h2>
-<p>2 - Maak een sleutelpaar</p>
-<pre class="shell"><code>ssh-keygen</code></pre>
-<p>3 - Registreer publieke sleutel op Github</p>
-<pre class="shell"><code>cat ~/.ssh/id_rsa.pub</code></pre>
-<p>4 - Kloon Git-repo in je VM</p>
-<pre class="shell"><code>git clone git@github.com:HoGentTIN/linux-1819-USERNAME.git</code></pre>
-<p>met USERNAME jouw Github gebruikersnaam</p>
-</section><section id="een-script-schrijven" class="slide level2">
+<section><section id="hoofdstuk-4.-scripting-intro" class="title-slide slide level1"><h1>Hoofdstuk 4. Scripting: intro</h1></section><section id="een-script-schrijven" class="slide level2">
 <h2>Een script schrijven</h2>
 <ol type="1">
 <li><p>Maak bestand aan (bv. <code>script.sh</code>) met een teksteditor, bv.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1"></a><span class="co">#! /bin/bash</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="bu">echo</span> <span class="st">&quot;Hallo </span><span class="va">${USER}</span><span class="st">&quot;</span></span></code></pre></div></li>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1"></a><span class="co">#! /bin/bash</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="bu">echo</span> <span class="st">&quot;Hallo </span><span class="va">${USER}</span><span class="st">&quot;</span></span></code></pre></div></li>
 <li><p>Maak bestand uitvoerbaar: <code>chmod +x script.sh</code></p></li>
 <li><p>Voer uit: <code>./script.sh</code></p></li>
 </ol>
@@ -903,28 +889,31 @@ git config --global core.autocrlf=input</code></pre>
 <ul>
 <li><code>#! /usr/bin/python</code></li>
 <li><code>#! /usr/bin/ruby</code></li>
-<li><code>#! /usr/bin/env bash</code> (zoek in <code>${PATH}</code> naar <code>bash</code>)</li>
+<li><code>#! /usr/bin/env bash</code>
+<ul>
+<li>= zoek in <code>${PATH}</code> naar <code>bash</code></li>
+</ul></li>
 </ul></li>
 </ul>
 </section><section id="tekst-afdrukken" class="slide level2">
 <h2>Tekst afdrukken</h2>
 <p>Wat is het verschil?</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1"></a><span class="va">var=</span><span class="st">&quot;world&quot;</span></span>
-<span id="cb22-2"><a href="#cb22-2"></a></span>
-<span id="cb22-3"><a href="#cb22-3"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span></span>
-<span id="cb22-4"><a href="#cb22-4"></a><span class="bu">echo</span> <span class="st">&#39;Hello ${var}&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1"></a><span class="va">var=</span><span class="st">&quot;world&quot;</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a></span>
+<span id="cb19-3"><a href="#cb19-3"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span></span>
+<span id="cb19-4"><a href="#cb19-4"></a><span class="bu">echo</span> <span class="st">&#39;Hello ${var}&#39;</span></span></code></pre></div>
 </section><section class="slide level2">
 
-<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1"></a><span class="va">var=</span><span class="st">&quot;world&quot;</span></span>
-<span id="cb23-2"><a href="#cb23-2"></a></span>
-<span id="cb23-3"><a href="#cb23-3"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span>    <span class="co"># Binnen &quot; &quot; wordt substitutie toegepast</span></span>
-<span id="cb23-4"><a href="#cb23-4"></a><span class="bu">echo</span> <span class="st">&#39;Hello ${var}&#39;</span>    <span class="co"># Binnen &#39; &#39; NIET!</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1"></a><span class="va">var=</span><span class="st">&quot;world&quot;</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a></span>
+<span id="cb20-3"><a href="#cb20-3"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span>    <span class="co"># Binnen &quot; &quot; wordt substitutie toegepast</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a><span class="bu">echo</span> <span class="st">&#39;Hello ${var}&#39;</span>    <span class="co"># Binnen &#39; &#39; NIET!</span></span></code></pre></div>
 </section><section id="gebruik-printf" class="slide level2">
 <h2>Gebruik <code>printf</code></h2>
 <p><code>printf</code> is beter dan <code>echo</code></p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1"></a><span class="va">var=</span><span class="st">&quot;world&quot;</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a></span>
-<span id="cb24-3"><a href="#cb24-3"></a><span class="bu">printf</span> <span class="st">&#39;Hello %s\n&#39;</span> <span class="st">&quot;</span><span class="va">${var}</span><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1"></a><span class="va">var=</span><span class="st">&quot;world&quot;</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a></span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="bu">printf</span> <span class="st">&#39;Hello %s\n&#39;</span> <span class="st">&quot;</span><span class="va">${var}</span><span class="st">&quot;</span></span></code></pre></div>
 <ul>
 <li>Het gedrag is beter gedefinieerd over verschillende UNIX-varianten.</li>
 <li>Vgl. <code>printf()</code> method in Java!</li>
@@ -958,9 +947,9 @@ git config --global core.autocrlf=input</code></pre>
 </section><section id="fouten-voorkomen" class="slide level2">
 <h2>Fouten voorkomen</h2>
 <p>Begin elk script met:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1"></a><span class="kw">set</span> <span class="ex">-o</span> errexit   <span class="co"># abort on nonzero exitstatus</span></span>
-<span id="cb25-2"><a href="#cb25-2"></a><span class="kw">set</span> <span class="ex">-o</span> nounset   <span class="co"># abort on unbound variable</span></span>
-<span id="cb25-3"><a href="#cb25-3"></a><span class="kw">set</span> <span class="ex">-o</span> pipefail  <span class="co"># don&#39;t hide errors within pipes</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1"></a><span class="kw">set</span> <span class="ex">-o</span> errexit   <span class="co"># abort on nonzero exitstatus</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="kw">set</span> <span class="ex">-o</span> nounset   <span class="co"># abort on unbound variable</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a><span class="kw">set</span> <span class="ex">-o</span> pipefail  <span class="co"># don&#39;t hide errors within pipes</span></span></code></pre></div>
 </section><section id="variabelen" class="slide level2">
 <h2>Variabelen</h2>
 <p>Bash-variabelen zijn (meestal) strings.</p>
@@ -972,9 +961,9 @@ git config --global core.autocrlf=input</code></pre>
 <li>Waarde v/e variabele opvragen: <code>${variable}</code></li>
 <li>Gebruik in strings (met dubbele aanhalingstekens):</li>
 </ul>
-<div class="sourceCode" id="cb26"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${USER}</span><span class="st">&quot;</span></span></code></pre></div>
-</section><section id="variabelen-tips" class="slide level2">
-<h2>Variabelen: tips</h2>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${USER}</span><span class="st">&quot;</span></span></code></pre></div>
+</section><section id="variabelen-codestijl" class="slide level2">
+<h2>Variabelen: codestijl</h2>
 <ul>
 <li>Gebruik zoveel mogelijk de notatie <code>${var}</code>
 <ul>
@@ -985,11 +974,11 @@ git config --global core.autocrlf=input</code></pre>
 <li>vermijd <em>splitsen</em> van woorden</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb27"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1"></a><span class="va">bestand=</span><span class="st">&quot;Mijn bestand.txt&quot;</span></span>
-<span id="cb27-2"><a href="#cb27-2"></a><span class="fu">touch</span> <span class="va">${bestand}</span>               <span class="co"># Fout</span></span>
-<span id="cb27-3"><a href="#cb27-3"></a><span class="fu">touch</span> <span class="st">&quot;</span><span class="va">${bestand}</span><span class="st">&quot;</span>             <span class="co"># Juist</span></span></code></pre></div>
-</section><section class="slide level2">
-
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1"></a><span class="va">bestand=</span><span class="st">&quot;Mijn bestand.txt&quot;</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="fu">touch</span> <span class="va">${bestand}</span>        <span class="co"># Fout</span></span>
+<span id="cb24-3"><a href="#cb24-3"></a><span class="fu">touch</span> <span class="st">&quot;</span><span class="va">${bestand}</span><span class="st">&quot;</span>      <span class="co"># Juist</span></span></code></pre></div>
+</section><section id="onbestaande-variabelen-opvragen" class="slide level2">
+<h2>Onbestaande variabelen opvragen</h2>
 <ul>
 <li>Onbestaande variabele wordt beschouwd als <em>lege string</em>.
 <ul>
@@ -1004,12 +993,12 @@ git config --global core.autocrlf=input</code></pre>
 <li>Een script oproepen creëert een subshell</li>
 <li>Maak “globale”, of <em>omgevingsvariabele</em> met <code>export</code>:</li>
 </ul>
-<div class="sourceCode" id="cb28"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1"></a><span class="bu">export</span> <span class="va">VARIABLE1=</span>value</span>
-<span id="cb28-2"><a href="#cb28-2"></a></span>
-<span id="cb28-3"><a href="#cb28-3"></a><span class="va">VARIABLE2=</span>value</span>
-<span id="cb28-4"><a href="#cb28-4"></a><span class="bu">export</span> <span class="va">VARIABLE2</span></span></code></pre></div>
-</section><section class="slide level2">
-
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1"></a><span class="bu">export</span> <span class="va">VARIABLE1=</span>value</span>
+<span id="cb25-2"><a href="#cb25-2"></a></span>
+<span id="cb25-3"><a href="#cb25-3"></a><span class="va">VARIABLE2=</span>value</span>
+<span id="cb25-4"><a href="#cb25-4"></a><span class="bu">export</span> <span class="va">VARIABLE2</span></span></code></pre></div>
+</section><section id="variabelen-naamgeving" class="slide level2">
+<h2>Variabelen: naamgeving</h2>
 <p>Conventie naamgeving:</p>
 <ul>
 <li>Lokale variabelen: kleine letters, bv: <code>foo_bar</code></li>
@@ -1038,11 +1027,11 @@ git config --global core.autocrlf=input</code></pre>
 </section><section class="slide level2">
 
 <p><em>primaire</em> groep aanpassen</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">sudo</span> usermod -g groep gebruiker</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">sudo</span> usermod -g groep gebruiker</span></code></pre></div>
 <p>gebruiker toevoegen aan opgegeven groepen <em>en verwijderen uit alle andere groepen</em></p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">sudo</span> usermod -G groep1,groep2 gebruiker</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">sudo</span> usermod -G groep1,groep2 gebruiker</span></code></pre></div>
 <p>gebruiker toevoegen aan opgegeven groep, blijft lid van andere groepen</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">sudo</span> usermod -aG groep gebruiker</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">sudo</span> usermod -aG groep gebruiker</span></code></pre></div>
 </section><section id="bestandspermissies-1" class="slide level2">
 <h2>Bestandspermissies (1)</h2>
 <p>= toegangsrechten voor bestanden en directories</p>
@@ -1140,8 +1129,8 @@ r w x  r - x  - - -
 <li>symbolisch: <code>u+s</code></li>
 <li>octaal: 4</li>
 </ul>
-<div class="sourceCode" id="cb35"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1"></a>$ <span class="fu">ls</span> -l /bin/passwd</span>
-<span id="cb35-2"><a href="#cb35-2"></a><span class="ex">-rwsr-xr-x.</span> 1 root root 28k 2017-02-11 12:02 /bin/passwd</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1"></a>$ <span class="fu">ls</span> -l /bin/passwd</span>
+<span id="cb32-2"><a href="#cb32-2"></a><span class="ex">-rwsr-xr-x.</span> 1 root root 28k 2017-02-11 12:02 /bin/passwd</span></code></pre></div>
 </section><section id="speciale-permissies-sgid" class="slide level2">
 <h2>Speciale permissies: <em>SGID</em></h2>
 <ul>
@@ -1151,8 +1140,8 @@ r w x  r - x  - - -
 <li>symbolisch: <code>g+s</code></li>
 <li>octaal: 2</li>
 </ul>
-<div class="sourceCode" id="cb36"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1"></a>$ <span class="fu">ls</span> -l /usr/bin/write </span>
-<span id="cb36-2"><a href="#cb36-2"></a><span class="ex">-rwxr-sr-x.</span> 1 root tty 20k 2017-09-22 10:55 /usr/bin/write</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1"></a>$ <span class="fu">ls</span> -l /usr/bin/write </span>
+<span id="cb33-2"><a href="#cb33-2"></a><span class="ex">-rwxr-sr-x.</span> 1 root tty 20k 2017-09-22 10:55 /usr/bin/write</span></code></pre></div>
 </section><section id="speciale-permissies-restricted-deletion" class="slide level2">
 <h2>Speciale permissies: <em>restricted deletion</em></h2>
 <ul>
@@ -1162,8 +1151,8 @@ r w x  r - x  - - -
 <li>symbolisch: <code>+t</code></li>
 <li>octaal: 1</li>
 </ul>
-<div class="sourceCode" id="cb37"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">ls</span> -ld /tmp</span>
-<span id="cb37-2"><a href="#cb37-2"></a><span class="ex">drwxrwxrwt.</span> 16 root root 360 2017-12-04 13:05 /tmp/</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">ls</span> -ld /tmp</span>
+<span id="cb34-2"><a href="#cb34-2"></a><span class="ex">drwxrwxrwt.</span> 16 root root 360 2017-12-04 13:05 /tmp/</span></code></pre></div>
 </section><section id="eigenaargroep-veranderen" class="slide level2">
 <h2>Eigenaar/groep veranderen:</h2>
 <p>Merk op: root-rechten nodig</p>
@@ -1219,11 +1208,11 @@ chgrp group file</code></pre>
 </ul>
 </section><section id="positionele-parameters-instellen" class="slide level2">
 <h2>Positionele parameters instellen</h2>
-<div class="sourceCode" id="cb39"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1"></a><span class="kw">set</span> <span class="ex">par1</span> par2 par3</span>
-<span id="cb39-2"><a href="#cb39-2"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span>  <span class="co">#  =&gt; par1</span></span>
-<span id="cb39-3"><a href="#cb39-3"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${2}</span><span class="st">&quot;</span>  <span class="co">#  =&gt; par2</span></span>
-<span id="cb39-4"><a href="#cb39-4"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${3}</span><span class="st">&quot;</span>  <span class="co">#  =&gt; par3</span></span>
-<span id="cb39-5"><a href="#cb39-5"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${4}</span><span class="st">&quot;</span>  <span class="co">#  =&gt;       (lege string)</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1"></a><span class="kw">set</span> <span class="ex">par1</span> par2 par3</span>
+<span id="cb36-2"><a href="#cb36-2"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span>  <span class="co">#  =&gt; par1</span></span>
+<span id="cb36-3"><a href="#cb36-3"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${2}</span><span class="st">&quot;</span>  <span class="co">#  =&gt; par2</span></span>
+<span id="cb36-4"><a href="#cb36-4"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${3}</span><span class="st">&quot;</span>  <span class="co">#  =&gt; par3</span></span>
+<span id="cb36-5"><a href="#cb36-5"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${4}</span><span class="st">&quot;</span>  <span class="co">#  =&gt;       (lege string)</span></span></code></pre></div>
 </section><section id="exit-status" class="slide level2">
 <h2>Exit-status</h2>
 <ul>
@@ -1238,11 +1227,11 @@ chgrp group file</code></pre>
 </ul>
 </section><section id="logische-operatoren" class="slide level2">
 <h2>Logische operatoren</h2>
-<div class="sourceCode" id="cb40"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1"></a><span class="kw">if</span> <span class="ex">COMMANDO</span><span class="kw">;</span> <span class="kw">then</span></span>
-<span id="cb40-2"><a href="#cb40-2"></a>  <span class="co"># A</span></span>
-<span id="cb40-3"><a href="#cb40-3"></a><span class="kw">else</span></span>
-<span id="cb40-4"><a href="#cb40-4"></a>  <span class="co"># B</span></span>
-<span id="cb40-5"><a href="#cb40-5"></a><span class="kw">fi</span></span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1"></a><span class="kw">if</span> <span class="ex">COMMANDO</span><span class="kw">;</span> <span class="kw">then</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a>  <span class="co"># A</span></span>
+<span id="cb37-3"><a href="#cb37-3"></a><span class="kw">else</span></span>
+<span id="cb37-4"><a href="#cb37-4"></a>  <span class="co"># B</span></span>
+<span id="cb37-5"><a href="#cb37-5"></a><span class="kw">fi</span></span></code></pre></div>
 <ul>
 <li><code>A</code>-blok wordt uitgevoerd als exit-status van <code>COMMANDO</code> 0 is (geslaagd, TRUE)</li>
 <li><code>B</code>-blok wordt uitgevoerd als exit-status van <code>COMMANDO</code> verschillend is van 0 (gefaald, FALSE)</li>
@@ -1264,95 +1253,95 @@ chgrp group file</code></pre>
 </ul>
 </section><section class="slide level2">
 
-<div class="sourceCode" id="cb41"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1"></a><span class="co"># Fout:</span></span>
-<span id="cb41-2"><a href="#cb41-2"></a><span class="ex">if</span>[<span class="va">$#</span>-eq 0]<span class="kw">;</span> <span class="kw">then</span></span>
-<span id="cb41-3"><a href="#cb41-3"></a>  <span class="bu">echo</span> <span class="st">&quot;Expected at least one argument&quot;</span></span>
-<span id="cb41-4"><a href="#cb41-4"></a><span class="kw">fi</span></span>
-<span id="cb41-5"><a href="#cb41-5"></a></span>
-<span id="cb41-6"><a href="#cb41-6"></a><span class="co"># Juist:</span></span>
-<span id="cb41-7"><a href="#cb41-7"></a><span class="kw">if</span><span class="bu"> [</span> <span class="st">&quot;</span><span class="va">${#}</span><span class="st">&quot;</span> <span class="ot">-eq</span> <span class="st">&quot;0&quot;</span><span class="bu"> ]</span>; <span class="kw">then</span></span>
-<span id="cb41-8"><a href="#cb41-8"></a>  <span class="bu">echo</span> <span class="st">&quot;Expected at least one argument&quot;</span></span>
-<span id="cb41-9"><a href="#cb41-9"></a><span class="kw">fi</span></span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1"></a><span class="co"># Fout:</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a><span class="ex">if</span>[<span class="va">$#</span>-eq 0]<span class="kw">;</span> <span class="kw">then</span></span>
+<span id="cb38-3"><a href="#cb38-3"></a>  <span class="bu">echo</span> <span class="st">&quot;Expected at least one argument&quot;</span></span>
+<span id="cb38-4"><a href="#cb38-4"></a><span class="kw">fi</span></span>
+<span id="cb38-5"><a href="#cb38-5"></a></span>
+<span id="cb38-6"><a href="#cb38-6"></a><span class="co"># Juist:</span></span>
+<span id="cb38-7"><a href="#cb38-7"></a><span class="kw">if</span><span class="bu"> [</span> <span class="st">&quot;</span><span class="va">${#}</span><span class="st">&quot;</span> <span class="ot">-eq</span> <span class="st">&quot;0&quot;</span><span class="bu"> ]</span>; <span class="kw">then</span></span>
+<span id="cb38-8"><a href="#cb38-8"></a>  <span class="bu">echo</span> <span class="st">&quot;Expected at least one argument&quot;</span></span>
+<span id="cb38-9"><a href="#cb38-9"></a><span class="kw">fi</span></span></code></pre></div>
 </section><section id="if-1" class="slide level2">
 <h2>If (1)</h2>
-<div class="sourceCode" id="cb42"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1"></a><span class="kw">if</span> <span class="ex">EXPR</span></span>
-<span id="cb42-2"><a href="#cb42-2"></a><span class="kw">then</span></span>
-<span id="cb42-3"><a href="#cb42-3"></a>  <span class="co"># ...</span></span>
-<span id="cb42-4"><a href="#cb42-4"></a><span class="kw">elif</span> <span class="ex">EXPR</span></span>
-<span id="cb42-5"><a href="#cb42-5"></a>  <span class="co"># ...</span></span>
-<span id="cb42-6"><a href="#cb42-6"></a><span class="kw">else</span></span>
-<span id="cb42-7"><a href="#cb42-7"></a>  <span class="co"># ...</span></span>
-<span id="cb42-8"><a href="#cb42-8"></a><span class="kw">fi</span></span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1"></a><span class="kw">if</span> <span class="ex">EXPR</span></span>
+<span id="cb39-2"><a href="#cb39-2"></a><span class="kw">then</span></span>
+<span id="cb39-3"><a href="#cb39-3"></a>  <span class="co"># ...</span></span>
+<span id="cb39-4"><a href="#cb39-4"></a><span class="kw">elif</span> <span class="ex">EXPR</span></span>
+<span id="cb39-5"><a href="#cb39-5"></a>  <span class="co"># ...</span></span>
+<span id="cb39-6"><a href="#cb39-6"></a><span class="kw">else</span></span>
+<span id="cb39-7"><a href="#cb39-7"></a>  <span class="co"># ...</span></span>
+<span id="cb39-8"><a href="#cb39-8"></a><span class="kw">fi</span></span></code></pre></div>
 </section><section id="if-2" class="slide level2">
 <h2>If (2)</h2>
-<div class="sourceCode" id="cb43"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1"></a><span class="kw">if</span><span class="bu"> [</span> <span class="st">&quot;</span><span class="va">${#}</span><span class="st">&quot;</span> <span class="ot">-gt</span> <span class="st">&#39;2&#39;</span><span class="bu"> ]</span>; <span class="kw">then</span></span>
-<span id="cb43-2"><a href="#cb43-2"></a>  <span class="bu">printf</span> <span class="st">&#39;Expected at most 2 arguments, got %d\n&#39;</span> <span class="st">&quot;</span><span class="va">${#}</span><span class="st">&quot;</span> <span class="op">&gt;&amp;2</span></span>
-<span id="cb43-3"><a href="#cb43-3"></a>  <span class="bu">exit</span> 1</span>
-<span id="cb43-4"><a href="#cb43-4"></a><span class="kw">fi</span></span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1"></a><span class="kw">if</span><span class="bu"> [</span> <span class="st">&quot;</span><span class="va">${#}</span><span class="st">&quot;</span> <span class="ot">-gt</span> <span class="st">&#39;2&#39;</span><span class="bu"> ]</span>; <span class="kw">then</span></span>
+<span id="cb40-2"><a href="#cb40-2"></a>  <span class="bu">printf</span> <span class="st">&#39;Expected at most 2 arguments, got %d\n&#39;</span> <span class="st">&quot;</span><span class="va">${#}</span><span class="st">&quot;</span> <span class="op">&gt;&amp;2</span></span>
+<span id="cb40-3"><a href="#cb40-3"></a>  <span class="bu">exit</span> 1</span>
+<span id="cb40-4"><a href="#cb40-4"></a><span class="kw">fi</span></span></code></pre></div>
 </section><section id="while-lus" class="slide level2">
 <h2>While-lus</h2>
-<div class="sourceCode" id="cb44"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1"></a><span class="kw">while</span> <span class="ex">EXPR</span><span class="kw">;</span> <span class="kw">do</span></span>
-<span id="cb44-2"><a href="#cb44-2"></a>  <span class="co"># ...</span></span>
-<span id="cb44-3"><a href="#cb44-3"></a><span class="kw">done</span></span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1"></a><span class="kw">while</span> <span class="ex">EXPR</span><span class="kw">;</span> <span class="kw">do</span></span>
+<span id="cb41-2"><a href="#cb41-2"></a>  <span class="co"># ...</span></span>
+<span id="cb41-3"><a href="#cb41-3"></a><span class="kw">done</span></span></code></pre></div>
 </section><section id="until-lus" class="slide level2">
 <h2>Until-lus</h2>
-<div class="sourceCode" id="cb45"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1"></a><span class="kw">until</span> <span class="ex">EXPR</span><span class="kw">;</span> <span class="kw">do</span></span>
-<span id="cb45-2"><a href="#cb45-2"></a>  <span class="co"># ...</span></span>
-<span id="cb45-3"><a href="#cb45-3"></a><span class="kw">done</span></span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1"></a><span class="kw">until</span> <span class="ex">EXPR</span><span class="kw">;</span> <span class="kw">do</span></span>
+<span id="cb42-2"><a href="#cb42-2"></a>  <span class="co"># ...</span></span>
+<span id="cb42-3"><a href="#cb42-3"></a><span class="kw">done</span></span></code></pre></div>
 </section><section id="while-lus-met-teller" class="slide level2">
 <h2>While lus met teller</h2>
-<div class="sourceCode" id="cb46"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb46-1"><a href="#cb46-1"></a><span class="va">counter=</span>0</span>
-<span id="cb46-2"><a href="#cb46-2"></a></span>
-<span id="cb46-3"><a href="#cb46-3"></a><span class="kw">while</span><span class="bu"> [</span> <span class="st">&quot;</span><span class="va">${counter}</span><span class="st">&quot;</span> <span class="ot">-le</span> <span class="st">&#39;10&#39;</span><span class="bu"> ]</span>; <span class="kw">do</span></span>
-<span id="cb46-4"><a href="#cb46-4"></a>  <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${counter}</span><span class="st">&quot;</span></span>
-<span id="cb46-5"><a href="#cb46-5"></a>  <span class="va">counter=$((</span>counter + 1<span class="va">))</span></span>
-<span id="cb46-6"><a href="#cb46-6"></a><span class="kw">done</span></span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1"></a><span class="va">counter=</span>0</span>
+<span id="cb43-2"><a href="#cb43-2"></a></span>
+<span id="cb43-3"><a href="#cb43-3"></a><span class="kw">while</span><span class="bu"> [</span> <span class="st">&quot;</span><span class="va">${counter}</span><span class="st">&quot;</span> <span class="ot">-le</span> <span class="st">&#39;10&#39;</span><span class="bu"> ]</span>; <span class="kw">do</span></span>
+<span id="cb43-4"><a href="#cb43-4"></a>  <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${counter}</span><span class="st">&quot;</span></span>
+<span id="cb43-5"><a href="#cb43-5"></a>  <span class="va">counter=$((</span>counter + 1<span class="va">))</span></span>
+<span id="cb43-6"><a href="#cb43-6"></a><span class="kw">done</span></span></code></pre></div>
 <p><code>$(( ... ))</code> is <em>arithmetic expansion</em></p>
 </section><section id="for-lus" class="slide level2">
 <h2>For-lus</h2>
 <p>Itereren over een lijst</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1"></a><span class="kw">for</span> <span class="ex">ITEM</span> in LIST<span class="kw">;</span> <span class="kw">do</span></span>
-<span id="cb47-2"><a href="#cb47-2"></a>  <span class="co"># ...</span></span>
-<span id="cb47-3"><a href="#cb47-3"></a><span class="kw">done</span></span></code></pre></div>
-<div class="sourceCode" id="cb48"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1"></a><span class="kw">for</span> <span class="fu">file</span> in *.md<span class="kw">;</span> <span class="kw">do</span></span>
-<span id="cb48-2"><a href="#cb48-2"></a>  <span class="bu">printf</span> <span class="st">&#39;Processing file %s\n&#39;</span> <span class="st">&quot;</span><span class="va">${file}</span><span class="st">&quot;</span></span>
-<span id="cb48-3"><a href="#cb48-3"></a>  <span class="co"># ...</span></span>
-<span id="cb48-4"><a href="#cb48-4"></a><span class="kw">done</span></span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1"></a><span class="kw">for</span> <span class="ex">ITEM</span> in LIST<span class="kw">;</span> <span class="kw">do</span></span>
+<span id="cb44-2"><a href="#cb44-2"></a>  <span class="co"># ...</span></span>
+<span id="cb44-3"><a href="#cb44-3"></a><span class="kw">done</span></span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1"></a><span class="kw">for</span> <span class="fu">file</span> in *.md<span class="kw">;</span> <span class="kw">do</span></span>
+<span id="cb45-2"><a href="#cb45-2"></a>  <span class="bu">printf</span> <span class="st">&#39;Processing file %s\n&#39;</span> <span class="st">&quot;</span><span class="va">${file}</span><span class="st">&quot;</span></span>
+<span id="cb45-3"><a href="#cb45-3"></a>  <span class="co"># ...</span></span>
+<span id="cb45-4"><a href="#cb45-4"></a><span class="kw">done</span></span></code></pre></div>
 </section><section id="for-lus-met-teller-13" class="slide level2">
 <h2>For-lus met teller (1/3)</h2>
-<div class="sourceCode" id="cb49"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb49-1"><a href="#cb49-1"></a><span class="kw">for</span> <span class="ex">i</span> in <span class="dt">{1..10}</span><span class="kw">;</span> <span class="kw">do</span></span>
-<span id="cb49-2"><a href="#cb49-2"></a>  <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${i}</span><span class="st">&quot;</span></span>
-<span id="cb49-3"><a href="#cb49-3"></a><span class="kw">done</span></span></code></pre></div>
-<div class="sourceCode" id="cb50"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb50-1"><a href="#cb50-1"></a><span class="kw">for</span> <span class="ex">i</span> in <span class="dt">{2..20..2}</span><span class="kw">;</span> <span class="kw">do</span></span>
-<span id="cb50-2"><a href="#cb50-2"></a>  <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${i}</span><span class="st">&quot;</span></span>
-<span id="cb50-3"><a href="#cb50-3"></a><span class="kw">done</span></span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb46-1"><a href="#cb46-1"></a><span class="kw">for</span> <span class="ex">i</span> in <span class="dt">{1..10}</span><span class="kw">;</span> <span class="kw">do</span></span>
+<span id="cb46-2"><a href="#cb46-2"></a>  <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${i}</span><span class="st">&quot;</span></span>
+<span id="cb46-3"><a href="#cb46-3"></a><span class="kw">done</span></span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1"></a><span class="kw">for</span> <span class="ex">i</span> in <span class="dt">{2..20..2}</span><span class="kw">;</span> <span class="kw">do</span></span>
+<span id="cb47-2"><a href="#cb47-2"></a>  <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${i}</span><span class="st">&quot;</span></span>
+<span id="cb47-3"><a href="#cb47-3"></a><span class="kw">done</span></span></code></pre></div>
 </section><section id="for-lus-met-teller-23" class="slide level2">
 <h2>For-lus met teller (2/3)</h2>
-<div class="sourceCode" id="cb51"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb51-1"><a href="#cb51-1"></a><span class="kw">for</span> <span class="ex">i</span> in <span class="va">$(</span><span class="fu">seq</span> 1 10<span class="va">)</span><span class="kw">;</span> <span class="kw">do</span></span>
-<span id="cb51-2"><a href="#cb51-2"></a>  <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${i}</span><span class="st">&quot;</span></span>
-<span id="cb51-3"><a href="#cb51-3"></a><span class="kw">done</span></span></code></pre></div>
-<div class="sourceCode" id="cb52"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb52-1"><a href="#cb52-1"></a><span class="kw">for</span> <span class="ex">i</span> in <span class="va">$(</span><span class="fu">seq</span> 2 2 20<span class="va">)</span><span class="kw">;</span> <span class="kw">do</span></span>
-<span id="cb52-2"><a href="#cb52-2"></a>  <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${i}</span><span class="st">&quot;</span></span>
-<span id="cb52-3"><a href="#cb52-3"></a><span class="kw">done</span></span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1"></a><span class="kw">for</span> <span class="ex">i</span> in <span class="va">$(</span><span class="fu">seq</span> 1 10<span class="va">)</span><span class="kw">;</span> <span class="kw">do</span></span>
+<span id="cb48-2"><a href="#cb48-2"></a>  <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${i}</span><span class="st">&quot;</span></span>
+<span id="cb48-3"><a href="#cb48-3"></a><span class="kw">done</span></span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb49-1"><a href="#cb49-1"></a><span class="kw">for</span> <span class="ex">i</span> in <span class="va">$(</span><span class="fu">seq</span> 2 2 20<span class="va">)</span><span class="kw">;</span> <span class="kw">do</span></span>
+<span id="cb49-2"><a href="#cb49-2"></a>  <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${i}</span><span class="st">&quot;</span></span>
+<span id="cb49-3"><a href="#cb49-3"></a><span class="kw">done</span></span></code></pre></div>
 </section><section id="for-lus-met-teller-33" class="slide level2">
 <h2>For-lus met teller (3/3)</h2>
 <p>“Klassieke” for-lus, komt slechts uitzonderlijk voor</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1"></a><span class="kw">for</span> <span class="kw">((</span>i=0; i&lt;=10; i++<span class="kw">))</span>; <span class="kw">do</span></span>
-<span id="cb53-2"><a href="#cb53-2"></a>  <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${i}</span><span class="st">&quot;</span></span>
-<span id="cb53-3"><a href="#cb53-3"></a><span class="kw">done</span></span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb50-1"><a href="#cb50-1"></a><span class="kw">for</span> <span class="kw">((</span>i=0; i&lt;=10; i++<span class="kw">))</span>; <span class="kw">do</span></span>
+<span id="cb50-2"><a href="#cb50-2"></a>  <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${i}</span><span class="st">&quot;</span></span>
+<span id="cb50-3"><a href="#cb50-3"></a><span class="kw">done</span></span></code></pre></div>
 </section><section id="itereren-over-positionele-parameters-while" class="slide level2">
 <h2>Itereren over positionele parameters (<code>while</code>)</h2>
-<div class="sourceCode" id="cb54"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb54-1"><a href="#cb54-1"></a><span class="kw">while</span><span class="bu"> [</span> <span class="st">&quot;</span><span class="va">$#</span><span class="st">&quot;</span> <span class="ot">-gt</span> 0<span class="bu"> ]</span>; <span class="kw">do</span></span>
-<span id="cb54-2"><a href="#cb54-2"></a>  <span class="bu">printf</span> <span class="st">&#39;Arg: %s\n&#39;</span> <span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span></span>
-<span id="cb54-3"><a href="#cb54-3"></a>  <span class="co"># ...</span></span>
-<span id="cb54-4"><a href="#cb54-4"></a>  <span class="bu">shift</span></span>
-<span id="cb54-5"><a href="#cb54-5"></a><span class="kw">done</span></span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb51-1"><a href="#cb51-1"></a><span class="kw">while</span><span class="bu"> [</span> <span class="st">&quot;</span><span class="va">$#</span><span class="st">&quot;</span> <span class="ot">-gt</span> 0<span class="bu"> ]</span>; <span class="kw">do</span></span>
+<span id="cb51-2"><a href="#cb51-2"></a>  <span class="bu">printf</span> <span class="st">&#39;Arg: %s\n&#39;</span> <span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span></span>
+<span id="cb51-3"><a href="#cb51-3"></a>  <span class="co"># ...</span></span>
+<span id="cb51-4"><a href="#cb51-4"></a>  <span class="bu">shift</span></span>
+<span id="cb51-5"><a href="#cb51-5"></a><span class="kw">done</span></span></code></pre></div>
 </section><section id="itereren-over-positionele-parameters-for" class="slide level2">
 <h2>Itereren over positionele parameters (<code>for</code>)</h2>
-<div class="sourceCode" id="cb55"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1"></a><span class="kw">for</span> <span class="ex">arg</span> in <span class="st">&quot;</span><span class="va">${@}</span><span class="st">&quot;</span><span class="kw">;</span> <span class="kw">do</span></span>
-<span id="cb55-2"><a href="#cb55-2"></a>  <span class="bu">printf</span> <span class="st">&#39;Arg: %s\n&#39;</span> <span class="st">&quot;</span><span class="va">${arg}</span><span class="st">&quot;</span></span>
-<span id="cb55-3"><a href="#cb55-3"></a>  <span class="co"># ...</span></span>
-<span id="cb55-4"><a href="#cb55-4"></a><span class="kw">done</span></span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb52-1"><a href="#cb52-1"></a><span class="kw">for</span> <span class="ex">arg</span> in <span class="st">&quot;</span><span class="va">${@}</span><span class="st">&quot;</span><span class="kw">;</span> <span class="kw">do</span></span>
+<span id="cb52-2"><a href="#cb52-2"></a>  <span class="bu">printf</span> <span class="st">&#39;Arg: %s\n&#39;</span> <span class="st">&quot;</span><span class="va">${arg}</span><span class="st">&quot;</span></span>
+<span id="cb52-3"><a href="#cb52-3"></a>  <span class="co"># ...</span></span>
+<span id="cb52-4"><a href="#cb52-4"></a><span class="kw">done</span></span></code></pre></div>
 </section></section>
 <section><section id="hoofdstuk-7.-een-webserver-installeren" class="title-slide slide level1"><h1>Hoofdstuk 7. Een webserver installeren</h1></section><section id="doelstelling" class="slide level2">
 <h2>Doelstelling</h2>
@@ -1378,23 +1367,23 @@ chgrp group file</code></pre>
 </ol>
 </section><section id="wat-is-het-ip-adres-van" class="slide level2">
 <h2>Wat is het IP-adres van…?</h2>
-<div class="sourceCode" id="cb56"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb56-1"><a href="#cb56-1"></a>$ <span class="ex">nslookup</span> www.hogent.be</span>
-<span id="cb56-2"><a href="#cb56-2"></a>$ <span class="ex">dig</span> www.hogent.be</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1"></a>$ <span class="ex">nslookup</span> www.hogent.be</span>
+<span id="cb53-2"><a href="#cb53-2"></a>$ <span class="ex">dig</span> www.hogent.be</span></code></pre></div>
 <p>Wat is <em>mijn publiek</em> IP-adres?</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb57-1"><a href="#cb57-1"></a>$ <span class="ex">curl</span> icanhazip.com</span>
-<span id="cb57-2"><a href="#cb57-2"></a><span class="ex">81.164.175.191</span></span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb54-1"><a href="#cb54-1"></a>$ <span class="ex">curl</span> icanhazip.com</span>
+<span id="cb54-2"><a href="#cb54-2"></a><span class="ex">81.164.175.191</span></span></code></pre></div>
 </section><section id="controleer-eerst-netwerkinstellingen" class="slide level2">
 <h2>Controleer eerst netwerkinstellingen</h2>
-<div class="sourceCode" id="cb58"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb58-1"><a href="#cb58-1"></a>$ <span class="ex">ip</span> -4 a</span>
-<span id="cb58-2"><a href="#cb58-2"></a><span class="ex">1</span>: lo: <span class="op">&lt;</span>LOOPBACK,UP,LOWER_UP<span class="op">&gt;</span> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span>
-<span id="cb58-3"><a href="#cb58-3"></a>    <span class="ex">inet</span> 127.0.0.1/8 scope host lo</span>
-<span id="cb58-4"><a href="#cb58-4"></a>       <span class="ex">valid_lft</span> forever preferred_lft forever</span>
-<span id="cb58-5"><a href="#cb58-5"></a><span class="ex">2</span>: enp0s3: <span class="op">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="op">&gt;</span> mtu 1500 qdisc fq_codel state UP group default qlen 1000</span>
-<span id="cb58-6"><a href="#cb58-6"></a>    <span class="ex">inet</span> 10.0.2.15/24 brd 10.0.2.255 scope global dynamic noprefixroute enp0s3</span>
-<span id="cb58-7"><a href="#cb58-7"></a>       <span class="ex">valid_lft</span> 74751sec preferred_lft 74751sec</span>
-<span id="cb58-8"><a href="#cb58-8"></a><span class="ex">3</span>: enp0s8: <span class="op">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="op">&gt;</span> mtu 1500 qdisc fq_codel state UP group default qlen 1000</span>
-<span id="cb58-9"><a href="#cb58-9"></a>    <span class="ex">inet</span> 192.168.56.101/24 brd 192.168.56.255 scope global dynamic noprefixroute enp0s8</span>
-<span id="cb58-10"><a href="#cb58-10"></a>       <span class="ex">valid_lft</span> 1049sec preferred_lft 1049sec</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1"></a>$ <span class="ex">ip</span> -4 a</span>
+<span id="cb55-2"><a href="#cb55-2"></a><span class="ex">1</span>: lo: <span class="op">&lt;</span>LOOPBACK,UP,LOWER_UP<span class="op">&gt;</span> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span>
+<span id="cb55-3"><a href="#cb55-3"></a>    <span class="ex">inet</span> 127.0.0.1/8 scope host lo</span>
+<span id="cb55-4"><a href="#cb55-4"></a>       <span class="ex">valid_lft</span> forever preferred_lft forever</span>
+<span id="cb55-5"><a href="#cb55-5"></a><span class="ex">2</span>: enp0s3: <span class="op">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="op">&gt;</span> mtu 1500 qdisc fq_codel state UP group default qlen 1000</span>
+<span id="cb55-6"><a href="#cb55-6"></a>    <span class="ex">inet</span> 10.0.2.15/24 brd 10.0.2.255 scope global dynamic noprefixroute enp0s3</span>
+<span id="cb55-7"><a href="#cb55-7"></a>       <span class="ex">valid_lft</span> 74751sec preferred_lft 74751sec</span>
+<span id="cb55-8"><a href="#cb55-8"></a><span class="ex">3</span>: enp0s8: <span class="op">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="op">&gt;</span> mtu 1500 qdisc fq_codel state UP group default qlen 1000</span>
+<span id="cb55-9"><a href="#cb55-9"></a>    <span class="ex">inet</span> 192.168.56.101/24 brd 192.168.56.255 scope global dynamic noprefixroute enp0s8</span>
+<span id="cb55-10"><a href="#cb55-10"></a>       <span class="ex">valid_lft</span> 1049sec preferred_lft 1049sec</span></code></pre></div>
 </section><section id="netwerkinstellingen" class="slide level2">
 <h2>Netwerkinstellingen</h2>
 <ul>
@@ -1417,7 +1406,7 @@ chgrp group file</code></pre>
 </ul>
 </section><section id="installatie-software" class="slide level2">
 <h2>Installatie software</h2>
-<div class="sourceCode" id="cb59"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb59-1"><a href="#cb59-1"></a>$ <span class="fu">sudo</span> dnf install mariadb-server wordpress phpMyAdmin</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb56-1"><a href="#cb56-1"></a>$ <span class="fu">sudo</span> dnf install mariadb-server wordpress phpMyAdmin</span></code></pre></div>
 </section><section id="belangrijke-directories" class="slide level2">
 <h2>Belangrijke directories</h2>
 <ul>
@@ -1435,18 +1424,18 @@ chgrp group file</code></pre>
 </ul>
 </section><section id="services-opstarten" class="slide level2">
 <h2>Services opstarten</h2>
-<div class="sourceCode" id="cb60"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb60-1"><a href="#cb60-1"></a>$ <span class="fu">sudo</span> systemctl start mariadb</span>
-<span id="cb60-2"><a href="#cb60-2"></a>$ <span class="fu">sudo</span> systemctl enable mariadb</span>
-<span id="cb60-3"><a href="#cb60-3"></a>$ <span class="fu">sudo</span> systemctl start httpd</span>
-<span id="cb60-4"><a href="#cb60-4"></a>$ <span class="fu">sudo</span> systemctl enable httpd</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb57-1"><a href="#cb57-1"></a>$ <span class="fu">sudo</span> systemctl start mariadb</span>
+<span id="cb57-2"><a href="#cb57-2"></a>$ <span class="fu">sudo</span> systemctl enable mariadb</span>
+<span id="cb57-3"><a href="#cb57-3"></a>$ <span class="fu">sudo</span> systemctl start httpd</span>
+<span id="cb57-4"><a href="#cb57-4"></a>$ <span class="fu">sudo</span> systemctl enable httpd</span></code></pre></div>
 <ul>
 <li><code>start</code>: <em>nu</em> opstarten</li>
 <li><code>enable</code>: automatisch opstarten bij <em>booten</em></li>
 </ul>
 </section><section id="test-de-services" class="slide level2">
 <h2>Test de services</h2>
-<div class="sourceCode" id="cb61"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb61-1"><a href="#cb61-1"></a>$ <span class="ex">systemctl</span> status httpd</span>
-<span id="cb61-2"><a href="#cb61-2"></a>$ <span class="ex">systemctl</span> status mariadb</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb58-1"><a href="#cb58-1"></a>$ <span class="ex">systemctl</span> status httpd</span>
+<span id="cb58-2"><a href="#cb58-2"></a>$ <span class="ex">systemctl</span> status mariadb</span></code></pre></div>
 <ul>
 <li>Open webbrowser <em>op de VM</em>
 <ul>
@@ -1455,15 +1444,15 @@ chgrp group file</code></pre>
 <li>PHP testen: maak bestand <code>/var/www/html/info.php</code></li>
 <li>Surf naar: <a href="http://localhost/info.php" class="uri">http://localhost/info.php</a></li>
 </ul>
-<div class="sourceCode" id="cb62"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb62-1"><a href="#cb62-1"></a><span class="kw">&lt;?php</span> <span class="fu">phpinfo</span><span class="ot">();</span> <span class="kw">?&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb59-1"><a href="#cb59-1"></a><span class="kw">&lt;?php</span> <span class="fu">phpinfo</span><span class="ot">();</span> <span class="kw">?&gt;</span></span></code></pre></div>
 </section><section id="logbestanden" class="slide level2">
 <h2>Logbestanden</h2>
 <p>Voorbeeld voor Apache:</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb63-1"><a href="#cb63-1"></a>$ <span class="fu">sudo</span> journalctl</span>
-<span id="cb63-2"><a href="#cb63-2"></a>$ <span class="fu">sudo</span> journalctl -u httpd</span>
-<span id="cb63-3"><a href="#cb63-3"></a>$ <span class="fu">sudo</span> journalctl -flu httpd</span>
-<span id="cb63-4"><a href="#cb63-4"></a>$ <span class="fu">sudo</span> tail -f /var/log/httpd/access_log</span>
-<span id="cb63-5"><a href="#cb63-5"></a>$ <span class="fu">sudo</span> tail -f /var/log/httpd/error_log</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb60-1"><a href="#cb60-1"></a>$ <span class="fu">sudo</span> journalctl</span>
+<span id="cb60-2"><a href="#cb60-2"></a>$ <span class="fu">sudo</span> journalctl -u httpd</span>
+<span id="cb60-3"><a href="#cb60-3"></a>$ <span class="fu">sudo</span> journalctl -flu httpd</span>
+<span id="cb60-4"><a href="#cb60-4"></a>$ <span class="fu">sudo</span> tail -f /var/log/httpd/access_log</span>
+<span id="cb60-5"><a href="#cb60-5"></a>$ <span class="fu">sudo</span> tail -f /var/log/httpd/error_log</span></code></pre></div>
 </section><section id="website-vanaf-fysiek-systeem-bekijken" class="slide level2">
 <h2>Website vanaf fysiek systeem bekijken</h2>
 <ul>
@@ -1485,14 +1474,14 @@ chgrp group file</code></pre>
 <p>Controleer instellingen Host-Only Netwerkinterface VirtualBox.</p>
 </section><section id="firewall-instellingen-aanpassen" class="slide level2">
 <h2>Firewall-instellingen aanpassen</h2>
-<div class="sourceCode" id="cb64"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb64-1"><a href="#cb64-1"></a>$ <span class="fu">sudo</span> firewall-cmd --list-all  <span class="co"># = toon firewall-regels</span></span>
-<span id="cb64-2"><a href="#cb64-2"></a>$ <span class="fu">sudo</span> firewall-cmd --add-service http --permanent</span>
-<span id="cb64-3"><a href="#cb64-3"></a>$ <span class="fu">sudo</span> firewall-cmd --add-service https --permanent</span>
-<span id="cb64-4"><a href="#cb64-4"></a>$ <span class="fu">sudo</span> firewall-cmd --reload</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb61-1"><a href="#cb61-1"></a>$ <span class="fu">sudo</span> firewall-cmd --list-all  <span class="co"># = toon firewall-regels</span></span>
+<span id="cb61-2"><a href="#cb61-2"></a>$ <span class="fu">sudo</span> firewall-cmd --add-service http --permanent</span>
+<span id="cb61-3"><a href="#cb61-3"></a>$ <span class="fu">sudo</span> firewall-cmd --add-service https --permanent</span>
+<span id="cb61-4"><a href="#cb61-4"></a>$ <span class="fu">sudo</span> firewall-cmd --reload</span></code></pre></div>
 <p>Probeer opnieuw de website te bekijken vanaf het fysieke systeem</p>
 </section><section id="database-beveiligen" class="slide level2">
 <h2>Database beveiligen</h2>
-<div class="sourceCode" id="cb65"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb65-1"><a href="#cb65-1"></a>$ <span class="fu">sudo</span> mysql_secure_installation</span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb62-1"><a href="#cb62-1"></a>$ <span class="fu">sudo</span> mysql_secure_installation</span></code></pre></div>
 <ul>
 <li>Volg de instructies!</li>
 <li>kies MariaDB root-wachtwoord
@@ -1517,11 +1506,11 @@ chgrp group file</code></pre>
 </ul>
 </section><section id="database-testen-root" class="slide level2">
 <h2>Database testen: root</h2>
-<div class="sourceCode" id="cb66"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb66-1"><a href="#cb66-1"></a>$ <span class="ex">mysql</span> -uroot -pR2rrbLV02TA1hAjN mysql</span>
-<span id="cb66-2"><a href="#cb66-2"></a><span class="ex">...</span></span>
-<span id="cb66-3"><a href="#cb66-3"></a><span class="ex">MariaDB</span> [mysql]<span class="op">&gt;</span> SHOW DATABASES<span class="kw">;</span></span>
-<span id="cb66-4"><a href="#cb66-4"></a><span class="ex">MariaDB</span> [mysql]<span class="op">&gt;</span> SELECT user,password from user<span class="kw">;</span></span>
-<span id="cb66-5"><a href="#cb66-5"></a><span class="ex">MariaDB</span> [mysql]<span class="op">&gt;</span> quit</span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb63-1"><a href="#cb63-1"></a>$ <span class="ex">mysql</span> -uroot -pR2rrbLV02TA1hAjN mysql</span>
+<span id="cb63-2"><a href="#cb63-2"></a><span class="ex">...</span></span>
+<span id="cb63-3"><a href="#cb63-3"></a><span class="ex">MariaDB</span> [mysql]<span class="op">&gt;</span> SHOW DATABASES<span class="kw">;</span></span>
+<span id="cb63-4"><a href="#cb63-4"></a><span class="ex">MariaDB</span> [mysql]<span class="op">&gt;</span> SELECT user,password from user<span class="kw">;</span></span>
+<span id="cb63-5"><a href="#cb63-5"></a><span class="ex">MariaDB</span> [mysql]<span class="op">&gt;</span> quit</span></code></pre></div>
 <ul>
 <li><code>-uroot</code>: inloggen als MariaDB-root</li>
 <li><code>-pR2rrbLV02TA1hAjN</code>: gekozen wachtwoord
@@ -1532,10 +1521,10 @@ chgrp group file</code></pre>
 </ul>
 </section><section id="database-testen-wordpress" class="slide level2">
 <h2>Database testen: wordpress</h2>
-<div class="sourceCode" id="cb67"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb67-1"><a href="#cb67-1"></a>$ <span class="ex">mysql</span> -uwordpress -pPu7QxGKPlvEdw6Gr wordpress</span>
-<span id="cb67-2"><a href="#cb67-2"></a><span class="ex">...</span></span>
-<span id="cb67-3"><a href="#cb67-3"></a><span class="ex">MariaDB</span> [wordpress]<span class="op">&gt;</span> SHOW TABLES<span class="kw">;</span></span>
-<span id="cb67-4"><a href="#cb67-4"></a><span class="ex">MariaDB</span> [wordpress]<span class="op">&gt;</span> quit</span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb64-1"><a href="#cb64-1"></a>$ <span class="ex">mysql</span> -uwordpress -pPu7QxGKPlvEdw6Gr wordpress</span>
+<span id="cb64-2"><a href="#cb64-2"></a><span class="ex">...</span></span>
+<span id="cb64-3"><a href="#cb64-3"></a><span class="ex">MariaDB</span> [wordpress]<span class="op">&gt;</span> SHOW TABLES<span class="kw">;</span></span>
+<span id="cb64-4"><a href="#cb64-4"></a><span class="ex">MariaDB</span> [wordpress]<span class="op">&gt;</span> quit</span></code></pre></div>
 </section><section id="wordpress-belangrijke-bestanden" class="slide level2">
 <h2>Wordpress: Belangrijke bestanden</h2>
 <ul>
@@ -1546,22 +1535,22 @@ chgrp group file</code></pre>
 </section><section id="wordpress-apache-configuratie" class="slide level2">
 <h2>Wordpress: Apache-configuratie</h2>
 <p>In <code>/etc/httpd/conf.d/wordpress.conf</code>:</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode apache"><code class="sourceCode apache"><span id="cb68-1"><a href="#cb68-1"></a><span class="co"># Zoek naar</span></span>
-<span id="cb68-2"><a href="#cb68-2"></a>Require<span class="st"> local</span></span>
-<span id="cb68-3"><a href="#cb68-3"></a><span class="co"># Vervang door</span></span>
-<span id="cb68-4"><a href="#cb68-4"></a>Require<span class="st"> all granted</span></span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode apache"><code class="sourceCode apache"><span id="cb65-1"><a href="#cb65-1"></a><span class="co"># Zoek naar</span></span>
+<span id="cb65-2"><a href="#cb65-2"></a>Require<span class="st"> local</span></span>
+<span id="cb65-3"><a href="#cb65-3"></a><span class="co"># Vervang door</span></span>
+<span id="cb65-4"><a href="#cb65-4"></a>Require<span class="st"> all granted</span></span></code></pre></div>
 <p>Daarna: <code>sudo sytemctl restart httpd</code></p>
 </section><section id="wordpress-database-instellingen" class="slide level2">
 <h2>Wordpress: database-instellingen</h2>
 <p>In <code>/etc/wordpress/wp-config.php</code>:</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb69-1"><a href="#cb69-1"></a><span class="co">/** The name of the database for WordPress */</span></span>
-<span id="cb69-2"><a href="#cb69-2"></a><span class="fu">define</span><span class="ot">(</span><span class="st">&#39;DB_NAME&#39;</span><span class="ot">,</span> <span class="st">&#39;wordpress&#39;</span><span class="ot">);</span></span>
-<span id="cb69-3"><a href="#cb69-3"></a></span>
-<span id="cb69-4"><a href="#cb69-4"></a><span class="co">/** MySQL database username */</span></span>
-<span id="cb69-5"><a href="#cb69-5"></a><span class="fu">define</span><span class="ot">(</span><span class="st">&#39;DB_USER&#39;</span><span class="ot">,</span> <span class="st">&#39;wordpress&#39;</span><span class="ot">);</span></span>
-<span id="cb69-6"><a href="#cb69-6"></a></span>
-<span id="cb69-7"><a href="#cb69-7"></a><span class="co">/** MySQL database password */</span></span>
-<span id="cb69-8"><a href="#cb69-8"></a><span class="fu">define</span><span class="ot">(</span><span class="st">&#39;DB_PASSWORD&#39;</span><span class="ot">,</span> <span class="st">&#39;Pu7QxGKPlvEdw6Gr&#39;</span><span class="ot">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb66-1"><a href="#cb66-1"></a><span class="co">/** The name of the database for WordPress */</span></span>
+<span id="cb66-2"><a href="#cb66-2"></a><span class="fu">define</span><span class="ot">(</span><span class="st">&#39;DB_NAME&#39;</span><span class="ot">,</span> <span class="st">&#39;wordpress&#39;</span><span class="ot">);</span></span>
+<span id="cb66-3"><a href="#cb66-3"></a></span>
+<span id="cb66-4"><a href="#cb66-4"></a><span class="co">/** MySQL database username */</span></span>
+<span id="cb66-5"><a href="#cb66-5"></a><span class="fu">define</span><span class="ot">(</span><span class="st">&#39;DB_USER&#39;</span><span class="ot">,</span> <span class="st">&#39;wordpress&#39;</span><span class="ot">);</span></span>
+<span id="cb66-6"><a href="#cb66-6"></a></span>
+<span id="cb66-7"><a href="#cb66-7"></a><span class="co">/** MySQL database password */</span></span>
+<span id="cb66-8"><a href="#cb66-8"></a><span class="fu">define</span><span class="ot">(</span><span class="st">&#39;DB_PASSWORD&#39;</span><span class="ot">,</span> <span class="st">&#39;Pu7QxGKPlvEdw6Gr&#39;</span><span class="ot">);</span></span></code></pre></div>
 </section><section id="wordpress-keys-en-salts" class="slide level2">
 <h2>Wordpress: Keys en Salts</h2>
 <ul>
@@ -1571,8 +1560,8 @@ chgrp group file</code></pre>
 </section><section id="wordpress-installatie-plugins-en-updates" class="slide level2">
 <h2>Wordpress: installatie plugins en updates</h2>
 <p>In <code>/etc/wordpress/wp-config.php</code>:</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb70-1"><a href="#cb70-1"></a><span class="co">/* ENABLE file changes */</span></span>
-<span id="cb70-2"><a href="#cb70-2"></a><span class="fu">define</span><span class="ot">(</span><span class="st">&#39;DISALLOW_FILE_MODS&#39;</span><span class="ot">,</span> <span class="kw">false</span><span class="ot">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb67-1"><a href="#cb67-1"></a><span class="co">/* ENABLE file changes */</span></span>
+<span id="cb67-2"><a href="#cb67-2"></a><span class="fu">define</span><span class="ot">(</span><span class="st">&#39;DISALLOW_FILE_MODS&#39;</span><span class="ot">,</span> <span class="kw">false</span><span class="ot">);</span></span></code></pre></div>
 </section><section id="installatie-wordpress" class="slide level2">
 <h2>Installatie Wordpress</h2>
 <ul>
@@ -1584,36 +1573,36 @@ chgrp group file</code></pre>
 </section></section>
 <section><section id="hoofdstuk-8.-complexere-scripts" class="title-slide slide level1"><h1>Hoofdstuk 8. Complexere scripts</h1></section><section id="case-1" class="slide level2">
 <h2>Case (1)</h2>
-<div class="sourceCode" id="cb71"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb71-1"><a href="#cb71-1"></a><span class="kw">case</span> EXPR<span class="kw"> in</span></span>
-<span id="cb71-2"><a href="#cb71-2"></a>  PATROON1<span class="kw">)</span></span>
-<span id="cb71-3"><a href="#cb71-3"></a>    <span class="co"># ...</span></span>
-<span id="cb71-4"><a href="#cb71-4"></a>    <span class="kw">;;</span></span>
-<span id="cb71-5"><a href="#cb71-5"></a>  PATROON2<span class="kw">)</span></span>
-<span id="cb71-6"><a href="#cb71-6"></a>    <span class="co"># ...</span></span>
-<span id="cb71-7"><a href="#cb71-7"></a>    <span class="kw">;;</span></span>
-<span id="cb71-8"><a href="#cb71-8"></a>  *<span class="kw">)</span></span>
-<span id="cb71-9"><a href="#cb71-9"></a>    <span class="co"># ...</span></span>
-<span id="cb71-10"><a href="#cb71-10"></a>    <span class="kw">;;</span></span>
-<span id="cb71-11"><a href="#cb71-11"></a><span class="kw">esac</span></span></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb68-1"><a href="#cb68-1"></a><span class="kw">case</span> EXPR<span class="kw"> in</span></span>
+<span id="cb68-2"><a href="#cb68-2"></a>  PATROON1<span class="kw">)</span></span>
+<span id="cb68-3"><a href="#cb68-3"></a>    <span class="co"># ...</span></span>
+<span id="cb68-4"><a href="#cb68-4"></a>    <span class="kw">;;</span></span>
+<span id="cb68-5"><a href="#cb68-5"></a>  PATROON2<span class="kw">)</span></span>
+<span id="cb68-6"><a href="#cb68-6"></a>    <span class="co"># ...</span></span>
+<span id="cb68-7"><a href="#cb68-7"></a>    <span class="kw">;;</span></span>
+<span id="cb68-8"><a href="#cb68-8"></a>  *<span class="kw">)</span></span>
+<span id="cb68-9"><a href="#cb68-9"></a>    <span class="co"># ...</span></span>
+<span id="cb68-10"><a href="#cb68-10"></a>    <span class="kw">;;</span></span>
+<span id="cb68-11"><a href="#cb68-11"></a><span class="kw">esac</span></span></code></pre></div>
 </section><section id="case-2" class="slide level2">
 <h2>Case (2)</h2>
-<div class="sourceCode" id="cb72"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb72-1"><a href="#cb72-1"></a><span class="va">option=</span><span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span></span>
-<span id="cb72-2"><a href="#cb72-2"></a></span>
-<span id="cb72-3"><a href="#cb72-3"></a><span class="kw">case</span> <span class="st">&quot;</span><span class="va">${option}</span><span class="st">&quot;</span><span class="kw"> in</span></span>
-<span id="cb72-4"><a href="#cb72-4"></a>  -h<span class="kw">|</span>--help<span class="kw">|</span>-?<span class="kw">)</span></span>
-<span id="cb72-5"><a href="#cb72-5"></a>    <span class="ex">usage</span></span>
-<span id="cb72-6"><a href="#cb72-6"></a>    <span class="bu">exit</span> 0</span>
-<span id="cb72-7"><a href="#cb72-7"></a>    <span class="kw">;;</span></span>
-<span id="cb72-8"><a href="#cb72-8"></a>  -v<span class="kw">|</span>--verbose<span class="kw">)</span></span>
-<span id="cb72-9"><a href="#cb72-9"></a>    <span class="va">verbose=</span>y</span>
-<span id="cb72-10"><a href="#cb72-10"></a>    <span class="bu">shift</span></span>
-<span id="cb72-11"><a href="#cb72-11"></a>    <span class="kw">;;</span></span>
-<span id="cb72-12"><a href="#cb72-12"></a>  *<span class="kw">)</span></span>
-<span id="cb72-13"><a href="#cb72-13"></a>    <span class="bu">printf</span> <span class="st">&#39;Unrecognized option: %s\n&#39;</span> <span class="st">&quot;</span><span class="va">${option}</span><span class="st">&quot;</span></span>
-<span id="cb72-14"><a href="#cb72-14"></a>    <span class="ex">usage</span></span>
-<span id="cb72-15"><a href="#cb72-15"></a>    <span class="bu">exit</span> 1</span>
-<span id="cb72-16"><a href="#cb72-16"></a>    <span class="kw">;;</span></span>
-<span id="cb72-17"><a href="#cb72-17"></a><span class="kw">esac</span></span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb69-1"><a href="#cb69-1"></a><span class="va">option=</span><span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span></span>
+<span id="cb69-2"><a href="#cb69-2"></a></span>
+<span id="cb69-3"><a href="#cb69-3"></a><span class="kw">case</span> <span class="st">&quot;</span><span class="va">${option}</span><span class="st">&quot;</span><span class="kw"> in</span></span>
+<span id="cb69-4"><a href="#cb69-4"></a>  -h<span class="kw">|</span>--help<span class="kw">|</span>-?<span class="kw">)</span></span>
+<span id="cb69-5"><a href="#cb69-5"></a>    <span class="ex">usage</span></span>
+<span id="cb69-6"><a href="#cb69-6"></a>    <span class="bu">exit</span> 0</span>
+<span id="cb69-7"><a href="#cb69-7"></a>    <span class="kw">;;</span></span>
+<span id="cb69-8"><a href="#cb69-8"></a>  -v<span class="kw">|</span>--verbose<span class="kw">)</span></span>
+<span id="cb69-9"><a href="#cb69-9"></a>    <span class="va">verbose=</span>y</span>
+<span id="cb69-10"><a href="#cb69-10"></a>    <span class="bu">shift</span></span>
+<span id="cb69-11"><a href="#cb69-11"></a>    <span class="kw">;;</span></span>
+<span id="cb69-12"><a href="#cb69-12"></a>  *<span class="kw">)</span></span>
+<span id="cb69-13"><a href="#cb69-13"></a>    <span class="bu">printf</span> <span class="st">&#39;Unrecognized option: %s\n&#39;</span> <span class="st">&quot;</span><span class="va">${option}</span><span class="st">&quot;</span></span>
+<span id="cb69-14"><a href="#cb69-14"></a>    <span class="ex">usage</span></span>
+<span id="cb69-15"><a href="#cb69-15"></a>    <span class="bu">exit</span> 1</span>
+<span id="cb69-16"><a href="#cb69-16"></a>    <span class="kw">;;</span></span>
+<span id="cb69-17"><a href="#cb69-17"></a><span class="kw">esac</span></span></code></pre></div>
 </section><section id="communicatie-scriptomgeving" class="slide level2">
 <h2>Communicatie script/omgeving</h2>
 <p>Informatie uitwisselen tussen script en omgeving:</p>
@@ -1623,12 +1612,12 @@ chgrp group file</code></pre>
 <li>Exit-status (0-255)</li>
 <li>Omgevingsvariabelen, vb:</li>
 </ul>
-<div class="sourceCode" id="cb73"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb73-1"><a href="#cb73-1"></a><span class="va">VAGRANT_LOG=</span>debug <span class="ex">vagrant</span> up</span></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb70-1"><a href="#cb70-1"></a><span class="va">VAGRANT_LOG=</span>debug <span class="ex">vagrant</span> up</span></code></pre></div>
 </section><section id="functies-in-bash" class="slide level2">
 <h2>Functies in Bash</h2>
-<div class="sourceCode" id="cb74"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb74-1"><a href="#cb74-1"></a><span class="fu">functie_naam()</span> <span class="kw">{</span></span>
-<span id="cb74-2"><a href="#cb74-2"></a>    <span class="co"># code</span></span>
-<span id="cb74-3"><a href="#cb74-3"></a><span class="kw">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb71-1"><a href="#cb71-1"></a><span class="fu">functie_naam()</span> <span class="kw">{</span></span>
+<span id="cb71-2"><a href="#cb71-2"></a>    <span class="co"># code</span></span>
+<span id="cb71-3"><a href="#cb71-3"></a><span class="kw">}</span></span></code></pre></div>
 <p>Een functie gedraagt zich als een script!</p>
 <ul>
 <li>oproepen: <code>functie_naam arg1 arg2 arg3</code></li>
@@ -1638,36 +1627,36 @@ chgrp group file</code></pre>
 </section><section id="scope-variabelen-bij-functies" class="slide level2">
 <h2>Scope variabelen bij functies</h2>
 <p>Wat is de uitvoer van dit script?</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb75-1"><a href="#cb75-1"></a><span class="co">#! /usr/bin/env bash</span></span>
-<span id="cb75-2"><a href="#cb75-2"></a><span class="va">var_a=</span>a</span>
-<span id="cb75-3"><a href="#cb75-3"></a></span>
-<span id="cb75-4"><a href="#cb75-4"></a><span class="fu">foo()</span> <span class="kw">{</span></span>
-<span id="cb75-5"><a href="#cb75-5"></a>  <span class="va">var_b=</span>b</span>
-<span id="cb75-6"><a href="#cb75-6"></a>  <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${var_a}</span><span class="st"> </span><span class="va">${var_b}</span><span class="st">&quot;</span></span>
-<span id="cb75-7"><a href="#cb75-7"></a><span class="kw">}</span></span>
-<span id="cb75-8"><a href="#cb75-8"></a></span>
-<span id="cb75-9"><a href="#cb75-9"></a><span class="ex">foo</span></span>
-<span id="cb75-10"><a href="#cb75-10"></a></span>
-<span id="cb75-11"><a href="#cb75-11"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${var_a}</span><span class="st"> </span><span class="va">${var_b}</span><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb72-1"><a href="#cb72-1"></a><span class="co">#! /usr/bin/env bash</span></span>
+<span id="cb72-2"><a href="#cb72-2"></a><span class="va">var_a=</span>a</span>
+<span id="cb72-3"><a href="#cb72-3"></a></span>
+<span id="cb72-4"><a href="#cb72-4"></a><span class="fu">foo()</span> <span class="kw">{</span></span>
+<span id="cb72-5"><a href="#cb72-5"></a>  <span class="va">var_b=</span>b</span>
+<span id="cb72-6"><a href="#cb72-6"></a>  <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${var_a}</span><span class="st"> </span><span class="va">${var_b}</span><span class="st">&quot;</span></span>
+<span id="cb72-7"><a href="#cb72-7"></a><span class="kw">}</span></span>
+<span id="cb72-8"><a href="#cb72-8"></a></span>
+<span id="cb72-9"><a href="#cb72-9"></a><span class="ex">foo</span></span>
+<span id="cb72-10"><a href="#cb72-10"></a></span>
+<span id="cb72-11"><a href="#cb72-11"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${var_a}</span><span class="st"> </span><span class="va">${var_b}</span><span class="st">&quot;</span></span></code></pre></div>
 </section><section id="functies-in-bash-voorbeeld" class="slide level2">
 <h2>Functies in Bash: voorbeeld</h2>
-<div class="sourceCode" id="cb76"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb76-1"><a href="#cb76-1"></a><span class="co"># Usage: copy_iso_to_usb ISO_FILE DEVICE</span></span>
-<span id="cb76-2"><a href="#cb76-2"></a><span class="co"># Copy an ISO file to a USB device, showing progress with pv (pipe viewer)</span></span>
-<span id="cb76-3"><a href="#cb76-3"></a><span class="co"># e.g. copy_iso_to_usb FedoraWorkstation.iso /dev/sdc</span></span>
-<span id="cb76-4"><a href="#cb76-4"></a><span class="fu">copy_iso_to_usb()</span> <span class="kw">{</span></span>
-<span id="cb76-5"><a href="#cb76-5"></a>  <span class="bu">local</span> <span class="va">iso=</span><span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span></span>
-<span id="cb76-6"><a href="#cb76-6"></a>  <span class="bu">local</span> <span class="va">destination=</span><span class="st">&quot;</span><span class="va">${2}</span><span class="st">&quot;</span></span>
-<span id="cb76-7"><a href="#cb76-7"></a>  <span class="bu">local</span> <span class="va">iso_size</span></span>
-<span id="cb76-8"><a href="#cb76-8"></a></span>
-<span id="cb76-9"><a href="#cb76-9"></a>  <span class="va">iso_size=$(</span><span class="fu">stat</span> -c <span class="st">&#39;%s&#39;</span> <span class="st">&quot;</span><span class="va">${iso}</span><span class="st">&quot;</span><span class="va">)</span></span>
-<span id="cb76-10"><a href="#cb76-10"></a></span>
-<span id="cb76-11"><a href="#cb76-11"></a>  <span class="bu">printf</span> <span class="st">&quot;Copying %s (%&#39;dB) to %s\n&quot;</span> \</span>
-<span id="cb76-12"><a href="#cb76-12"></a>    <span class="st">&quot;</span><span class="va">${iso}</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">${iso_size}</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">${destination}</span><span class="st">&quot;</span></span>
-<span id="cb76-13"><a href="#cb76-13"></a></span>
-<span id="cb76-14"><a href="#cb76-14"></a>  <span class="fu">dd</span> if=<span class="st">&quot;</span><span class="va">${iso}</span><span class="st">&quot;</span> \</span>
-<span id="cb76-15"><a href="#cb76-15"></a>    <span class="kw">|</span> <span class="ex">pv</span> --size <span class="st">&quot;</span><span class="va">${iso_size}</span><span class="st">&quot;</span> \</span>
-<span id="cb76-16"><a href="#cb76-16"></a>    <span class="kw">|</span> <span class="fu">sudo</span> dd of=<span class="st">&quot;</span><span class="va">${destination}</span><span class="st">&quot;</span></span>
-<span id="cb76-17"><a href="#cb76-17"></a><span class="kw">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb73-1"><a href="#cb73-1"></a><span class="co"># Usage: copy_iso_to_usb ISO_FILE DEVICE</span></span>
+<span id="cb73-2"><a href="#cb73-2"></a><span class="co"># Copy an ISO file to a USB device, showing progress with pv (pipe viewer)</span></span>
+<span id="cb73-3"><a href="#cb73-3"></a><span class="co"># e.g. copy_iso_to_usb FedoraWorkstation.iso /dev/sdc</span></span>
+<span id="cb73-4"><a href="#cb73-4"></a><span class="fu">copy_iso_to_usb()</span> <span class="kw">{</span></span>
+<span id="cb73-5"><a href="#cb73-5"></a>  <span class="bu">local</span> <span class="va">iso=</span><span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span></span>
+<span id="cb73-6"><a href="#cb73-6"></a>  <span class="bu">local</span> <span class="va">destination=</span><span class="st">&quot;</span><span class="va">${2}</span><span class="st">&quot;</span></span>
+<span id="cb73-7"><a href="#cb73-7"></a>  <span class="bu">local</span> <span class="va">iso_size</span></span>
+<span id="cb73-8"><a href="#cb73-8"></a></span>
+<span id="cb73-9"><a href="#cb73-9"></a>  <span class="va">iso_size=$(</span><span class="fu">stat</span> -c <span class="st">&#39;%s&#39;</span> <span class="st">&quot;</span><span class="va">${iso}</span><span class="st">&quot;</span><span class="va">)</span></span>
+<span id="cb73-10"><a href="#cb73-10"></a></span>
+<span id="cb73-11"><a href="#cb73-11"></a>  <span class="bu">printf</span> <span class="st">&quot;Copying %s (%&#39;dB) to %s\n&quot;</span> \</span>
+<span id="cb73-12"><a href="#cb73-12"></a>    <span class="st">&quot;</span><span class="va">${iso}</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">${iso_size}</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">${destination}</span><span class="st">&quot;</span></span>
+<span id="cb73-13"><a href="#cb73-13"></a></span>
+<span id="cb73-14"><a href="#cb73-14"></a>  <span class="fu">dd</span> if=<span class="st">&quot;</span><span class="va">${iso}</span><span class="st">&quot;</span> \</span>
+<span id="cb73-15"><a href="#cb73-15"></a>    <span class="kw">|</span> <span class="ex">pv</span> --size <span class="st">&quot;</span><span class="va">${iso_size}</span><span class="st">&quot;</span> \</span>
+<span id="cb73-16"><a href="#cb73-16"></a>    <span class="kw">|</span> <span class="fu">sudo</span> dd of=<span class="st">&quot;</span><span class="va">${destination}</span><span class="st">&quot;</span></span>
+<span id="cb73-17"><a href="#cb73-17"></a><span class="kw">}</span></span></code></pre></div>
 </section><section id="tips-1" class="slide level2">
 <h2>Tips (1)</h2>
 <ul>
@@ -1676,9 +1665,9 @@ chgrp group file</code></pre>
 <li>Maak lijnen niet te lang (gebruik <code>\</code> op het einde van een regel)</li>
 <li>Gebruik “lange” opties: maakt script leesbaarder</li>
 </ul>
-<div class="sourceCode" id="cb77"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb77-1"><a href="#cb77-1"></a><span class="kw">set</span> <span class="ex">-o</span> nounset  <span class="co"># stop bij onbestaande variabele</span></span>
-<span id="cb77-2"><a href="#cb77-2"></a><span class="kw">set</span> <span class="ex">-o</span> errexit  <span class="co"># stop bij fout (exitstatus ≠ 0) in commando</span></span>
-<span id="cb77-3"><a href="#cb77-3"></a><span class="kw">set</span> <span class="ex">-o</span> pipefail <span class="co"># stop bij fout in pipeline</span></span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb74-1"><a href="#cb74-1"></a><span class="kw">set</span> <span class="ex">-o</span> nounset  <span class="co"># stop bij onbestaande variabele</span></span>
+<span id="cb74-2"><a href="#cb74-2"></a><span class="kw">set</span> <span class="ex">-o</span> errexit  <span class="co"># stop bij fout (exitstatus ≠ 0) in commando</span></span>
+<span id="cb74-3"><a href="#cb74-3"></a><span class="kw">set</span> <span class="ex">-o</span> pipefail <span class="co"># stop bij fout in pipeline</span></span></code></pre></div>
 </section><section id="tips-2" class="slide level2">
 <h2>Tips (2)</h2>
 <ul>

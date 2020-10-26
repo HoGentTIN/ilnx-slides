@@ -572,41 +572,6 @@ awk '{ printf "%s;%s", $2, $4 }'
 
 # Hoofdstuk 4. Scripting: intro
 
-## Vooraf: Git configuratie (1)
-
- 1 - Configureer Git in je VM
-
-  ```shell
-  sudo dnf install git
-  git config --global user.name "Voornaam Naam"
-  git config --global user.email "emailadres@student.hogent.be"
-  git config --global push.default simple
-  git config --global pull.rebase true
-  git config --global core.autocrlf=input
-  ```
-
-## Vooraf: Git configuratie (2)
-
-2 - Maak een sleutelpaar
-
-```shell
-ssh-keygen
-```
-
-3 - Registreer publieke sleutel op Github
-
-```shell
-cat ~/.ssh/id_rsa.pub
-```
-
-4 - Kloon Git-repo in je VM
-
-```shell
-git clone git@github.com:HoGentTIN/linux-1819-USERNAME.git
-```
-
-met USERNAME jouw Github gebruikersnaam
-
 ## Een script schrijven
 
 1. Maak bestand aan (bv. `script.sh`) met een teksteditor, bv.
@@ -626,7 +591,8 @@ met USERNAME jouw Github gebruikersnaam
 - Absoluut pad naar de interpreter voor het script, bv:
     - `#! /usr/bin/python`
     - `#! /usr/bin/ruby`
-    - `#! /usr/bin/env bash` (zoek in `${PATH}` naar `bash`)
+    - `#! /usr/bin/env bash`
+        - = zoek in `${PATH}` naar `bash`
 
 ## Tekst afdrukken
 
@@ -702,7 +668,7 @@ Bash-variabelen zijn (meestal) strings.
 echo "Hello ${USER}"
 ```
 
-## Variabelen: tips
+## Variabelen: codestijl
 
 - Gebruik zoveel mogelijk de notatie `${var}`
     - *accolades*
@@ -711,11 +677,11 @@ echo "Hello ${USER}"
 
 ```bash
 bestand="Mijn bestand.txt"
-touch ${bestand}               # Fout
-touch "${bestand}"             # Juist
+touch ${bestand}        # Fout
+touch "${bestand}"      # Juist
 ```
 
----
+## Onbestaande variabelen opvragen
 
 - Onbestaande variabele wordt beschouwd als *lege string*.
     - Oorzaak van veel fouten in shell-scripts!
@@ -735,7 +701,7 @@ VARIABLE2=value
 export VARIABLE2
 ```
 
----
+## Variabelen: naamgeving
 
 Conventie naamgeving:
 
